@@ -4,7 +4,7 @@
             <div class="container">
                 <div class="row mt-3">
                     <div class="col text-light">
-                        <img src="<?= base_url('user/get_qrid/') . $profile['cus_hash']; ?>" class="img-fluid rounded-3" alt="..." width="100%" style="max-width:100px"><br>
+                        <img src="<?= base_url('user/get_qrid/') . $profile['cus_hash']; ?>" class="img-fluid rounded-3" alt="..." width="100px" height="100px"><br>
                         <span class="text-light fw-light fst-italic mt-1" style="font-size:10pt;">Tap to Enlarge</span>
                     </div>
                     <div id="member_since_text" class="col text-end text-light">
