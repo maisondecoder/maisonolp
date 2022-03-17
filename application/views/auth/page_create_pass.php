@@ -35,10 +35,10 @@
                         <input type="text" class="form-control mb-2" name="email-input" id="email-input" minlength="3" maxlength="60" aria-describedby="email-input" placeholder="johndoe@domain.com" required>
 
                         <label for="pass-input" class="form-label">Password</label>
-                        <input type="password" class="form-control mb-2" name="pass-input" id="pass-input" minlength="5" maxlength="60" aria-describedby="pass-input" placeholder="" required>
+                        <input type="password" class="form-control mb-2" name="pass-input" id="pass-input" minlength="6" maxlength="60" aria-describedby="pass-input" placeholder="" required>
 
                         <label for="conpass-input" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control mb-2" name="conpass-input" id="conpass-input" minlength="5" maxlength="60" aria-describedby="conpass-input" placeholder="" required>
+                        <input type="password" class="form-control mb-2" name="conpass-input" id="conpass-input" minlength="6" maxlength="60" aria-describedby="conpass-input" placeholder="" required>
 
                     </div>
                     <div class="d-grid gap-2">

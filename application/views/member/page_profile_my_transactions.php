@@ -3,7 +3,14 @@
 </div>
 <div class="container p-4 mb-3 text-center text-white" style="border-radius: 16px">
     <div class="fw-bold fs-1">Rp <?= number_format($total_spending, 0, ',', '.'); ?></div>
-    <div class="position-relative mt-2">Great! Keep up the transaction</div>
+    <div class="position-relative mt-2">
+        <?php if ($total_spending > 0) {
+            echo 'Great! Keep up the transaction!';
+        } else {
+            echo 'Don\'t worry, lets make a purchase!';
+        }
+        ?>
+    </div>
 </div>
 <div class="container bg-white p-4 mb-3 text-center" style="border-radius: 16px">
     <div class="row">
@@ -21,7 +28,7 @@
         </div>
         <div class="col">
             <div class="bg-white" style="border-radius: 16px">
-                <div class="fs-6">Pending</div>
+                <div class="fs-6">Waiting</div>
                 <div class="fw-bold"><?= number_format($total_pending, 0, ',', '.'); ?></div>
             </div>
         </div>
@@ -49,7 +56,7 @@
                             <div class="col"><?= $list_trx['trx_note']; ?></div>
                             <div class="col text-end">Rp <?= number_format($list_trx['trx_nominal'], 0, ',', '.'); ?><?php if (!$list_trx['trx_status']) {
                                                                                                                             echo '<i class="fas fa-hourglass-half mx-2 text-secondary"></i>';
-                                                                                                                        }?></div>
+                                                                                                                        } ?></div>
                         </div>
                     </div>
                 <?php }
