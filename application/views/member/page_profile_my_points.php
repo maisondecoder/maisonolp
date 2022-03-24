@@ -1,4 +1,4 @@
-<div class="container p-4 bg-dark">
+<div class="container p-4">
     <h3 class="mt-2 text-white">My Points</h3>
 </div>
 <div class="container p-4 mb-3 text-center text-white" style="border-radius: 16px">

@@ -9,42 +9,36 @@
     <meta name=”robots” content=”noindex,nofollow”>
     <!-- Bootstrap CSS -->
     <link href="<?= base_url('assets/external/'); ?>bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="<?= base_url('assets/css/'); ?>custom-color.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="https://maisonliving.id/wp-content/uploads/2021/11/cropped-logo-tab1-192x192.jpg" sizes="192x192" />
     <link rel="apple-touch-icon" href="https://maisonliving.id/wp-content/uploads/2021/11/cropped-logo-tab1-180x180.jpg" />
     <meta name="msapplication-TileImage" content="https://maisonliving.id/wp-content/uploads/2021/11/cropped-logo-tab1-270x270.jpg" />
     <title>Online Loyalty Program | Maison Living</title>
 </head>
 
-<body class="bg-dark mx-auto vh-100" style="max-width:500px; background-image:url('<?= base_url('assets/papadatos-sofa.jpg'); ?>');background-size:cover; background-repeat:no-repeat; background-position: left center">
+<body class="cus-dark-bg mx-auto vh-100" style="max-width:500px; background-image:url('<?= base_url('assets/papadatos-sofa.jpg'); ?>');background-size:cover; background-repeat:no-repeat; background-position: left center">
 
     <div class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 11">
-        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto ">Join Maison Living Membership</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                Get extra cashback in Maison Points by joining Maison Living Online Loyalty Program!
-            </div>
-        </div>
+        <img class="img " src="<?= base_url('assets/maison-logo.png'); ?>" alt="Logo Maison" style="margin-top:5em" width="400px">
     </div>
 
-    <div class="container" >
+    <div class="container">
 
-        <img class="img-fluid " src="<?= base_url('assets/maison-logo.png'); ?>" alt="Logo Maison" style="margin-top:5em">
 
-        <div class="fixed-bottom mb-5 mx-auto p-4" style="max-width:500px; padding-bottom:40px !important; background:#00000061">
-            <h2 class="text-light">Member Area</h2>
+
+        <div class="fixed-bottom mb-3 mx-auto p-3" style="max-width:500px; background:#0000009e">
+            <h3 class="text-light">Member Area</h3>
             <span class="text-warning"><?php echo validation_errors(); ?></span>
 
             <?php echo form_open('auth'); ?>
             <div class="d-grid gap-2">
-                <label for="nomor-wa" class="form-label text-light">Enter your Whatsapp number</label>
+                <label for="nomor-wa" class="form-label text-light">Sign up with your Whatsapp Number</label>
                 <div class="input-group">
                     <span class="input-group-text" id="basic-addon1">+62</span>
-                    <input type="number" class="form-control form-control-lg" name="nomor-wa" id="nomor-wa" aria-describedby="nomor-wa" placeholder="81222444555" required>
+                    <input type="number" class="form-control" name="nomor-wa" id="nomor-wa" aria-describedby="nomor-wa" placeholder="81222444555" required>
                 </div>
-                <button type="submit" class="btn btn-primary btn-lg">Sign In</button>
+                <button type="submit" class="btn mb-3 cus-dark-btn">Sign Up</button>
+                <a href="<?= base_url('auth/signin'); ?>" class="btn btn-link text-white">I Already Have an Account</button>
             </div>
             </form>
         </div>

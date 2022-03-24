@@ -25,13 +25,15 @@ class User extends CI_Controller
 
     public function test_vod()
     {
+        $data['page'] = 'home';
         $this->load->view('member/header');
-        $this->load->view('member/page_feeds');
+        $this->load->view('member/page_feeds', $data);
         $this->load->view('member/footer');
     }
 
     public function index()
     {
+        $data['page'] = 'profile';
         $phone = $this->session->userdata('ses_phone');
         $cusid = $this->session->userdata('ses_cusid');
 
@@ -58,6 +60,7 @@ class User extends CI_Controller
 
     public function level()
     {
+        $data['page'] = 'profile';
         $phone = $this->session->userdata('ses_phone');
         $cusid = $this->session->userdata('ses_cusid');
 
@@ -88,6 +91,7 @@ class User extends CI_Controller
 
     public function point()
     {
+        $data['page'] = 'profile';
         $cusid = $this->session->userdata('ses_cusid');
 
         $this->load->model('customer_model');
@@ -104,6 +108,7 @@ class User extends CI_Controller
 
     public function transaction()
     {
+        $data['page'] = 'profile';
         $cusid = $this->session->userdata('ses_cusid');
 
         $this->load->model('customer_model');
@@ -119,6 +124,7 @@ class User extends CI_Controller
 
     public function voucher($state = "active")
     {
+        $data['page'] = 'profile';
         $cusid = $this->session->userdata('ses_cusid');
         $this->load->model('voucher_model');
         $jenis = array("active", "expired", "used");

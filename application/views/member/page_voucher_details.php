@@ -1,4 +1,4 @@
-<div class="container p-4 bg-dark">
+<div class="container p-4">
     <h3 class="mt-2 mb-4 text-white">Voucher Program Details</h3>
 </div>
 <div class="bg-white p-4" style="margin-top:-15px; margin-bottom:95px; border-radius: 16px">

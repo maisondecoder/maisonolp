@@ -1,4 +1,4 @@
-<div class="container p-4 bg-dark">
+<div class="container p-4">
     <h3 class="mt-2 mb-2 text-white">My Level</h3>
 </div>
 <div class="container bg-white p-4 mb-3" style="border-radius: 16px">
@@ -8,7 +8,7 @@
         <div><strong>Rp <?= number_format($next_spend, 0, ',', '.'); ?></strong> more to Level Up!</div>
 
         <div class="progress mt-2">
-            <div class="progress-bar" role="progressbar" style="width: <?= $percentage; ?>%" aria-valuenow="<?= $percentage; ?>" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar cus-progressbar" role="progressbar" style="width: <?= $percentage; ?>%" aria-valuenow="<?= $percentage; ?>" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
     <?php } else { ?>
         <div class="text-center">

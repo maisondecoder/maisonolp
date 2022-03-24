@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.9/dist/css/splide.min.css">
 <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.9/dist/js/splide.min.js"></script>
-<div class="container p-4 bg-dark">
+<div class="container p-4">
     <h3 class="mt-2 text-white">Maison Feeds</h3>
 </div>
 <div style="margin-bottom:95px; border-radius: 16px">

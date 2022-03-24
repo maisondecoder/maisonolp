@@ -1,4 +1,4 @@
-<div class="container p-4 bg-dark">
+<div class="container p-4">
     <h3 class="mt-2 text-white">My Vouchers</h3>
 </div>
 <div class="bg-white p-4" style="margin-bottom:95px; border-radius: 16px">

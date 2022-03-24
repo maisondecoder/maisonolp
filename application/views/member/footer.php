@@ -1,9 +1,11 @@
-<div class="container bg-white pb-1 fixed-bottom d-grid gap-2 shadow" style="max-width:500px; border-radius: 4px 4px 0px 0px">
 
-    <div class="btn-group" role="group" aria-label="Basic outlined example">
-        <a href="<?= base_url('voucher'); ?>" class="btn text-primary"><i class="fas fa-home"></i><br>Home</a>
-        <a href="<?= base_url('voucher'); ?>" class="btn text-primary"><i class="fas fa-ticket-alt"></i><br>Reward</a>
-        <a href="<?= base_url('user'); ?>" class="btn text-primary"><i class="fas fa-user"></i><br>Profile</a>
+<div class="fixed-bottom p-2">
+    <div class="container bg-white d-grid gap-2 shadow-lg p-2" style="max-width:480px; border-radius: 16px;">
+        <div class="btn-group" role="group" aria-label="Basic outlined example">
+            <a href="<?= base_url('user/test_vod'); ?>" class="btn text-<?php if($page=='home'){echo'cus-brown';}else{echo'secondary';} ?>"><i class="fas fa-home"></i><br><span style="font-size:10pt">Home</span></a>
+            <a href="<?= base_url('voucher'); ?>" class="btn text-<?php if($page=='voucher'){echo'cus-brown';}else{echo'secondary';} ?>"><i class="fas fa-ticket-alt"></i><br><span style="font-size:10pt">Reward</span></a>
+            <a href="<?= base_url('user'); ?>" class="btn text-<?php if($page=='profile'){echo'cus-brown';}else{echo'secondary';} ?>"><i class="fas fa-user"></i><br><span style="font-size:10pt">Profile</span></a>
+        </div>
     </div>
 </div>
 </div>

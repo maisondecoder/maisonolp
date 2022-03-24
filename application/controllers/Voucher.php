@@ -12,10 +12,13 @@ class Voucher extends CI_Controller
         if(!$this->session->has_userdata('ses_phone') && !$this->session->has_userdata('ses_logged')) {
             redirect('auth');
         }
+        
     }
 
     public function index()
     {
+        $data['page'] = 'voucher';
+
         $this->load->model('voucher_model');
         $data['vp_details'] = $this->voucher_model->get_list_active_voucher_program(now());
         $data['vp_details2'] = $this->voucher_model->get_list_upcoming_voucher_program(now());
@@ -28,6 +31,8 @@ class Voucher extends CI_Controller
 
     public function details($vop_uniqueid = 0)
     {
+        $data['page'] = 'voucher';
+
         $this->load->model('voucher_model');
         $this->load->model('customer_model');
         $cusid = $this->session->userdata('ses_cusid');
@@ -75,6 +80,8 @@ class Voucher extends CI_Controller
 
     public function buy($vop_uniqueid)
     {
+        $data['page'] = 'voucher';
+        
         $cusid = $this->session->userdata('ses_cusid');
         $this->load->model('voucher_model');
         $this->load->model('customer_model');

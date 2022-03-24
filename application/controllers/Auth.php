@@ -52,9 +52,13 @@ class Auth extends CI_Controller
 
         $this->load->library('form_validation');
         $this->form_validation->set_rules('pass-input', 'Password', 'required');
-
-        $phone = $this->session->userdata('ses_phone');
-        $data['ses_phone'] = $phone;
+        if($this->session->has_userdata('ses_phone')){
+            $phone = $this->session->userdata('ses_phone');
+            $data['ses_phone'] = $phone;
+        }else{
+            $data['ses_phone'] = null;
+            $phone = $this->input->post('phone-input');
+        }
         $pass = $this->input->post('pass-input');
 
         if ($this->form_validation->run() == FALSE) {
@@ -67,6 +71,7 @@ class Auth extends CI_Controller
             if ($login) {
                 $this->session->set_userdata('ses_cusid', $login['cus_id']);
                 $this->session->set_userdata('ses_logged', true);
+                $this->session->set_userdata('ses_phone', $phone);
                 $this->session->set_userdata('ses_verified', $login['is_verified']);
                 $this->session->set_userdata('ses_profiled', $login['is_profiled']);
                 redirect('user');
@@ -157,6 +162,28 @@ class Auth extends CI_Controller
             $this->auth_model->auth_create_password($email, $phone, $pass);
 
             redirect('auth/create_profile');
+        }
+    }
+
+    public function reset_password()
+    {
+
+        $this->load->model('customer_model');
+
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('pass-input', 'Password', 'required');
+        $this->form_validation->set_rules('conpass-input', 'Password Confirmation', 'required|matches[pass-input]');
+
+        $email = $this->input->post('email-input');
+        $pass = password_hash($this->input->post('conpass-input'), PASSWORD_DEFAULT);;
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('auth/page_reset_pass');
+        } else {
+            $this->load->model('auth_model');
+
+            redirect('auth/signin');
         }
     }
 
