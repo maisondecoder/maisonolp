@@ -1,5 +1,5 @@
 
-<div class="fixed-bottom p-2">
+<div class="fixed-bottom p-2 mb-2">
     <div class="container bg-white d-grid gap-2 shadow-lg p-2" style="max-width:480px; border-radius: 16px;">
         <div class="btn-group" role="group" aria-label="Basic outlined example">
             <a href="<?= base_url('user/test_vod'); ?>" class="btn text-<?php if($page=='home'){echo'cus-brown';}else{echo'secondary';} ?>"><i class="fas fa-home"></i><br><span style="font-size:10pt">Home</span></a>

@@ -113,6 +113,18 @@ class Auth_model extends CI_Model {
         $this->db->where('cus_id', $cus_id);
         $this->db->update('cd_customer_data', $data);
     }
-}
 
-?>
+    public function auth_check_token_reset($token_reset){
+        $this->load->helper('date');
+
+        $this->db->select('*');
+        $this->db->where('reset_token',  $token_reset);
+        $this->db->limit(1);
+        $existing = $this->db->get('reset_token')->row_array();
+        if($existing){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}

@@ -1,5 +1,5 @@
 <div class="container p-4">
-    <h3 class="mt-2 mb-2 text-white">My Level</h3>
+    <h3 class="mt-2 mb-2 text-white"><a href="<?= base_url('user'); ?>" class="me-3 text-white"><i class="fas fa-arrow-left"></i></a> Level</h3>
 </div>
 <div class="container bg-white p-4 mb-3" style="border-radius: 16px">
     <?php if ($total_spending < 750000000) { ?>

@@ -1,5 +1,5 @@
 <div class="container p-4">
-    <h3 class="mt-2 text-white">My Vouchers</h3>
+    <h3 class="mt-2 text-white"><a href="<?= base_url('user'); ?>" class="me-3 text-white"><i class="fas fa-arrow-left"></i></a> My Vouchers</h3>
 </div>
 <div class="bg-white p-4" style="margin-bottom:95px; border-radius: 16px">
     <div class="bg-white container p-2 rounded mb-3">

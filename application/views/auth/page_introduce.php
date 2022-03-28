@@ -23,7 +23,7 @@
             <span class="text-secondary">Registration Step 3 of 3</span>
                 <h2>Please Introduce Yourself.</h2>
                 <span class="text-danger"><?php echo validation_errors(); ?></span>
-                <form class="mt-3" action="<?= base_url('auth/create_profile'); ?>" method="post">
+                <form action="<?= base_url('auth/create_profile'); ?>" method="post">
                     <div class="mb-4">
                         <label for="first-input" class="form-label">First Name</label>
                         <input type="text" class="form-control mb-2" name="first-input" id="first-input" minlength="3" maxlength="32"  placeholder="John" required>

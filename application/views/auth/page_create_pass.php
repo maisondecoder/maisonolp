@@ -23,7 +23,7 @@
                 <span class="text-secondary">Registration Step 2 of 3</span>
                 <h2>Create Password</h2>
                 <span class="text-danger"><?php echo validation_errors(); ?></span>
-                <form class="mt-3" action="<?= base_url('auth/create_password'); ?>" method="post">
+                <form action="<?= base_url('auth/create_password'); ?>" method="post">
                     <div class="mb-4">
                         <label for="email-input" class="form-label">Email Address</label>
                         <input type="text" class="form-control mb-2" name="email-input" id="email-input" minlength="3" maxlength="60" aria-describedby="email-input" placeholder="johndoe@domain.com" required>

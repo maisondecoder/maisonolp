@@ -26,9 +26,10 @@
                 <form action="<?= base_url('auth/signin/'); ?>" method="post">
                     <div class="mb-4">
                         <label for="phone-input" class="form-label">Whatsapp Number</label>
-                        <input type="text" class="form-control" name="phone-input" id="phone-input" aria-describedby="phone-input" placeholder="Your Whatsapp Number" value="<?= $ses_phone; ?>" required>
+                        <input type="text" class="form-control mb-2" name="phone-input" id="phone-input" aria-describedby="phone-input" placeholder="Your Whatsapp Number" value="<?= $ses_phone; ?>" required>
+                        
                         <label for="pass-input" class="form-label">Password</label>
-                        <input type="password" class="form-control" name="pass-input" id="pass-input" max="9999" aria-describedby="pass-input" placeholder="*****" required>
+                        <input type="password" class="form-control mb-2" name="pass-input" id="pass-input" max="9999" aria-describedby="pass-input" placeholder="*****" required>
                         <div id="otpHelp" class="form-text"><a href="#">Forgot Password</a></div>
                     </div>
                     <div class="d-grid gap-2">

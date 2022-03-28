@@ -22,7 +22,7 @@
             <div class="card-body">
                 <h2>Reset Password</h2>
                 <span class="text-danger"><?php echo validation_errors(); ?></span>
-                <form class="mt-3" action="<?= base_url('auth/create_password'); ?>" method="post">
+                <form action="<?= base_url('auth/create_password'); ?>" method="post">
                     <div class="mb-4">
                         <label for="pass-input" class="form-label">New Password</label>
                         <input type="password" class="form-control mb-2" name="pass-input" id="pass-input" minlength="6" maxlength="60" aria-describedby="pass-input" placeholder="" required>
@@ -32,7 +32,7 @@
 
                     </div>
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn cus-dark-btn">Continue</button>
+                        <button type="submit" class="btn cus-dark-btn">Save New Password</button>
                         <a href="<?= base_url('auth/signin'); ?>" class="btn btn-link text-secondary mx-auto mt-4">Back to Login Page</a>
                     </div>
                 </form>

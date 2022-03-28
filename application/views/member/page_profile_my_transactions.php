@@ -1,5 +1,5 @@
 <div class="container p-4">
-    <h3 class="mt-2 text-white">My Transactions</h3>
+    <h3 class="mt-2 text-white"><a href="<?= base_url('user'); ?>" class="me-3 text-white"><i class="fas fa-arrow-left"></i></a> My Transactions</h3>
 </div>
 <div class="container p-4 mb-3 text-center text-white" style="border-radius: 16px">
     <div class="fw-bold fs-1">Rp <?= number_format($total_spending, 0, ',', '.'); ?></div>

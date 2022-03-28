@@ -19,12 +19,11 @@
 <body class="cus-dark-bg">
     <div class="container p-4" style="max-width:500px">
         <div class="card">
-            <!--<img src="<?= base_url('assets/cover-auth.jpg'); ?>" class="card-img-top" alt="...">-->
             <div class="card-body">
                 <span class="text-secondary">Registration Step 1 of 3</span>
                 <h2>OTP Verification</h2>
                 <?= $this->session->flashdata('verify_otp_msg'); ?>
-                <form class="mt-3" action="<?= base_url('auth/otp_verification/'); ?>" method="post">
+                <form action="<?= base_url('auth/otp_verification/'); ?>" method="post">
                     <div class="mb-4">
                         <label for="kode-otp" class="form-label">Enter your OTP Number</label>
                         <input type="number" class="form-control" name="kode-otp" id="kode-otp" max="9999" aria-describedby="kode-otp" placeholder="4 Digits OTP" required>
