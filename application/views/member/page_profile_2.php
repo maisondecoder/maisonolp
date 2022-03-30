@@ -1,5 +1,5 @@
 <div class="container">
-    <div data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="card shadow mt-4 mb-4" style="border-radius:16px;max-width:500px; height:auto; background-image:url('<?= base_url('assets/card/bg-'.$level.'.webp'); ?>');background-size:cover; background-position: left">
+    <div data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="card shadow mt-4 mb-4" style="border-radius:16px;max-width:500px; height:auto; background-image:url('<?= base_url('assets/card/bg-'.strtolower($level).'.webp'); ?>');background-size:cover; background-position: left">
         <div class="card-body">
             <div class="container p-2s">
                 <div class="row">
