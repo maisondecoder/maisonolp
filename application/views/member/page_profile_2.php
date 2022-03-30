@@ -1,19 +1,23 @@
 <div class="container">
-    <div data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="card shadow mt-4 mb-4" style="max-height:250px; border-radius:16px;  max-width:500px; height:auto; background-image:url('<?= base_url('assets/card-bg.jpg'); ?>');background-size:fit; background-repeat:no-repeat; background-position: center center">
+    <div data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="card shadow mt-4 mb-4" style="border-radius:16px;max-width:500px; height:auto; background-image:url('<?= base_url('assets/card/bg-'.$level.'.webp'); ?>');background-size:cover; background-position: left">
         <div class="card-body">
-            <div class="container">
-                <div class="row mt-3">
+            <div class="container p-2s">
+                <div class="row">
                     <div class="col text-light">
-                        <img src="<?= base_url('user/get_qrid/') . $profile['cus_hash']; ?>" class="img rounded-3" alt="..." width="100px" height="100px"><br>
-                        <span class="text-light fw-light fst-italic mt-1" style="font-size:10pt;">Tap to Enlarge</span>
+                        <img src="<?= base_url('assets/card/logo-m.webp'); ?>" class="img rounded-3" alt="..." height="60px">
                     </div>
                     <div id="member_since_text" class="col text-end text-light">
                         <p style="font-family:monospace">MEMBER SINCE<br><?= date('d/m/Y', $profile['date_created']); ?></p>
+                        <p style="font-family:monospace"><?= $profile_data['profile_first_name'] . ' ' . $profile_data['profile_last_name']; ?></p>
                     </div>
                 </div>
-                <div id="member_name_text" class="row mt-4">
+                <div id="member_name_text" class="row">
                     <div class="col text-light">
-                        <p style="font-family:monospace"><?= $profile_data['profile_first_name'] . ' ' . $profile_data['profile_last_name']; ?></p>
+                        <img src="<?= base_url('assets/card/logo-maison.png'); ?>" class="img rounded-3" alt="..." height="30px" style="position:absolute;bottom:20px">
+                    </div>
+                    <div class="col text-light text-end">
+                        <img src="<?= base_url('user/get_qrid/') . $profile['cus_hash']; ?>" class="img rounded-3 shadow" alt="..." width="60px" height="60px"><br>
+                        <span style="font-size:9pt"><em>Tap to Enlarge</em></span>
                     </div>
                 </div>
             </div>
@@ -24,13 +28,13 @@
     <div class="row">
         <div class="col position-relative">
             <div class="bg-white p-3" style="border-radius: 16px">
-                <div class="fs-6">Member Level <a href="<?= base_url('user/level'); ?>" class="stretched-link"><i class="fas fa-chevron-right text-primary"></i></a></div>
+                <div class="fs-6">Member Level <a href="<?= base_url('user/level'); ?>" class="stretched-link"><i class="fas fa-chevron-right cus-icon-color"></i></a></div>
                 <div class="fw-bold"><i class="fas fa-medal"></i> <?= $level; ?></div>
             </div>
         </div>
         <div class="col position-relative">
             <div class="bg-white p-3" style="border-radius: 16px">
-                <div class="fs-6">Maison Point <a href="<?= base_url('user/point'); ?>" class="stretched-link"><i class="fas fa-chevron-right text-primary"></i></a></div>
+                <div class="fs-6">Maison Point <a href="<?= base_url('user/point'); ?>" class="stretched-link"><i class="fas fa-chevron-right cus-icon-color"></i></a></div>
                 <div class="fw-bold"><i class="fas fa-coins"></i> <?= number_format($total_pts, 1, ',', '.'); ?></div>
             </div>
         </div>
@@ -40,13 +44,13 @@
     <div class="row">
         <div class="col position-relative">
             <div class="bg-white p-3" style="border-radius: 16px">
-                <div class="fs-6">Transaction <a href="<?= base_url('user/transaction'); ?>" class="stretched-link"><i class="fas fa-chevron-right text-primary"></i></a></div>
+                <div class="fs-6">Transaction <a href="<?= base_url('user/transaction'); ?>" class="stretched-link"><i class="fas fa-chevron-right cus-icon-color"></i></a></div>
                 <div class="fw-bold"><i class="fas fa-exchange-alt"></i> <?= number_format($total_trx, 0, ',', '.'); ?></div>
             </div>
         </div>
         <div class="col position-relative">
             <div class="bg-white p-3" style="border-radius: 16px">
-                <div class="fs-6">My Voucher <a href="<?= base_url('user/voucher'); ?>" class="stretched-link"><i class="fas fa-chevron-right text-primary"></i></a></div>
+                <div class="fs-6">My Voucher <a href="<?= base_url('user/voucher'); ?>" class="stretched-link"><i class="fas fa-chevron-right cus-icon-color"></i></a></div>
                 <div class="fw-bold"><i class="fas fa-ticket-alt"></i> <?= number_format($total_vcr, 0, ',', '.'); ?></div>
             </div>
         </div>

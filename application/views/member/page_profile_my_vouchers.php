@@ -4,9 +4,9 @@
 <div class="bg-white p-4" style="margin-bottom:95px; border-radius: 16px">
     <div class="bg-white container p-2 rounded mb-3">
         <nav class="nav nav-pills nav-justified">
-        <a class="flex-sm-fill text-sm-center nav-link <?php if($state=='active'){echo 'active';} ?>" aria-current="page" href="<?= base_url('user/voucher/active'); ?>">Active <i class="fas fa-chevron-right"></i></a>
-        <a class="flex-sm-fill text-sm-center nav-link <?php if($state=='expired'){echo 'active';} ?>" href="<?= base_url('user/voucher/expired'); ?>">Expired <i class="fas fa-chevron-right"></i></a>
-        <a class="flex-sm-fill text-sm-center nav-link <?php if($state=='used'){echo 'active';} ?>" href="<?= base_url('user/voucher/used'); ?>">Used <i class="fas fa-chevron-right"></i></a>
+        <a class="flex-sm-fill text-sm-center nav-link <?php if($state=='active'){echo 'bg-cus-brown';}else{ echo 'text-secondary'; } ?>" aria-current="page" href="<?= base_url('user/voucher/active'); ?>">Active <i class="fas fa-chevron-right"></i></a>
+        <a class="flex-sm-fill text-sm-center nav-link <?php if($state=='expired'){echo 'bg-cus-brown';}else{ echo 'text-secondary'; } ?>" href="<?= base_url('user/voucher/expired'); ?>">Expired <i class="fas fa-chevron-right"></i></a>
+        <a class="flex-sm-fill text-sm-center nav-link <?php if($state=='used'){echo 'bg-cus-brown';}else{ echo 'text-secondary'; } ?>" href="<?= base_url('user/voucher/used'); ?>">Used <i class="fas fa-chevron-right"></i></a>
         </nav>
     </div>
     <div>

@@ -1,6 +1,6 @@
 <div class="container p-4">
     <h3 class="text-white mt-2">Welcome!</h3>
-    <div data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="card shadow mt-4 mb-4" style="max-height:250px; border-radius:16px;  max-width:500px; height:auto; background-image:url('<?= base_url('assets/card-bg.jpg'); ?>');background-size:fit; background-repeat:no-repeat; background-position: center center">
+    <div data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="card shadow mt-4 mb-4" style="max-height:250px; border-radius:16px;  max-width:500px; height:auto; background-image:url('<?= base_url('assets/card/bg-classic.webp'); ?>');background-size:fit; background-repeat:no-repeat; background-position: center center">
         <div class="card-body">
             <div class="container">
                 <div class="row mt-3">

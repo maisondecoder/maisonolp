@@ -165,6 +165,28 @@ class Auth extends CI_Controller
         }
     }
 
+    public function forgot_password()
+    {
+
+        $this->load->model('customer_model');
+
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('pass-input', 'Password', 'required');
+        $this->form_validation->set_rules('conpass-input', 'Password Confirmation', 'required|matches[pass-input]');
+
+        $email = $this->input->post('email-input');
+        $pass = password_hash($this->input->post('conpass-input'), PASSWORD_DEFAULT);;
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('auth/page_forgot_pass');
+        } else {
+            $this->load->model('auth_model');
+
+            redirect('auth/signin');
+        }
+    }
+
     public function reset_password()
     {
 

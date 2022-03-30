@@ -13,33 +13,28 @@
     <link rel="icon" href="https://maisonliving.id/wp-content/uploads/2021/11/cropped-logo-tab1-192x192.jpg" sizes="192x192" />
     <link rel="apple-touch-icon" href="https://maisonliving.id/wp-content/uploads/2021/11/cropped-logo-tab1-180x180.jpg" />
     <meta name="msapplication-TileImage" content="https://maisonliving.id/wp-content/uploads/2021/11/cropped-logo-tab1-270x270.jpg" />
-    <title>Create Password | Maison Living</title>
+    <title>Forgot Password | Maison Living</title>
 </head>
 
 <body class="cus-dark-bg">
     <div class="container p-4" style="max-width:500px">
         <div class="card">
             <div class="card-body">
-                <span class="text-secondary">Registration Step 2 of 3</span>
-                <h2>Create Password</h2>
+                <h2>Forgot Password</h2>
                 <span class="text-danger"><?php echo validation_errors(); ?></span>
                 <form action="<?= base_url('auth/create_password'); ?>" method="post">
                     <div class="mb-4">
-                        <label for="email-input" class="form-label">Email Address</label>
-                        <input type="text" class="form-control mb-2" name="email-input" id="email-input" minlength="3" maxlength="60" aria-describedby="email-input" placeholder="Use for reset password" required>
+                        <label for="pass-input" class="form-label">Whatsapp Number</label>
+                        <input type="text" class="form-control mb-2" name="wa-input" id="wa-input" minlength="10" maxlength="16" aria-describedby="wa-input" placeholder="" required>
 
-                        <label for="pass-input" class="form-label">Password</label>
-                        <input type="password" class="form-control mb-2" name="pass-input" id="pass-input" minlength="6" maxlength="60" aria-describedby="pass-input" placeholder="" required>
-
-                        <label for="conpass-input" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control mb-2" name="conpass-input" id="conpass-input" minlength="6" maxlength="60" aria-describedby="conpass-input" placeholder="" required>
+                        <label for="conpass-input" class="form-label">Email Address</label>
+                        <input type="password" class="form-control mb-2" name="email-input" id="email-input" minlength="6" maxlength="60" aria-describedby="email-input" placeholder="" required>
 
                     </div>
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn cus-dark-btn">Continue</button>
-                        <a href="<?= base_url('auth/clear_session'); ?>" class="btn btn-link text-secondary mx-auto mt-4">Change Number</a>
+                        <button type="submit" class="btn cus-dark-btn">Send Request</button>
+                        <a href="<?= base_url('auth/signin'); ?>" class="btn btn-link text-secondary mx-auto mt-4">Back to Login Page</a>
                     </div>
-
                 </form>
             </div>
         </div>

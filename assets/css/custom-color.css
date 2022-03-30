@@ -3,8 +3,12 @@
 }
 
 .cus-progressbar{
-    background-color: #dab231 !important;
+    background-color: #aa7d3b !important;
     color: #ffffff;
+}
+
+.cus-icon-color{
+    color:#aa7d3b;
 }
 
 .cus-dark-btn{
@@ -13,5 +17,10 @@
 }
 
 .text-cus-brown{
-    color: #664d39 !important;
+    color: #aa7d3b !important;
+}
+
+.bg-cus-brown{
+    background-color: #aa7d3b !important;
+    color: #ffffff !important;
 }
