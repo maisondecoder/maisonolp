@@ -225,7 +225,7 @@ class Auth extends CI_Controller
     public function reset_password($token = 0)
     {
         if ($token == 0) {
-            redirect('auth/forgot_password');
+            //redirect('auth/forgot_password');
             echo 'reset token is invalid or expired!';
             die;
         } else {
