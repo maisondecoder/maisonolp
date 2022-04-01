@@ -183,16 +183,22 @@ class Auth extends CI_Controller
         } else {
             $this->load->model('auth_model');
             $check_data = $this->auth_model->auth_check_account_forgot($phone, $email);
-            
+
             if ($check_data) {
                 $token = $this->auth_model->auth_create_token_reset($check_data);
+
+                $sender = "auto-service";
+                $symbol_send = "@";
+                $domain_send = "maisonliving.id";
+                $sendergroup = $sender . $symbol_send . $domain_send;
+                $secret = '~~Maisonliving123~~';
 
                 $config = [
                     'protocol' => 'smtp',
                     'priority' => 2,
                     'smtp_host' => 'ssl://srv115.niagahoster.com',
-                    'smtp_user' => 'no-reply@maisonliving.id',
-                    'smtp_pass' => 'Maisonliving.id',
+                    'smtp_user' => $sendergroup,
+                    'smtp_pass' => $secret,
                     'smtp_port' => 465,
                     'mailtype' => 'html',
                     'charset' => 'utf-8',
@@ -202,10 +208,10 @@ class Auth extends CI_Controller
                 $this->load->library('email', $config);
                 $this->email->initialize($config);
 
-                $this->email->from('no-reply@maisonliving.id', 'No-Reply | Maison Living');
+                $this->email->from($sendergroup, 'Auto Services Maison Living');
                 $this->email->to($email);
                 $this->email->subject('Password Reset');
-                $this->email->message('You have submitted a password reset request, click the following link to create a new password: <a href="https://app.maisonliving.id/auth/reset_password/'.$token.'" target="_blank">Create a New Password.</a>');
+                $this->email->message('You have submitted a password reset request, click the following link to create a new password: <a href="https://app.maisonliving.id/auth/reset_password/' . $token . '" target="_blank">Create a New Password.</a>');
 
                 $this->email->send();
                 $this->load->view('auth/page_forgot_pass_2');

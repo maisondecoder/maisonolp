@@ -150,7 +150,7 @@ class Auth_model extends CI_Model
         $data = array(
             'reset_token' => $randomString,
             'date_created' => now(),
-            'date_expired' => now() + 300000,
+            'date_expired' => now() + 300,
             'cus_id' => $user_id
         );
 
