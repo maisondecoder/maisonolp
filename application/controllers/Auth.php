@@ -52,10 +52,10 @@ class Auth extends CI_Controller
 
         $this->load->library('form_validation');
         $this->form_validation->set_rules('pass-input', 'Password', 'required');
-        if($this->session->has_userdata('ses_phone')){
+        if ($this->session->has_userdata('ses_phone')) {
             $phone = $this->session->userdata('ses_phone');
             $data['ses_phone'] = $phone;
-        }else{
+        } else {
             $data['ses_phone'] = null;
             $phone = $this->input->post('phone-input');
         }
@@ -168,27 +168,66 @@ class Auth extends CI_Controller
     public function forgot_password()
     {
 
-        $this->load->model('customer_model');
+        $this->load->model('auth_model');
 
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('pass-input', 'Password', 'required');
-        $this->form_validation->set_rules('conpass-input', 'Password Confirmation', 'required|matches[pass-input]');
+        $this->form_validation->set_rules('wa-input', 'Whatsapp Number', 'required');
+        $this->form_validation->set_rules('email-input', 'Email Address', 'required');
 
         $email = $this->input->post('email-input');
-        $pass = password_hash($this->input->post('conpass-input'), PASSWORD_DEFAULT);;
+        $phone = $this->input->post('wa-input');
 
         if ($this->form_validation->run() == FALSE) {
-            $this->load->view('auth/page_forgot_pass');
+            $this->load->view('auth/page_forgot_pass_1');
         } else {
             $this->load->model('auth_model');
+            $check_data = $this->auth_model->auth_check_account_forgot($phone, $email);
+            if ($check_data) {
+                $config['protocol']    = 'smtp';
+                $config['smtp_host']    = 'ssl://srv115.niagahoster.com';
+                $config['smtp_port']    = '465';
+                $config['smtp_timeout'] = '7';
+                $config['smtp_user']    = 'no-reply@maisonliving.id';
+                $config['smtp_pass']    = 'Maisonliving123';
+                $config['charset']    = 'utf-8';
+                $config['newline']    = "\r\n";
+                $config['mailtype'] = 'text'; // or html
+                $config['validation'] = TRUE; // bool whether to validate email or not      
 
-            redirect('auth/signin');
+                $this->email->initialize($config);
+
+                $this->email->from('no-reply@maisonliving.id', 'myname');
+                $this->email->to($email);
+
+                $this->email->subject('Reset Password | Maison Living');
+                $this->email->message('Hi, this is your reset password request, click the link below to create a new password.');
+
+                $this->email->send();
+                $this->load->view('auth/page_forgot_pass_2');
+            } else {
+                $this->session->set_flashdata("forgot_password_msg", "<p class='alert alert-danger'>The information you provided does not match, please try again.</p>");
+                redirect('auth/forgot_password');
+            }
         }
     }
 
-    public function reset_password()
+    public function reset_password($token = 0)
     {
+        if ($token == 0) {
+            redirect('auth/forgot_password');
+            echo 'reset token is invalid or expired!';
+            die;
+        } else {
+            $this->load->model('auth_model');
+            $check_token = $this->auth_model->auth_check_token_reset($token);
+            if ($check_token) {
+                echo 'match token';
+            } else {
+                echo 'reset token is invalid or expired!';
+                die;
+            }
+        }
 
         $this->load->model('customer_model');
 

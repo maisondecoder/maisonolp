@@ -114,13 +114,29 @@ class Auth_model extends CI_Model {
         $this->db->update('cd_customer_data', $data);
     }
 
+    public function auth_check_account_forgot($phone_input, $email_input){
+        $this->load->helper('date');
+
+        $this->db->select('cus_phone, cus_email');
+        $this->db->where('cus_phone',  $phone_input);
+        $this->db->where('cus_email',  $email_input);
+        $this->db->limit(1);
+        $existing = $this->db->get('cd_customer_data')->row_array();
+        if($existing){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public function auth_check_token_reset($token_reset){
         $this->load->helper('date');
 
         $this->db->select('*');
         $this->db->where('reset_token',  $token_reset);
+        $this->db->where('date_expired >',  now());
         $this->db->limit(1);
-        $existing = $this->db->get('reset_token')->row_array();
+        $existing = $this->db->get('reset_password_request')->row_array();
         if($existing){
             return true;
         }else{

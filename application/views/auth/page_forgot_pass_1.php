@@ -13,32 +13,34 @@
     <link rel="icon" href="https://maisonliving.id/wp-content/uploads/2021/11/cropped-logo-tab1-192x192.jpg" sizes="192x192" />
     <link rel="apple-touch-icon" href="https://maisonliving.id/wp-content/uploads/2021/11/cropped-logo-tab1-180x180.jpg" />
     <meta name="msapplication-TileImage" content="https://maisonliving.id/wp-content/uploads/2021/11/cropped-logo-tab1-270x270.jpg" />
-    <title>Existing Member | Maison Living</title>
+    <title>Forgot Password | Maison Living</title>
 </head>
 
 <body class="cus-dark-bg">
     <div class="container p-4" style="max-width:500px">
         <div class="card">
             <div class="card-body">
-                <h2>Existing Member</h2>
-                <?= $this->session->flashdata('login_password'); ?>
+                <h2>Forgot Password</h2>
+                <p class="alert alert-warning">We need some account information to make sure you are the real owner.</p>
+                <?= $this->session->flashdata('forgot_password_msg'); ?>
                 <span class="text-danger"><?php echo validation_errors(); ?></span>
-                <form action="<?= base_url('auth/signin/'); ?>" method="post">
+                <form action="<?= base_url('auth/forgot_password'); ?>" method="post">
                     <div class="mb-4">
-                        <label for="phone-input" class="form-label">Whatsapp Number</label>
-                        <input type="text" class="form-control mb-2" name="phone-input" id="phone-input" aria-describedby="phone-input" placeholder="6281234567890" value="<?= $ses_phone; ?>" required>
-                        
-                        <label for="pass-input" class="form-label">Password</label>
-                        <input type="password" class="form-control mb-2" name="pass-input" id="pass-input" max="9999" aria-describedby="pass-input" placeholder="*****" required>
-                        <div id="otpHelp" class="form-text"><a href="<?= base_url('auth/forgot_password/'); ?>">Forgot Password</a></div>
+                        <label for="pass-input" class="form-label">Whatsapp Number</label>
+                        <input type="text" class="form-control mb-2" name="wa-input" id="wa-input" minlength="10" maxlength="16" aria-describedby="wa-input" placeholder="6281234567890" required>
+
+                        <label for="conpass-input" class="form-label">Email Address</label>
+                        <input type="text" class="form-control mb-2" name="email-input" id="email-input" minlength="6" maxlength="60" aria-describedby="email-input" placeholder="johndoe@domain.com" required>
+
                     </div>
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn cus-dark-btn">Sign In</button>
-                        <a href="<?= base_url('auth/clear_session'); ?>" class="btn btn-link text-secondary mx-auto mt-4">Go to Main Page</a>
+                        <button type="submit" class="btn cus-dark-btn">Send Request</button>
+                        <a href="<?= base_url('auth/signin'); ?>" class="btn btn-link text-secondary mx-auto mt-4">Back to Login Page</a>
                     </div>
                 </form>
             </div>
         </div>
+
     </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
