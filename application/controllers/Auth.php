@@ -184,24 +184,25 @@ class Auth extends CI_Controller
             $this->load->model('auth_model');
             $check_data = $this->auth_model->auth_check_account_forgot($phone, $email);
             if ($check_data) {
-                $config['protocol']    = 'smtp';
-                $config['smtp_host']    = 'ssl://srv115.niagahoster.com';
-                $config['smtp_port']    = '465';
-                $config['smtp_timeout'] = '7';
-                $config['smtp_user']    = 'no-reply@maisonliving.id';
-                $config['smtp_pass']    = 'Maisonliving123';
-                $config['charset']    = 'utf-8';
-                $config['newline']    = "\r\n";
-                $config['mailtype'] = 'text'; // or html
-                $config['validation'] = TRUE; // bool whether to validate email or not      
+                $config = [
+                    'protocol' => 'smtp',
+                    'priority' => 2,
+                    'smtp_host' => 'ssl://srv115.niagahoster.com',
+                    'smtp_user' => 'no-reply@maisonliving.id',
+                    'smtp_pass' => 'Maisonliving.id',
+                    'smtp_port' => 465,
+                    'mailtype' => 'html',
+                    'charset' => 'utf-8',
+                    'newline' => "\r\n"
+                ];
 
+                $this->load->library('email', $config);
                 $this->email->initialize($config);
 
-                $this->email->from('no-reply@maisonliving.id', 'myname');
+                $this->email->from('no-reply@maisonliving.id', 'No-Reply | Maison Living');
                 $this->email->to($email);
-
-                $this->email->subject('Reset Password | Maison Living');
-                $this->email->message('Hi, this is your reset password request, click the link below to create a new password.');
+                $this->email->subject('Password Reset');
+                $this->email->message('Hello, here is your request, <a href="https://app.maisonliving.id/auth/reset_password/" target="_blank">click here to create new password.</a>');
 
                 $this->email->send();
                 $this->load->view('auth/page_forgot_pass_2');
