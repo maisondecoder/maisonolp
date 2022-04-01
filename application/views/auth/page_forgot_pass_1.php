@@ -27,7 +27,14 @@
                 <form action="<?= base_url('auth/forgot_password'); ?>" method="post">
                     <div class="mb-4">
                         <label for="pass-input" class="form-label">Whatsapp Number</label>
-                        <input type="text" class="form-control mb-2" name="wa-input" id="wa-input" minlength="10" maxlength="16" aria-describedby="wa-input" placeholder="6281234567890" required>
+                        <div class="input-group mb-2">
+                            <select class="form-select" name="dialcode" id="dialcode" aria-label="Country Dial Code" style="max-width:130px !important">
+                                <?php foreach($country_code as $key=>$country){ ?>
+                                <option value="<?= $country['dialCode']; ?>" <?php if($country['dialCode']=="62"){ echo 'selected';} ?>><?= $country['isoCode'].' ('.$country['dialCode'].')'; ?></option>
+                                <?php } ?>
+                            </select>
+                            <input type="text" class="form-control" name="phone-input" id="phone-input" aria-describedby="phone-input" placeholder="81222444555" value="" required>
+                        </div>
 
                         <label for="conpass-input" class="form-label">Email Address</label>
                         <input type="text" class="form-control mb-2" name="email-input" id="email-input" minlength="6" maxlength="60" aria-describedby="email-input" placeholder="johndoe@domain.com" required>

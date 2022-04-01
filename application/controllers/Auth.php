@@ -19,24 +19,31 @@ class Auth extends CI_Controller
             die;
         }
 
+        $json = file_get_contents('https://gist.githubusercontent.com/kcak11/4a2f22fb8422342b3b3daa7a1965f4e4/raw/3d54c1a6869e2bf35f729881ef85af3f22c74fad/countries.json');
+        $obj = json_decode($json, true);
+        $data['country_code'] = $obj;
+
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('nomor-wa', 'Whatsapp Number', 'required|numeric|min_length[10]|max_length[14]');
+        $this->form_validation->set_rules('phone-input', 'Whatsapp Number', 'required|numeric|min_length[10]|max_length[14]');
 
         if ($this->form_validation->run() == FALSE) {
-            $this->load->view('auth/page_auth_home');
+            $this->load->view('auth/page_auth_home', $data);
         } else {
-            $no_tujuan = '62' . $this->input->post('nomor-wa');
-            $this->session->set_userdata('ses_phone', $no_tujuan);
+            $phone = $this->input->post('phone-input');
+            $dialcode = substr_replace($this->input->post('dialcode'), "", 0, 1);
+            $phonefix = $dialcode . $phone;
+
+            $this->session->set_userdata('ses_phone', $phonefix);
             $this->load->model('auth_model');
 
-            if ($this->auth_model->check_existing_member($no_tujuan)) {
+            if ($this->auth_model->check_existing_member($phonefix)) {
                 $this->session->set_flashdata('login_password', "<p class='alert alert-info'>Your Whatsapp Number (+" . $this->session->userdata('ses_phone') . ") is an existing account, enter your password to access your account.</p>");
                 redirect('auth/signin');
             } else {
-                if (!$this->auth_model->check_latest_otp($no_tujuan)) {
+                if (!$this->auth_model->check_latest_otp($phonefix)) {
                     $this->load->model('sendtalk_model');
-                    $this->sendtalk_model->send_otp($no_tujuan);
+                    $this->sendtalk_model->send_otp($phonefix);
                     $this->session->set_flashdata('verify_otp_msg', "<p class='alert alert-warning'>We've sent an OTP to your Whatsapp (+" . $this->session->userdata('ses_phone') . "), please check your Whatsapp and enter the OTP number below.</p>");
                     redirect('auth/otp_verification?msg=new-otp-sent');
                 } else {
@@ -49,6 +56,9 @@ class Auth extends CI_Controller
 
     public function signin()
     {
+        $json = file_get_contents('https://gist.githubusercontent.com/kcak11/4a2f22fb8422342b3b3daa7a1965f4e4/raw/3d54c1a6869e2bf35f729881ef85af3f22c74fad/countries.json');
+        $obj = json_decode($json, true);
+        $data['country_code'] = $obj;
 
         $this->load->library('form_validation');
         $this->form_validation->set_rules('pass-input', 'Password', 'required');
@@ -59,19 +69,23 @@ class Auth extends CI_Controller
             $data['ses_phone'] = null;
             $phone = $this->input->post('phone-input');
         }
-        $pass = $this->input->post('pass-input');
+
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('auth/page_login_existing', $data);
         } else {
+            $dialcode = substr_replace($this->input->post('dialcode'), "", 0, 1);
+            $phonefix = $dialcode . $phone;
+            $pass = $this->input->post('pass-input');
+
             $this->load->model('customer_model');
-            $login = $this->customer_model->login_verify($phone, $pass);
-            //print_r($login);
+            $login = $this->customer_model->login_verify($phonefix, $pass);
+            //print_r($phonefix);
             //die;
             if ($login) {
                 $this->session->set_userdata('ses_cusid', $login['cus_id']);
                 $this->session->set_userdata('ses_logged', true);
-                $this->session->set_userdata('ses_phone', $phone);
+                $this->session->set_userdata('ses_phone', $phonefix);
                 $this->session->set_userdata('ses_verified', $login['is_verified']);
                 $this->session->set_userdata('ses_profiled', $login['is_profiled']);
                 redirect('user');
@@ -128,6 +142,7 @@ class Auth extends CI_Controller
     {
         if (!$this->session->userdata('ses_otp_ok')) {
             redirect('auth/otp_verification');
+            die;
         }
 
         $this->load->model('customer_model');
@@ -168,21 +183,27 @@ class Auth extends CI_Controller
     public function forgot_password()
     {
 
+        $json = file_get_contents('https://gist.githubusercontent.com/kcak11/4a2f22fb8422342b3b3daa7a1965f4e4/raw/3d54c1a6869e2bf35f729881ef85af3f22c74fad/countries.json');
+        $obj = json_decode($json, true);
+        $data['country_code'] = $obj;
+
         $this->load->model('auth_model');
 
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('wa-input', 'Whatsapp Number', 'required');
+        $this->form_validation->set_rules('phone-input', 'Whatsapp Number', 'required');
         $this->form_validation->set_rules('email-input', 'Email Address', 'required');
 
         $email = $this->input->post('email-input');
-        $phone = $this->input->post('wa-input');
+        $phone = $this->input->post('phone-input');
+        $dialcode = substr_replace($this->input->post('dialcode'), "", 0, 1);
+        $phonefix = $dialcode . $phone;
 
         if ($this->form_validation->run() == FALSE) {
-            $this->load->view('auth/page_forgot_pass_1');
+            $this->load->view('auth/page_forgot_pass_1', $data);
         } else {
             $this->load->model('auth_model');
-            $check_data = $this->auth_model->auth_check_account_forgot($phone, $email);
+            $check_data = $this->auth_model->auth_check_account_forgot($phonefix, $email);
 
             if ($check_data) {
                 $token = $this->auth_model->auth_create_token_reset($check_data);
@@ -225,14 +246,16 @@ class Auth extends CI_Controller
     public function reset_password($token = '0')
     {
         if ($token == '0') {
-            //redirect('auth/forgot_password');
+            redirect('auth/forgot_password');
             echo 'reset token is invalid or expired!';
             die;
         } else {
             $this->load->model('auth_model');
             $check_token = $this->auth_model->auth_check_token_reset($token);
             if ($check_token) {
-                echo 'match token';
+                //echo 'match token';
+                //print_r($check_token);
+                $data['token'] = $token;
             } else {
                 echo 'reset token is invalid or expired!';
                 die;
@@ -246,14 +269,13 @@ class Auth extends CI_Controller
         $this->form_validation->set_rules('pass-input', 'Password', 'required');
         $this->form_validation->set_rules('conpass-input', 'Password Confirmation', 'required|matches[pass-input]');
 
-        $email = $this->input->post('email-input');
-        $pass = password_hash($this->input->post('conpass-input'), PASSWORD_DEFAULT);;
+        $pass = $this->input->post('conpass-input');
 
         if ($this->form_validation->run() == FALSE) {
-            $this->load->view('auth/page_reset_pass');
+            $this->load->view('auth/page_reset_pass', $data);
         } else {
             $this->load->model('auth_model');
-
+            $this->auth_model->auth_change_password($pass, $check_token['cus_id']);
             redirect('auth/signin');
         }
     }
@@ -285,14 +307,16 @@ class Auth extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('auth/page_introduce');
         } else {
-
+            $this->load->helper('date');
             $first_input = $this->input->post('first-input');
             $last_input = $this->input->post('last-input');
             $gender_input = $this->input->post('gender-input');
             $age_input = $this->input->post('age-input');
             $this->load->model('auth_model');
+            $this->load->model('cashier_model');
             $this->auth_model->auth_create_profile($first_input, $last_input, $gender_input, $age_input, $cus_id);
             $this->session->set_userdata('ses_cusid', $cus_id);
+            $this->cashier_model->create_pts(50, 0, 'Sign Up Bonus', $cus_id, 1, 'REG' . now());
             redirect('user');
         }
     }

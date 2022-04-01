@@ -169,9 +169,23 @@ class Auth_model extends CI_Model
         $this->db->limit(1);
         $existing = $this->db->get('reset_password_request')->row_array();
         if ($existing) {
-            return true;
+            return $existing;
         } else {
             return false;
         }
+    }
+
+    public function auth_change_password($pass_input, $cus_id_input)
+    {
+        $pass_hash = password_hash($pass_input, PASSWORD_DEFAULT);
+
+        $data = array(
+            'cus_pass' => $pass_hash
+        );
+
+        $this->db->where('cus_id', $cus_id_input);
+        $change_password = $this->db->update('cd_customer_data', $data);
+
+        return $change_password;
     }
 }

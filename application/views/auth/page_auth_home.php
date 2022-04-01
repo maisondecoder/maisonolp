@@ -34,8 +34,12 @@
             <div class="d-grid gap-2">
                 <label for="nomor-wa" class="form-label text-light">Sign up with your Whatsapp Number</label>
                 <div class="input-group">
-                    <span class="input-group-text" id="basic-addon1">+62</span>
-                    <input type="number" class="form-control" name="nomor-wa" id="nomor-wa" aria-describedby="nomor-wa" placeholder="81222444555" required>
+                <select class="form-select" name="dialcode" id="dialcode" aria-label="Country Dial Code" style="max-width:130px !important">
+                                <?php foreach($country_code as $key=>$country){ ?>
+                                <option value="<?= $country['dialCode']; ?>" <?php if($country['dialCode']=="62"){ echo 'selected';} ?>><?= $country['isoCode'].' ('.$country['dialCode'].')'; ?></option>
+                                <?php } ?>
+                            </select>
+                            <input type="text" class="form-control" name="phone-input" id="phone-input" aria-describedby="phone-input" placeholder="81222444555" value="" required>
                 </div>
                 <button type="submit" class="btn mb-3 cus-dark-btn">Sign Up</button>
                 <a href="<?= base_url('auth/signin'); ?>" class="btn btn-link text-white">I Already Have an Account</button>

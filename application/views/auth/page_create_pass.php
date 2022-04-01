@@ -26,7 +26,7 @@
                 <form action="<?= base_url('auth/create_password'); ?>" method="post">
                     <div class="mb-4">
                         <label for="email-input" class="form-label">Email Address</label>
-                        <input type="text" class="form-control mb-2" name="email-input" id="email-input" minlength="3" maxlength="60" aria-describedby="email-input" placeholder="Use for reset password" required>
+                        <input type="text" class="form-control mb-2" name="email-input" id="email-input" minlength="3" maxlength="60" aria-describedby="email-input" placeholder="Will be use for reset password" required>
 
                         <label for="pass-input" class="form-label">Password</label>
                         <input type="password" class="form-control mb-2" name="pass-input" id="pass-input" minlength="6" maxlength="60" aria-describedby="pass-input" placeholder="" required>

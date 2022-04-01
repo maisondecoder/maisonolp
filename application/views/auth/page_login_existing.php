@@ -26,12 +26,19 @@
                 <form action="<?= base_url('auth/signin/'); ?>" method="post">
                     <div class="mb-4">
                         <label for="phone-input" class="form-label">Whatsapp Number</label>
-                        <input type="text" class="form-control mb-2" name="phone-input" id="phone-input" aria-describedby="phone-input" placeholder="6281234567890" value="<?= $ses_phone; ?>" required>
-                        
+                        <div class="input-group mb-2">
+                            <select class="form-select" name="dialcode" id="dialcode" aria-label="Country Dial Code" style="max-width:130px !important">
+                                <?php foreach($country_code as $key=>$country){ ?>
+                                <option value="<?= $country['dialCode']; ?>" <?php if($country['dialCode']=="62"){ echo 'selected';} ?>><?= $country['isoCode'].' ('.$country['dialCode'].')'; ?></option>
+                                <?php } ?>
+                            </select>
+                            <input type="text" class="form-control" name="phone-input" id="phone-input" aria-describedby="phone-input" placeholder="81222444555" value="<?= $ses_phone; ?>" required>
+                        </div>
                         <label for="pass-input" class="form-label">Password</label>
                         <input type="password" class="form-control mb-2" name="pass-input" id="pass-input" max="9999" aria-describedby="pass-input" placeholder="*****" required>
                         <div id="otpHelp" class="form-text"><a href="<?= base_url('auth/forgot_password/'); ?>">Forgot Password</a></div>
                     </div>
+
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn cus-dark-btn">Sign In</button>
                         <a href="<?= base_url('auth/clear_session'); ?>" class="btn btn-link text-secondary mx-auto mt-4">Go to Main Page</a>

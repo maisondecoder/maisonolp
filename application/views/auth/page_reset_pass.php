@@ -22,7 +22,7 @@
             <div class="card-body">
                 <h2>Reset Password</h2>
                 <span class="text-danger"><?php echo validation_errors(); ?></span>
-                <form action="<?= base_url('auth/create_password'); ?>" method="post">
+                <form action="<?= base_url('auth/reset_password/').$token; ?>" method="post">
                     <div class="mb-4">
                         <label for="pass-input" class="form-label">New Password</label>
                         <input type="password" class="form-control mb-2" name="pass-input" id="pass-input" minlength="6" maxlength="60" aria-describedby="pass-input" placeholder="" required>
