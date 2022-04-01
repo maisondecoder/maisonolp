@@ -183,7 +183,10 @@ class Auth extends CI_Controller
         } else {
             $this->load->model('auth_model');
             $check_data = $this->auth_model->auth_check_account_forgot($phone, $email);
+            
             if ($check_data) {
+                $token = $this->auth_model->auth_create_token_reset($check_data);
+
                 $config = [
                     'protocol' => 'smtp',
                     'priority' => 2,
@@ -202,7 +205,7 @@ class Auth extends CI_Controller
                 $this->email->from('no-reply@maisonliving.id', 'No-Reply | Maison Living');
                 $this->email->to($email);
                 $this->email->subject('Password Reset');
-                $this->email->message('Hello, here is your request, <a href="https://app.maisonliving.id/auth/reset_password/" target="_blank">click here to create new password.</a>');
+                $this->email->message('You have submitted a password reset request, click the following link to create a new password: <a href="https://app.maisonliving.id/auth/reset_password/'.$token.'" target="_blank">Create a New Password.</a>');
 
                 $this->email->send();
                 $this->load->view('auth/page_forgot_pass_2');
