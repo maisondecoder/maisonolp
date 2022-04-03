@@ -29,10 +29,10 @@
                         <div class="input-group mb-2">
                             <select class="form-select" name="dialcode" id="dialcode" aria-label="Country Dial Code" style="max-width:130px !important">
                                 <?php foreach($country_code as $key=>$country){ ?>
-                                <option value="<?= $country['dialCode']; ?>" <?php if($country['dialCode']=="62"){ echo 'selected';} ?>><?= $country['isoCode'].' ('.$country['dialCode'].')'; ?></option>
+                                <option value="<?= $country['dialCode']; ?>" <?php if($country['dialCode']==$ses_dialcode_input){ echo 'selected';} ?>><?= $country['isoCode'].' ('.$country['dialCode'].')'; ?></option>
                                 <?php } ?>
                             </select>
-                            <input type="text" class="form-control" name="phone-input" id="phone-input" aria-describedby="phone-input" placeholder="81222444555" value="<?= $ses_phone; ?>" required>
+                            <input type="text" class="form-control" name="phone-input" id="phone-input" aria-describedby="phone-input" placeholder="81222444555" value="<?= $ses_phone_input; ?>" required>
                         </div>
                         <label for="pass-input" class="form-label">Password</label>
                         <input type="password" class="form-control mb-2" name="pass-input" id="pass-input" max="9999" aria-describedby="pass-input" placeholder="*****" required>

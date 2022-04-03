@@ -62,7 +62,7 @@
                 <?php }
             } else { ?>
                 <i class="fas fa-ghost text-center text-muted mb-3" style="font-size:36pt;"></i>
-                <span class="text-center text-muted">You don't have any point yet.</span>
+                <span class="text-center text-muted">You don't have any transaction yet.</span>
             <?php } ?>
         </div>
     </div>

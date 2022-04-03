@@ -190,4 +190,18 @@ class Customer_model extends CI_Model
         return $credits - $debits;
     }
 
+
+    //
+    public function change_password($pass_input, $cus_id_input){
+        $pass_hash = password_hash($pass_input, PASSWORD_DEFAULT);
+
+        $data = array(
+            'cus_pass' => $pass_hash
+        );
+
+        $this->db->where('cus_id', $cus_id_input);
+        $change_password = $this->db->update('cd_customer_data', $data);
+
+        return $change_password;
+    }
 }

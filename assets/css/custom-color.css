@@ -12,8 +12,8 @@
 }
 
 .cus-dark-btn{
-    background-color: #574b41;
-    color: #ffffff;
+    background-color: #574b41 !important;
+    color: #ffffff  !important;
 }
 
 .text-cus-brown{

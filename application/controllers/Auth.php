@@ -14,11 +14,7 @@ class Auth extends CI_Controller
 
     public function index()
     {
-        if ($this->session->userdata('ses_phone')) {
-            redirect('auth/otp_verification');
-            die;
-        }
-
+        
         $json = file_get_contents('https://gist.githubusercontent.com/kcak11/4a2f22fb8422342b3b3daa7a1965f4e4/raw/3d54c1a6869e2bf35f729881ef85af3f22c74fad/countries.json');
         $obj = json_decode($json, true);
         $data['country_code'] = $obj;
@@ -29,25 +25,31 @@ class Auth extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('auth/page_auth_home', $data);
+            if($this->session->has_userdata('ses_cusid')){
+                redirect('user');
+            }else{
+                $this->session->sess_destroy();
+            }
         } else {
             $phone = $this->input->post('phone-input');
             $dialcode = substr_replace($this->input->post('dialcode'), "", 0, 1);
             $phonefix = $dialcode . $phone;
 
             $this->session->set_userdata('ses_phone', $phonefix);
+            $this->session->set_userdata('ses_phone_input', $phone);
             $this->load->model('auth_model');
 
             if ($this->auth_model->check_existing_member($phonefix)) {
-                $this->session->set_flashdata('login_password', "<p class='alert alert-info'>Your Whatsapp Number (+" . $this->session->userdata('ses_phone') . ") is an existing account, enter your password to access your account.</p>");
+                $this->session->set_flashdata('login_password', "<p class='alert alert-info'>Your Whatsapp Number (+" . $phonefix . ") is an existing account, enter your password to access your account.</p>");
                 redirect('auth/signin');
             } else {
                 if (!$this->auth_model->check_latest_otp($phonefix)) {
                     $this->load->model('sendtalk_model');
                     $this->sendtalk_model->send_otp($phonefix);
-                    $this->session->set_flashdata('verify_otp_msg', "<p class='alert alert-warning'>We've sent an OTP to your Whatsapp (+" . $this->session->userdata('ses_phone') . "), please check your Whatsapp and enter the OTP number below.</p>");
+                    $this->session->set_flashdata('verify_otp_msg', "<p class='alert alert-warning'>We've sent an OTP to your Whatsapp (+" . $phonefix . "), please check your Whatsapp and enter the OTP number below.</p>");
                     redirect('auth/otp_verification?msg=new-otp-sent');
                 } else {
-                    $this->session->set_flashdata('verify_otp_msg', "<p class='alert alert-warning'>There is an active OTP sent to (+" . $this->session->userdata('ses_phone') . ") earlier, it is valid for 5 minutes before being able to resend, please check your Whatsapp.</p>");
+                    $this->session->set_flashdata('verify_otp_msg', "<p class='alert alert-warning'>There is an active OTP sent to (+" . $phonefix . ") earlier, it is valid for 5 minutes before being able to resend, please check your Whatsapp.</p>");
                     redirect('auth/otp_verification?msg=already-have-otp');
                 }
             }
@@ -63,10 +65,12 @@ class Auth extends CI_Controller
         $this->load->library('form_validation');
         $this->form_validation->set_rules('pass-input', 'Password', 'required');
         if ($this->session->has_userdata('ses_phone')) {
-            $phone = $this->session->userdata('ses_phone');
-            $data['ses_phone'] = $phone;
+            $phone = $this->session->userdata('ses_phone_input');
+            $data['ses_dialcode_input'] = substr( $this->session->userdata('ses_phone'),0,2);
+            $data['ses_phone_input'] = $phone;
         } else {
-            $data['ses_phone'] = null;
+            $data['ses_dialcode_input'] = 62;
+            $data['ses_phone_input'] = null;
             $phone = $this->input->post('phone-input');
         }
 

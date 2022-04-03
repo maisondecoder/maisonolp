@@ -33,6 +33,10 @@ class User extends CI_Controller
 
     public function index()
     {
+        
+        if(!$this->session->has_userdata('ses_cusid')){
+            redirect('auth');
+        }
         $data['page'] = 'profile';
         $phone = $this->session->userdata('ses_phone');
         $cusid = $this->session->userdata('ses_cusid');
@@ -150,6 +154,32 @@ class User extends CI_Controller
         $this->load->view('member/header');
         $this->load->view('member/page_profile_my_vouchers', $data);
         $this->load->view('member/footer');
+    }
+
+    public function change_password()
+    {
+        $data['page'] = 'profile';
+
+        $this->load->library('form_validation');
+        
+        $this->form_validation->set_rules('pass-input', 'Password', 'required');
+        $this->form_validation->set_rules('conpass-input', 'Confirmation Password', 'required|matches[pass-input]',array(
+            'matches'     => 'Confirmation Password is not matched.'
+        ));
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('member/header');
+            $this->load->view('member/page_setting_change_pass',$data);
+            $this->load->view('member/footer');
+        }else{
+            $cusid = $this->session->userdata('ses_cusid');
+            $pass = $this->input->post('pass-input');
+            $this->load->model('customer_model');
+            $change_pass = $this->customer_model->change_password($pass, $cusid);
+            if($change_pass){
+                redirect('user');
+            }
+        }
     }
 
     public function get_qrid($string)

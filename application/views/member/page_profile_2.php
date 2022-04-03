@@ -1,5 +1,5 @@
 <div class="container">
-    <div data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="card shadow mt-4 mb-4" style="border-radius:16px;max-width:500px; height:auto; background-image:url('<?= base_url('assets/card/bg-'.strtolower($level).'.webp'); ?>');background-size:cover; background-position: left">
+    <div data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="card shadow mt-4 mb-4" style="border-radius:16px;max-width:500px; height:auto; background-image:url('<?= base_url('assets/card/bg-' . strtolower($level) . '.webp'); ?>');background-size:cover; background-position: left">
         <div class="card-body">
             <div class="container p-2s">
                 <div class="row">
@@ -28,13 +28,13 @@
     <div class="row">
         <div class="col position-relative">
             <div class="bg-white p-3" style="border-radius: 16px">
-                <div class="fs-6">Member Level <a href="<?= base_url('user/level'); ?>" class="stretched-link"><i class="fas fa-chevron-right cus-icon-color"></i></a></div>
+                <div class="fs-6">Level <a href="<?= base_url('user/level'); ?>" class="stretched-link"><i class="fas fa-chevron-right cus-icon-color"></i></a></div>
                 <div class="fw-bold"><i class="fas fa-medal"></i> <?= $level; ?></div>
             </div>
         </div>
         <div class="col position-relative">
             <div class="bg-white p-3" style="border-radius: 16px">
-                <div class="fs-6">Maison Point <a href="<?= base_url('user/point'); ?>" class="stretched-link"><i class="fas fa-chevron-right cus-icon-color"></i></a></div>
+                <div class="fs-6">Point <a href="<?= base_url('user/point'); ?>" class="stretched-link"><i class="fas fa-chevron-right cus-icon-color"></i></a></div>
                 <div class="fw-bold"><i class="fas fa-coins"></i> <?= number_format($total_pts, 1, ',', '.'); ?></div>
             </div>
         </div>
@@ -50,50 +50,44 @@
         </div>
         <div class="col position-relative">
             <div class="bg-white p-3" style="border-radius: 16px">
-                <div class="fs-6">My Voucher <a href="<?= base_url('user/voucher'); ?>" class="stretched-link"><i class="fas fa-chevron-right cus-icon-color"></i></a></div>
+                <div class="fs-6">Voucher <a href="<?= base_url('user/voucher'); ?>" class="stretched-link"><i class="fas fa-chevron-right cus-icon-color"></i></a></div>
                 <div class="fw-bold"><i class="fas fa-ticket-alt"></i> <?= number_format($total_vcr, 0, ',', '.'); ?></div>
             </div>
         </div>
     </div>
 </div>
-<div class="bg-white p-4" style="margin-bottom:95px; border-radius: 16px">
-    <div class="mt-3">
-        <h3 class="mt-3">Personal Information</h3>
-        <div class="list-group mt-3 list-group-flush rounded-3">
-            <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">
-                <div class="row">
-                    <div class="col">Full Name</div>
-                    <div class="col text-end"><?= $profile_data['profile_first_name'] . ' ' . $profile_data['profile_last_name']; ?></div>
-                </div>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">
-                <div class="row">
-                    <div class="col">Gender</div>
-                    <div class="col text-end"><?= $profile_data['gender_label']; ?></div>
-                </div>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">
-                <div class="row">
-                    <div class="col">Age Group</div>
-                    <div class="col text-end"><?= $profile_data['age_label']; ?></div>
-                </div>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">
-                <div class="row">
-                    <div class="col">Email</div>
-                    <div class="col text-end"><?= $profile['cus_email']; ?></div>
-                </div>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">
-                <div class="row">
-                    <div class="col">Phone</div>
-                    <div class="col text-end">+<?= $profile['cus_phone']; ?></div>
-                </div>
-            </a>
-        </div>
+<div class="bg-white p-4" style="border-radius: 16px 16px 0px 0px">
+    <h5>Informations</h5>
+    <div class="list-group mt-3 list-group-flush rounded-3">
+        <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">
+            <div class="row">
+                <div class="col">Full Name</div>
+                <div class="col text-end"><?= $profile_data['profile_first_name'] . ' ' . $profile_data['profile_last_name']; ?></div>
+            </div>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">
+            <div class="row">
+                <div class="col">Email</div>
+                <div class="col text-end"><?= $profile['cus_email']; ?></div>
+            </div>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">
+            <div class="row">
+                <div class="col">Phone</div>
+                <div class="col text-end">+<?= $profile['cus_phone']; ?></div>
+            </div>
+        </a>
     </div>
-    <div class="d-grid gap-2 mt-5 mb-4">
-        <a href="<?= base_url('auth/clear_session'); ?>" class="btn btn-outline-danger">Sign Out</a>
+</div>
+<div class="bg-white p-4 mt-1" style="border-radius: 0px">
+    <h5>Settings</h5>
+    <div class="list-group mt-3 list-group-flush rounded-3">
+        <a href="<?= base_url('user/change_password'); ?>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center text-dark">Change Password<span class=""><i class="fas fa-chevron-right cus-icon-color"></i></span></a>
+    </div>
+</div>
+<div class="bg-white px-4 p-3 mt-1" style="margin-bottom:98px; border-radius: 0px 0px 16px 16px">
+    <div class="list-group list-group-flush rounded-3">
+        <a href="<?= base_url('auth/clear_session'); ?>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center text-danger">Sign Out<span class=""><i class="fas fa-sign-out-alt text-danger"></i></span></a>
     </div>
 </div>
 
