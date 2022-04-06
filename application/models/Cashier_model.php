@@ -29,7 +29,7 @@ class Cashier_model extends CI_Model
 
     public function get_cashier_profile($cas_email_input)
     {
-        $this->db->select('a.cas_fullname, a.cas_email, a.store_id, b.store_name');
+        $this->db->select('a.cas_id, a.cas_fullname, a.cas_email, a.store_id, b.store_name');
         $this->db->join('sd_store_data b', 'b.store_id = a.store_id');
         $get_cashier_profile = $this->db->get_where('cd_cashier_data a', array('a.cas_email' => $cas_email_input), 1, 0)->row_array();
 
@@ -111,10 +111,68 @@ class Cashier_model extends CI_Model
 
     public function scan_qrid($hash_input)
     {
-        $this->db->select('*');
+        $this->db->select('cd_customer_data.cus_id, cus_hash, profile_first_name, profile_last_name');
+        $this->db->join('cp_customer_profile', 'cp_customer_profile.cus_id = cd_customer_data.cus_id');
         $this->db->order_by('cus_id', 'DESC');
         $find_cus = $this->db->get_where('cd_customer_data', array('cus_hash' => $hash_input), 1, 0)->row_array();
 
         return $find_cus;
+    }
+
+
+    //////////////////////////////////////////////////////////////
+    //////////////// AUTH, RESET, FORGOT PASSWORD ////////////////
+    //////////////////////////////////////////////////////////////
+
+    public function cashier_create_token_reset($cashier_id){
+        $this->load->helper('date');
+
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < 12; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+    
+        $data = array(
+            'reset_token' => $randomString,
+            'date_created' => now(),
+            'date_expired' => now() + 300,
+            'cas_id' => $cashier_id
+        );
+
+        $this->db->insert('reset_password_cashier', $data);
+
+        return $randomString;
+    }
+
+    public function cashier_check_token_reset($token_reset)
+    {
+        $this->load->helper('date');
+
+        $this->db->select('*');
+        $this->db->where('reset_token',  $token_reset);
+        $this->db->where('date_expired >',  now());
+        $this->db->limit(1);
+        $existing = $this->db->get('reset_password_cashier')->row_array();
+        if ($existing) {
+            return $existing;
+        } else {
+            return false;
+        }
+    }
+
+    public function cashier_change_password($pass_input, $cas_id_input)
+    {
+        $pass_hash = password_hash($pass_input, PASSWORD_DEFAULT);
+
+        $data = array(
+            'cas_password' => $pass_hash
+        );
+
+        $this->db->where('cas_id', $cas_id_input);
+        $change_password = $this->db->update('cd_cashier_data', $data);
+
+        return $change_password;
     }
 }

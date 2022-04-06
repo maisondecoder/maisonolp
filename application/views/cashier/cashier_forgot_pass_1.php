@@ -20,13 +20,20 @@
     <div class="container p-4" style="max-width:500px">
         <div class="card">
             <div class="card-body">
-                <h2>Request Sent</h2>
-                <p class="alert alert-success">We have sent an email to the registered email address, please check your inbox or spam box. <br><br>You will redirected to Login Page after 5 seconds.</p>
-
-                <div class="d-grid gap-2">
-                    <a href="<?= base_url('auth/signin'); ?>" class="btn btn-link text-secondary mx-auto mt-4">Back to Login Page</a>
-                </div>
-
+                <h2>Forgot Password</h2>
+                <p class="alert alert-warning">We need some account information to make sure you are the real owner.</p>
+                <?= $this->session->flashdata('forgot_password_msg'); ?>
+                <span class="text-danger"><?php echo validation_errors(); ?></span>
+                <form action="<?= base_url('cashier/forgot_password'); ?>" method="post">
+                    <div class="mb-4">
+                        <label for="email-input" class="form-label">Email Address</label>
+                        <input type="text" class="form-control mb-2" name="email-input" id="email-input" minlength="6" maxlength="60" aria-describedby="email-input" placeholder="johndoe@domain.com" required>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn cus-dark-btn">Send Request</button>
+                        <a href="<?= base_url('cashier/auth'); ?>" class="btn btn-link text-secondary mx-auto mt-4">Back to Login Page</a>
+                    </div>
+                </form>
             </div>
         </div>
 

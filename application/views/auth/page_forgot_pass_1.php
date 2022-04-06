@@ -36,7 +36,7 @@
                             <input type="text" class="form-control" name="phone-input" id="phone-input" aria-describedby="phone-input" placeholder="81222444555" value="" required>
                         </div>
 
-                        <label for="conpass-input" class="form-label">Email Address</label>
+                        <label for="email-input" class="form-label">Email Address</label>
                         <input type="text" class="form-control mb-2" name="email-input" id="email-input" minlength="6" maxlength="60" aria-describedby="email-input" placeholder="johndoe@domain.com" required>
 
                     </div>

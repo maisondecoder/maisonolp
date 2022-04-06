@@ -34,7 +34,7 @@
                         <?php foreach ($member_list as $key => $member) { ?>
                             <tr id="<?= $member['cus_id']; ?>">
                                 <td><?= $key+1 ?></td>
-                                <td><?= $member['cus_fullname']; ?></td>
+                                <td><?= $member['profile_first_name'].' '.$member['profile_last_name']; ?></td>
                                 <td><?= $member['cus_email']; ?></td>
                                 <td><?= $member['cus_phone']; ?></td>
                                 <td><?= date('d-m-Y H:i:s', $member['date_created']); ?></td>

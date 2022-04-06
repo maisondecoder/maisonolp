@@ -20,5 +20,5 @@
     <title>Member Area | Maison Living</title>
 </head>
 
-<body class=" cus-dark-bg">
+<body class="cus-dark-bg">
     <div class="mx-auto" style="max-width:500px">

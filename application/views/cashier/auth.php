@@ -7,49 +7,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="format-detection" content="telephone=no">
     <meta name=”robots” content=”noindex,nofollow”>
-    <link rel="stylesheet" href="<?= base_url('assets/external/'); ?>all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Bootstrap CSS -->
-    <link href="<?= base_url('assets/external/'); ?>bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="<?= base_url('assets/css/'); ?>custom-color.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="https://maisonliving.id/wp-content/uploads/2021/11/cropped-logo-tab1-192x192.jpg" sizes="192x192" />
     <link rel="apple-touch-icon" href="https://maisonliving.id/wp-content/uploads/2021/11/cropped-logo-tab1-180x180.jpg" />
     <meta name="msapplication-TileImage" content="https://maisonliving.id/wp-content/uploads/2021/11/cropped-logo-tab1-270x270.jpg" />
-    <title>Cashier Login | Maison Living</title>
+    <title>Staff Login | Maison Living</title>
 </head>
 
-<body class="bg-dark">
-    <div class="mx-auto" style="max-width:500px">
-        <div class="container p-4 bg-dark">
-            <h3 class="mt-2 mb-4 text-white">Cashier Login</h3>
+<body class="cus-dark-bg">
+    <div class="container p-4" style="max-width:500px">
+        <div class="card">
+            <div class="card-body">
+                <h2>Cashier Login</h2>
+                <?= $this->session->flashdata('cashier_login'); ?>
+                <span class="text-danger"><?php echo validation_errors(); ?></span>
+                <form action="<?= base_url('cashier/auth/'); ?>" method="post">
+                    <div class="mb-4">
+                        <label for="phone-input" class="form-label">Email Address</label>
+                        <input type="email" class="form-control mb-2" name="email-input" id="email-input" aria-describedby="email-input" placeholder="johndoe@domain.com" required>
 
-            <?php echo '<div class="text-danger">' . validation_errors() . '</div>'; ?>
-        </div>
-        <div class="bg-white p-4" style="margin-top:-15px; margin-bottom:95px; border-radius: 16px">
-            <?= $this->session->flashdata('cashier_login'); ?>
-            <form action="<?= base_url('cashier/auth'); ?>" method="post">
-                <div class="row mb-3">
-                    <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
-                    <div class="col-sm-9">
-                        <input type="email" name="email-input" class="form-control" id="inputEmail" placeholder="ex: name@maisonliving.id" required>
+                        <label for="pass-input" class="form-label">Password</label>
+                        <input type="password" class="form-control mb-2" name="pass-input" id="pass-input" max="9999" aria-describedby="pass-input" placeholder="*****" required>
+                        <div id="otpHelp" class="form-text"><a href="<?= base_url('cashier/forgot_password/'); ?>">Forgot Password</a></div>
                     </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="inputPass" class="col-sm-3 col-form-label">Password</label>
-                    <div class="col-sm-9">
-                        <input type="password" name="pass-input" class="form-control" id="inputPass" placeholder="Your Password" required>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn cus-dark-btn">Sign In</button>
                     </div>
-                </div>
-                <div class="row p-2">
-                    <input class="btn btn-large btn-primary" type="submit" value="Sign in">
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
-    <script src="<?= base_url('assets/external/'); ?>jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-    <script src="<?= base_url('assets/js/'); ?>jquery.number.min.js"></script>
+
     <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="<?= base_url('assets/external/'); ?>bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
 </body>
 
 </html>

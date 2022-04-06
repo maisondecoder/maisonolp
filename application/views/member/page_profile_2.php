@@ -57,7 +57,7 @@
     </div>
 </div>
 <div class="bg-white p-4" style="border-radius: 16px 16px 0px 0px">
-    <h5>Informations</h5>
+    <h5>Details</h5>
     <div class="list-group mt-3 list-group-flush rounded-3">
         <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">
             <div class="row">

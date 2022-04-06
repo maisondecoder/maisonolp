@@ -206,10 +206,12 @@ class Auth extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('auth/page_forgot_pass_1', $data);
         } else {
+            
             $this->load->model('auth_model');
             $check_data = $this->auth_model->auth_check_account_forgot($phonefix, $email);
 
             if ($check_data) {
+                
                 $token = $this->auth_model->auth_create_token_reset($check_data);
 
                 $sender = "auto-service";
@@ -233,12 +235,14 @@ class Auth extends CI_Controller
                 $this->load->library('email', $config);
                 $this->email->initialize($config);
 
-                $this->email->from($sendergroup, 'Auto Services Maison Living');
+                $this->email->from($sendergroup, 'Auto-Services Maison Living');
                 $this->email->to($email);
-                $this->email->subject('Password Reset');
-                $this->email->message('You have submitted a password reset request, click the following link to create a new password: <a href="https://app.maisonliving.id/auth/reset_password/' . $token . '" target="_blank">Create a New Password.</a>');
+                $this->email->subject('Password Reset Request ['.$token.']');
+                $this->email->message('You have submitted a password reset request, click the following link to create a new password: <a href="'.base_url().'auth/reset_password/' . $token . '" target="_blank">Create a New Password.</a>');
 
                 $this->email->send();
+                
+                header( "refresh:7;url=".base_url('auth/signin'));
                 $this->load->view('auth/page_forgot_pass_2');
             } else {
                 $this->session->set_flashdata("forgot_password_msg", "<p class='alert alert-danger'>The information you provided does not match, please try again.</p>");
@@ -280,6 +284,7 @@ class Auth extends CI_Controller
         } else {
             $this->load->model('auth_model');
             $this->auth_model->auth_change_password($pass, $check_token['cus_id']);
+            $this->session->set_flashdata("login_password", "<p class='alert alert-info'>Change password has been successful. Please login using the new password you created.</p>");
             redirect('auth/signin');
         }
     }

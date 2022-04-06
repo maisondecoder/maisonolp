@@ -47,6 +47,7 @@ class Admin_model extends CI_Model
         $this->db->join('sd_store_data', 'sd_store_data.store_id = trx_transaction.store_id');
         $this->db->join('cd_cashier_data', 'cd_cashier_data.cas_id = trx_transaction.cas_id');
         $this->db->join('cd_customer_data', 'cd_customer_data.cus_id = trx_transaction.cus_id');
+        $this->db->join('cp_customer_profile', 'cp_customer_profile.cus_id = trx_transaction.cus_id');
         $this->db->join('pts_point', 'pts_point.trx_reff = trx_transaction.trx_reff');
         $this->db->order_by('trx_transaction.date_created', 'ASC');
         $this->db->where('trx_status', 0);
@@ -64,6 +65,7 @@ class Admin_model extends CI_Model
         $this->db->join('sd_store_data', 'sd_store_data.store_id = trx_transaction.store_id');
         $this->db->join('cd_cashier_data', 'cd_cashier_data.cas_id = trx_transaction.cas_id');
         $this->db->join('cd_customer_data', 'cd_customer_data.cus_id = trx_transaction.cus_id');
+        $this->db->join('cp_customer_profile', 'cp_customer_profile.cus_id = trx_transaction.cus_id');
         $this->db->join('ad_admin_data', 'ad_admin_data.admin_id = trx_transaction.admin_id');
         $this->db->join('pts_point', 'pts_point.trx_reff = trx_transaction.trx_reff');
         $this->db->order_by('trx_transaction.date_created', 'ASC');
@@ -80,6 +82,7 @@ class Admin_model extends CI_Model
         $this->db->join('sd_store_data', 'sd_store_data.store_id = trx_transaction.store_id');
         $this->db->join('cd_cashier_data', 'cd_cashier_data.cas_id = trx_transaction.cas_id');
         $this->db->join('cd_customer_data', 'cd_customer_data.cus_id = trx_transaction.cus_id');
+        $this->db->join('cp_customer_profile', 'cp_customer_profile.cus_id = trx_transaction.cus_id');
         $this->db->join('pts_point', 'pts_point.trx_reff = trx_transaction.trx_reff');
         $this->db->order_by('trx_transaction.date_created', 'ASC');
         $this->db->where('trx_status', 0);
@@ -96,6 +99,7 @@ class Admin_model extends CI_Model
         $this->db->join('sd_store_data', 'sd_store_data.store_id = trx_transaction.store_id');
         $this->db->join('cd_cashier_data', 'cd_cashier_data.cas_id = trx_transaction.cas_id');
         $this->db->join('cd_customer_data', 'cd_customer_data.cus_id = trx_transaction.cus_id');
+        $this->db->join('cp_customer_profile', 'cp_customer_profile.cus_id = trx_transaction.cus_id');
         $this->db->join('ad_admin_data', 'ad_admin_data.admin_id = trx_transaction.admin_id');
         $this->db->join('pts_point', 'pts_point.trx_reff = trx_transaction.trx_reff');
         $this->db->order_by('trx_transaction.date_approved', 'DESC');
@@ -145,6 +149,7 @@ class Admin_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('cd_customer_data');
+        $this->db->join('cp_customer_profile', 'cp_customer_profile.cus_id = cd_customer_data.cus_id');
         $this->db->order_by('date_created', 'DESC');
         $this->db->where('cus_status', $status_input);
         $member_list = $this->db->get()->result_array();

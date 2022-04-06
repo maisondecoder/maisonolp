@@ -1,9 +1,12 @@
-</div>
-<div class="container p-2 bg-white fixed-bottom d-grid gap-2 shadow" style="max-width:500px; border-radius: 16px 16px 0px 0px">
-    <div class="btn-group" role="group" aria-label="Basic outlined example">
-        <a href="<?= base_url('cashier/'); ?>" class="btn text-primary"><i class="fas fa-coins"></i><br>M-Point</a>
-        <a href="<?= base_url('cashier/profile'); ?>" class="btn text-primary"><i class="fas fa-user"></i><br>Profile</a>
+<div class="fixed-bottom p-2 mb-2">
+    <div class="container bg-white d-grid gap-2 shadow-lg p-2" style="max-width:480px; border-radius: 16px;">
+        <div class="btn-group" role="group" aria-label="Basic outlined example">
+            <a href="<?= base_url('cashier'); ?>" class="btn text-<?php if($page=='point'){echo'cus-brown';}else{echo'secondary';} ?>"><i class="fas fa-coins"></i><br><span style="font-size:10pt">Point</span></a>
+            <a href="<?= base_url('cashier/voucher'); ?>" class="btn text-<?php if($page=='voucher'){echo'cus-brown';}else{echo'secondary';} ?>"><i class="fas fa-ticket-alt"></i><br><span style="font-size:10pt">Voucher</span></a>
+            <a href="<?= base_url('cashier/profile'); ?>" class="btn text-<?php if($page=='profile'){echo'cus-brown';}else{echo'secondary';} ?>"><i class="fas fa-user"></i><br><span style="font-size:10pt">Profile</span></a>
+        </div>
     </div>
+</div>
 </div>
     <!-- Optional JavaScript; choose one of the two! -->
      <script src="<?= base_url('assets/js/'); ?>jquery.number.min.js"></script>

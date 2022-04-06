@@ -56,7 +56,7 @@
                                 <td><?= $pending['store_branch']; ?></td>
                                 <td><?= $pending['jurnal_id']; ?></td>
 
-                                <td><?= $pending['cus_fullname']; ?></td>
+                                <td><?= $pending['profile_first_name'].' '.$pending['profile_last_name']; ?></td>
                                 <td><?= $pending['cas_fullname']; ?></td>
                                 <td><span id="trx-idr-<?= $pending['trx_reff']; ?>"><?= number_format($pending['trx_nominal'], 0, ',', '.'); ?></span></td>
                                 <td><span id="trx-pts-<?= $pending['trx_reff']; ?>"><?= number_format($pending['pts_nominal'], 1, ',', '.'); ?></span> <span class="badge bg-dark text-light rounded-pill"><?= $pending['pts_multiplier']; ?>x</span></td>

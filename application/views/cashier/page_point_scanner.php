@@ -1,8 +1,8 @@
-<div class="container p-4 bg-dark">
-    <h3 class="mt-2 mb-4 text-white">Point Transaction</h3>
+<div class="container p-4">
+    <h3 class="mt-2 mb-2 text-white">Point Transaction</h3>
     <?php echo '<div class="text-danger">' . validation_errors() . '</div>'; ?>
 </div>
-<div class="bg-white p-4" style="margin-top:-15px; margin-bottom:95px; border-radius: 16px">
+<div class="bg-white p-4" style="margin-bottom:95px; border-radius: 16px">
     <div id="reader" class="mb-3"></div>
     <form action="<?= base_url('cashier'); ?>" method="post">
         <div class="row mb-3">

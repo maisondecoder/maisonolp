@@ -1,25 +1,19 @@
-<div class="container p-4 bg-dark">
-    <h3 class="mt-2 mb-4 text-white">Change Password</h3>
-
-    <?php echo '<div class="text-danger">' . validation_errors() . '</div>'; ?>
+<div class="container p-4">
+    <h3 class="mt-2 mb-2 text-white"><a href="<?= base_url('cashier/profile'); ?>" class="me-3 text-white"><i class="fas fa-arrow-left"></i></a>Change Password</h3>
 </div>
-<div class="bg-white p-4" style="margin-top:-15px; margin-bottom:95px; border-radius: 16px">
-    <?= $this->session->flashdata('cashier_change_password'); ?>
+<div class="bg-white p-4" style="margin-bottom:95px; border-radius: 16px">
+    <?php echo '<div class="text-danger">' . validation_errors() . '</div>'; ?>
     <form action="<?= base_url('cashier/change_password'); ?>" method="post">
-        <div class="row mb-3">
-            <label for="inputNewPass" class="col-sm-3 col-form-label">New Password</label>
-            <div class="col-sm-9">
-                <input type="password" name="pass-input" class="form-control" id="inputNewPass" placeholder="" required>
-            </div>
+        <div class="mb-4">
+            <label for="pass-input" class="form-label">New Password</label>
+            <input type="password" class="form-control mb-2" name="pass-input" id="pass-input" minlength="6" maxlength="60" aria-describedby="pass-input" placeholder="" required>
+
+            <label for="conpass-input" class="form-label">Confirm New Password</label>
+            <input type="password" class="form-control mb-2" name="conpass-input" id="conpass-input" minlength="6" maxlength="60" aria-describedby="conpass-input" placeholder="" required>
+
         </div>
-        <div class="row mb-3">
-            <label for="inputConNewPass" class="col-sm-3 col-form-label">Confirm New Password</label>
-            <div class="col-sm-9">
-                <input type="password" name="conpass-input" class="form-control" id="inputConNewPass" placeholder="" required>
-            </div>
-        </div>
-        <div class="row p-2">
-            <input class="btn btn-large btn-primary" type="submit" value="Change My Password">
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn cus-dark-btn">Save New Password</button>
         </div>
     </form>
 </div>

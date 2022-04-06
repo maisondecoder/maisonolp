@@ -24,7 +24,7 @@
                 <p class="alert alert-success">We have sent an email to the registered email address, please check your inbox or spam box. <br><br>You will redirected to Login Page after 5 seconds.</p>
 
                 <div class="d-grid gap-2">
-                    <a href="<?= base_url('auth/signin'); ?>" class="btn btn-link text-secondary mx-auto mt-4">Back to Login Page</a>
+                    <a href="<?= base_url('cashier/auth'); ?>" class="btn btn-link text-secondary mx-auto mt-4">Back to Login Page</a>
                 </div>
 
             </div>

@@ -13,20 +13,29 @@
     <link rel="icon" href="https://maisonliving.id/wp-content/uploads/2021/11/cropped-logo-tab1-192x192.jpg" sizes="192x192" />
     <link rel="apple-touch-icon" href="https://maisonliving.id/wp-content/uploads/2021/11/cropped-logo-tab1-180x180.jpg" />
     <meta name="msapplication-TileImage" content="https://maisonliving.id/wp-content/uploads/2021/11/cropped-logo-tab1-270x270.jpg" />
-    <title>Forgot Password | Maison Living</title>
+    <title>Reset Password | Maison Living</title>
 </head>
 
 <body class="cus-dark-bg">
     <div class="container p-4" style="max-width:500px">
         <div class="card">
             <div class="card-body">
-                <h2>Request Sent</h2>
-                <p class="alert alert-success">We have sent an email to the registered email address, please check your inbox or spam box. <br><br>You will redirected to Login Page after 5 seconds.</p>
+                <h2>Reset Password</h2>
+                <span class="text-danger"><?php echo validation_errors(); ?></span>
+                <form action="<?= base_url('cashier/reset_password/').$token; ?>" method="post">
+                    <div class="mb-4">
+                        <label for="pass-input" class="form-label">New Password</label>
+                        <input type="password" class="form-control mb-2" name="pass-input" id="pass-input" minlength="6" maxlength="60" aria-describedby="pass-input" placeholder="" required>
 
-                <div class="d-grid gap-2">
-                    <a href="<?= base_url('auth/signin'); ?>" class="btn btn-link text-secondary mx-auto mt-4">Back to Login Page</a>
-                </div>
+                        <label for="conpass-input" class="form-label">Confirm New Password</label>
+                        <input type="password" class="form-control mb-2" name="conpass-input" id="conpass-input" minlength="6" maxlength="60" aria-describedby="conpass-input" placeholder="" required>
 
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn cus-dark-btn">Save New Password</button>
+                        <a href="<?= base_url('cashier/auth'); ?>" class="btn btn-link text-secondary mx-auto mt-4">Back to Login Page</a>
+                    </div>
+                </form>
             </div>
         </div>
 
