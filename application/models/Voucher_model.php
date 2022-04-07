@@ -48,6 +48,7 @@ class Voucher_model extends CI_Model
         
         $this->db->where('vou.cus_id', $cus_id_input);
         $this->db->where('vou.date_expired >=', now());
+        $this->db->where('vou.date_used <=', 0);
         $this->db->join('vp_voucher_program vp', 'vp.vop_uniqueid = vou.vop_uniqueid', 'left');
         $query = $this->db->get()->result_array();
         return $query;

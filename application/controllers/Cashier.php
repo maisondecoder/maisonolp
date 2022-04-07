@@ -46,11 +46,11 @@ class Cashier extends CI_Controller
         }
     }
 
-    
+
 
     public function index()
     {
-        
+
         if (!$this->session->has_userdata('ses_store_id') || !$this->session->has_userdata('ses_cas_id') || !$this->session->has_userdata('ses_cas_email') || !$this->session->has_userdata('ses_cas_token')) {
             redirect('cashier/auth');
             die('Cannot Access Cashier Page');
@@ -81,16 +81,52 @@ class Cashier extends CI_Controller
             $cus_data = $this->customer_model->find_cus_by_hash($qrid);
             if ($cus_data) {
                 $generated_trx_reff = 'ML' . now() . '1';
-                $this->cashier_model->create_trx($generated_trx_reff, $nominal, "Transaksi Store", 0, $this->session->userdata('ses_store_id'), $cus_data['cus_id'], $jurnal, $this->session->userdata('ses_cas_id'),$point_setting['ps_point_multiplier']);
+                $this->cashier_model->create_trx($generated_trx_reff, $nominal, "Transaksi Store", 0, $this->session->userdata('ses_store_id'), $cus_data['cus_id'], $jurnal, $this->session->userdata('ses_cas_id'), $point_setting['ps_point_multiplier']);
 
                 $bonus_point = $nominal / $point_setting['ps_point_per'] * $point_setting['ps_point_multiplier'];
                 $this->cashier_model->create_pts($bonus_point, 0, 'Transaksi Store', $cus_data['cus_id'], 0, $generated_trx_reff);
 
-                redirect('cashier/result/'.$bonus_point);
+                redirect('cashier/result/' . $bonus_point);
             } else {
                 redirect('cashier?error=member-not-found');
             }
         }
+    }
+
+    public function voucher()
+    {
+        if (!$this->session->has_userdata('ses_store_id') || !$this->session->has_userdata('ses_cas_id') || !$this->session->has_userdata('ses_cas_email') || !$this->session->has_userdata('ses_cas_token')) {
+            redirect('cashier/auth');
+            die('Cannot Access Cashier Page');
+        }
+
+        $data['page'] = 'voucher';
+
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('voucher-input', 'Voucher', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('cashier/header');
+            $this->load->view('cashier/page_voucher_scanner', $data);
+            $this->load->view('cashier/footer');
+        } else {
+            $reff = $this->input->post('voucher-input');
+
+            $this->load->model('cashier_model');
+            $claim = $this->cashier_model->claim_voucher($reff);
+            if ($claim) {
+                redirect('cashier/claim_success');
+            } else {
+                echo 'claim failed';
+            }
+        }
+    }
+    public function claim_success()
+    {
+        $data['page'] = 'voucher';
+        $this->load->view('cashier/header');
+        $this->load->view('cashier/page_voucher_success', $data);
+        $this->load->view('cashier/footer');
     }
 
     public function profile()
@@ -120,7 +156,7 @@ class Cashier extends CI_Controller
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules('pass-input', 'New Password', 'required');
-        $this->form_validation->set_rules('conpass-input', 'New Password Confirmation', 'required|matches[pass-input]',array(
+        $this->form_validation->set_rules('conpass-input', 'New Password Confirmation', 'required|matches[pass-input]', array(
             'matches'     => 'Confirmation Password is not matched.'
         ));
 
@@ -132,21 +168,18 @@ class Cashier extends CI_Controller
             $pass = $this->input->post('pass-input');
             $conpass = $this->input->post('conpass-input');
 
-            $pass_hash = password_hash($conpass,PASSWORD_DEFAULT);
+            $pass_hash = password_hash($conpass, PASSWORD_DEFAULT);
             $this->load->model('cashier_model');
-            $change_password = $this->cashier_model->change_password($this->session->userdata('ses_cas_email'),$pass_hash);
+            $change_password = $this->cashier_model->change_password($this->session->userdata('ses_cas_email'), $pass_hash);
 
-            if($change_password){
+            if ($change_password) {
                 $this->session->set_flashdata('cashier_change_password', "<p class='alert alert-success'>Password changed successfully.</p>");
                 redirect('cashier/profile?msg=change-password-success');
-            }else{
+            } else {
                 $this->session->set_flashdata('cashier_change_password', "<p class='alert alert-danger'>Failed to change password!</p>");
                 redirect('cashier/profile?msg=change-password-failed');
             }
-            
         }
-
-        
     }
 
     //AJAX Purpose
@@ -165,10 +198,35 @@ class Cashier extends CI_Controller
         $cus_data = $this->cashier_model->scan_qrid($cus_hash);
 
         if ($cus_data) {
-            $data = array("status" => 1, "name" => $cus_data['profile_first_name'].' '.$cus_data['profile_last_name']);
+            $data = array("status" => 1, "name" => $cus_data['profile_first_name'] . ' ' . $cus_data['profile_last_name']);
             echo json_encode($data);
         } else {
             $data = array("status" => 0, "name" => "Member not found!");
+            echo json_encode($data);
+        }
+    }
+
+    //AJAX Purpose
+    public function summary_voucher()
+    {
+        if (!$this->session->has_userdata('ses_cas_id') && !$this->session->has_userdata('ses_cas_email') && !$this->session->has_userdata('ses_cas_token')) {
+            redirect('cashier/auth');
+        }
+
+        $vou_hash = $this->input->post('hash_input');
+        if (!$vou_hash) {
+            //redirect('cashier');
+        }
+
+        $this->load->model('cashier_model');
+        $vou_data = $this->cashier_model->scan_voucher($vou_hash);
+        //print_r($vou_data);
+        //die;
+        if ($vou_data) {
+            $data = array("status" => 1, "reff" => $vou_data['vou_reff'], "title" => $vou_data['vop_title'], "image" => $vou_data['vop_image']);
+            echo json_encode($data);
+        } else {
+            $data = array("status" => 0, "reff" => "Voucher invalid or expired!");
             echo json_encode($data);
         }
     }
@@ -181,7 +239,7 @@ class Cashier extends CI_Controller
         }
         $data['page'] = 'point';
         $data['pts_data'] = $pts;
-        
+
 
         $this->load->view('cashier/header');
         $this->load->view('cashier/page_point_success', $data);
@@ -198,7 +256,8 @@ class Cashier extends CI_Controller
 
 
 
-    public function forgot_password(){
+    public function forgot_password()
+    {
 
         $this->load->library('form_validation');
         $this->form_validation->set_rules('email-input', 'Email Address', 'required');
@@ -207,12 +266,12 @@ class Cashier extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('cashier/cashier_forgot_pass_1');
         } else {
-            
+
             $this->load->model('cashier_model');
             $check_cashier = $this->cashier_model->get_cashier_profile($email);
 
             if ($check_cashier) {
-                
+
                 $token = $this->cashier_model->cashier_create_token_reset($check_cashier['cas_id']);
 
                 $sender = "auto-service";
@@ -238,22 +297,22 @@ class Cashier extends CI_Controller
 
                 $this->email->from($sendergroup, 'Auto-Services Maison Living');
                 $this->email->to($email);
-                $this->email->subject('Password Reset Request ['.$token.']');
-                $this->email->message('You have submitted a password reset request, click the following link to create a new password: <a href="'.base_url().'cashier/reset_password/' . $token . '" target="_blank">Create a New Password.</a>');
+                $this->email->subject('Password Reset Request [' . $token . ']');
+                $this->email->message('You have submitted a password reset request, click the following link to create a new password: <a href="' . base_url() . 'cashier/reset_password/' . $token . '" target="_blank">Create a New Password.</a>');
 
                 $this->email->send();
-                
-                header( "refresh:7;url=".base_url('cashier/auth'));
+
+                header("refresh:7;url=" . base_url('cashier/auth'));
                 $this->load->view('cashier/cashier_forgot_pass_2');
             } else {
                 $this->session->set_flashdata("forgot_password_msg", "<p class='alert alert-danger'>The information you provided does not match, please try again.</p>");
                 redirect('cashier/forgot_password');
             }
         }
-        
     }
 
-    public function reset_password($token='0'){
+    public function reset_password($token = '0')
+    {
         if ($token == '0') {
             redirect('cashier/forgot_password');
             echo 'reset token is invalid or expired!';

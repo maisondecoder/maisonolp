@@ -50,7 +50,7 @@ class Cashier_model extends CI_Model
         $jurnal = $jurnal_input;
         $cas_id = $cas_id_input;
         $pts_multi = $pts_multi_input;
-        $end_year = strtotime('31 December ' . (date('Y')+1) . ' 23:59:59 GMT+07:00'); 
+        $end_year = strtotime('31 December ' . (date('Y') + 1) . ' 23:59:59 GMT+07:00');
 
         $data = array(
             'trx_reff' => $reff,
@@ -80,7 +80,7 @@ class Cashier_model extends CI_Model
         $cus_id = $cus_id_input;
         $status = $pts_status_input;
         $trx_reff = $trx_reff_input;
-        $end_year = strtotime('31 December ' . (date('Y')+1) . ' 23:59:59 GMT+07:00');
+        $end_year = strtotime('31 December ' . (date('Y') + 1) . ' 23:59:59 GMT+07:00');
 
         $data = array(
             'pts_nominal' => $nominal,
@@ -108,23 +108,50 @@ class Cashier_model extends CI_Model
         return $change_password;
     }
 
+    //Scan Voucher QR
+    public function scan_voucher($hash_input)
+    {
+        $this->db->select('vou_voucher_user.vop_uniqueid, vp_voucher_program.vop_image, vp_voucher_program.vop_title, vou_voucher_user.vou_reff, vou_voucher_user.date_expired, vou_voucher_user.date_used');
+        $this->db->join('vp_voucher_program', 'vp_voucher_program.vop_uniqueid = vou_voucher_user.vop_uniqueid');
+        $find_cus = $this->db->get_where('vou_voucher_user', array('vou_voucher_user.vou_reff' => $hash_input, 'vou_voucher_user.date_expired >=' => now(), 'vou_voucher_user.date_used <=' => 0), 1, 0)->row_array();
 
+        return $find_cus;
+    }
+
+    //Scan Member QR
     public function scan_qrid($hash_input)
     {
         $this->db->select('cd_customer_data.cus_id, cus_hash, profile_first_name, profile_last_name');
         $this->db->join('cp_customer_profile', 'cp_customer_profile.cus_id = cd_customer_data.cus_id');
         $this->db->order_by('cus_id', 'DESC');
-        $find_cus = $this->db->get_where('cd_customer_data', array('cus_hash' => $hash_input), 1, 0)->row_array();
+        $find_vou = $this->db->get_where('cd_customer_data', array('cus_hash' => $hash_input), 1, 0)->row_array();
 
-        return $find_cus;
+        return $find_vou;
     }
 
+    public function claim_voucher($reff_input)
+    {
+        $this->load->helper('date');
+
+        $data = array(
+            'date_used' => now(),
+        );
+
+        $this->db->where('vou_reff', $reff_input);
+        $this->db->where('date_expired >=', now());
+        $this->db->where('date_used <=', 1);
+        $this->db->update('vou_voucher_user', $data);
+        $claim =  $this->db->affected_rows();
+
+        return $claim;
+    }
 
     //////////////////////////////////////////////////////////////
     //////////////// AUTH, RESET, FORGOT PASSWORD ////////////////
     //////////////////////////////////////////////////////////////
 
-    public function cashier_create_token_reset($cashier_id){
+    public function cashier_create_token_reset($cashier_id)
+    {
         $this->load->helper('date');
 
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -133,7 +160,7 @@ class Cashier_model extends CI_Model
         for ($i = 0; $i < 12; $i++) {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
-    
+
         $data = array(
             'reset_token' => $randomString,
             'date_created' => now(),

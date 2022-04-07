@@ -1,3 +1,4 @@
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <div class="container p-4">
     <h3 class="mt-2 mb-2 text-white">Point Transaction</h3>
     <?php echo '<div class="text-danger">' . validation_errors() . '</div>'; ?>
@@ -5,7 +6,7 @@
 <div class="bg-white p-4" style="margin-bottom:95px; border-radius: 16px">
     <div id="reader" class="mb-3"></div>
     <form action="<?= base_url('cashier'); ?>" method="post">
-        <div class="row mb-3">
+        <div class="row mb-2">
             <label for="memberID" class="col-sm-3 col-form-label">QR ID</label>
             <div class="col-sm-9">
                 <div class="input-group">
@@ -14,13 +15,13 @@
                 </div>
             </div>
         </div>
-        <div class="row mb-3">
+        <div class="row mb-2">
             <label for="inputAmount3" class="col-sm-3 col-form-label">Nominal</label>
             <div class="col-sm-9">
                 <input type="number" name="nominal-input" class="form-control" id="inputAmount3" placeholder="Total Spending Amount" min='0' required>
             </div>
         </div>
-        <div class="row mb-3">
+        <div class="row mb-2">
             <label for="inputJurnal" class="col-sm-3 col-form-label">Invoice ID</label>
             <div class="col-sm-9">
                 <input type="text" name="jurnal-input" class="form-control" id="inputJurnal" placeholder="Jurnal's Invoice ID" required>
@@ -53,11 +54,11 @@
     </form>
 </div>
 
-<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
 <script>
     const html5QrCode = new Html5Qrcode("reader");
     const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-        //console.log(`Code matched = ${decodedText}`, decodedResult);
+        console.log(`Code matched = ${decodedText}`, decodedResult);
         html5QrCode.stop().then((ignore) => {
 
             $.post("<?= base_url('cashier/summary_member/'); ?>", {
