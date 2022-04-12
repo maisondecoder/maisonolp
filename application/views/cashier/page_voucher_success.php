@@ -11,6 +11,6 @@
     </div>
     <hr>
     <div class="text-center">
-        <a class="btn btn-outline-secondary" href="<?= base_url('cashier'); ?>">Scan New Voucher</a>
+        <a class="btn btn-outline-secondary" href="<?= base_url('cashier/voucher'); ?>">Scan New Voucher</a>
     </div>
 </div>
