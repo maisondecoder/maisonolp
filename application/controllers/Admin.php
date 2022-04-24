@@ -198,7 +198,7 @@ class Admin extends CI_Controller
 
         if ($check) {
             $approve = $this->admin_model->approve($trx_id_input, $trx_reff_input);
-            //print_r($approve);
+            print_r($approve);
         } else {
             echo 'Transaction Invalid';
             return false;

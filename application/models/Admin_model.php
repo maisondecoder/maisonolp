@@ -121,9 +121,9 @@ class Admin_model extends CI_Model
     }
 
     //Approving Transaksi
-    public function approve($trx_id_input = 0, $trx_reff_input = 0)
+    public function approve($trx_id_input = '0', $trx_reff_input = '0')
     {
-        if ($trx_id_input == 0 || $trx_reff_input == 0) {
+        if ($trx_id_input == '0' || $trx_reff_input == '0') {
             return 'parameter invalid';
             die();
         }
