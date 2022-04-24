@@ -72,28 +72,28 @@ class Cashier_model extends CI_Model
     //menambah record mutasi point
     public function create_pts($nominal_input, $type_input, $note_input, $cus_id_input, $pts_status_input, $trx_reff_input)
     {
-        $this->load->helper('date');
+            $this->load->helper('date');
 
-        $nominal = $nominal_input;
-        $type = $type_input;
-        $note = $note_input;
-        $cus_id = $cus_id_input;
-        $status = $pts_status_input;
-        $trx_reff = $trx_reff_input;
-        $end_year = strtotime('31 December ' . (date('Y') + 1) . ' 23:59:59 GMT+07:00');
+            $nominal = $nominal_input;
+            $type = $type_input;
+            $note = $note_input;
+            $cus_id = $cus_id_input;
+            $status = $pts_status_input;
+            $trx_reff = $trx_reff_input;
+            $end_year = strtotime('31 December ' . (date('Y') + 1) . ' 23:59:59 GMT+07:00');
 
-        $data = array(
-            'pts_nominal' => $nominal,
-            'pts_type' => $type,
-            'pts_note' => $note,
-            'pts_status' => $status,
-            'cus_id' => $cus_id,
-            'trx_reff' => $trx_reff,
-            'date_created' => now(),
-            'date_expired' => $end_year
-        );
+            $data = array(
+                'pts_nominal' => $nominal,
+                'pts_type' => $type,
+                'pts_note' => $note,
+                'pts_status' => $status,
+                'cus_id' => $cus_id,
+                'trx_reff' => $trx_reff,
+                'date_created' => now(),
+                'date_expired' => $end_year
+            );
 
-        $this->db->insert('pts_point', $data);
+            $this->db->insert('pts_point', $data);
     }
 
     public function change_password($cas_email_input, $cas_new_password_input)

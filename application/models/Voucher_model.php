@@ -42,7 +42,7 @@ class Voucher_model extends CI_Model
     public function get_list_voucher_owned_by_user($cus_id_input)
     {
         $this->load->helper('date');
-        $this->db->select('vou.*, vp.vop_image');
+        $this->db->select('vou.*, vp.vop_image, vp.vop_title');
         $this->db->from('vou_voucher_user vou');
         $this->db->order_by('vou.vou_id', 'DESC');
         
@@ -57,7 +57,7 @@ class Voucher_model extends CI_Model
     public function get_list_voucher_expired_owned_by_user($cus_id_input)
     {
         $this->load->helper('date');
-        $this->db->select('vou.*, vp.vop_image');
+        $this->db->select('vou.*, vp.vop_image, vp.vop_title');
         $this->db->from('vou_voucher_user vou');
         $this->db->order_by('vou.vou_id', 'DESC');
         
@@ -72,7 +72,7 @@ class Voucher_model extends CI_Model
     public function get_list_voucher_used_owned_by_user($cus_id_input)
     {
         $this->load->helper('date');
-        $this->db->select('vou.*, vp.vop_image');
+        $this->db->select('vou.*, vp.vop_image, vp.vop_title');
         $this->db->from('vou_voucher_user vou');
         $this->db->order_by('vou.vou_id', 'DESC');
         
@@ -116,7 +116,7 @@ class Voucher_model extends CI_Model
             
             
             $timenow = now();
-            $reff = 'MVOU' . $timenow .rand(0,9);
+            $reff = 'MV' . $timenow .rand(0,9);
             $vopuniqueid = $vop_uniqueid;
             $cusid = $cus_id_input;
 

@@ -221,4 +221,71 @@ class Admin_model extends CI_Model
             return false;
         }
     }
+
+    //Add New Voucher Program
+    public function add_voucher_program($title,$desc,$quota,$limit,$price,$start,$end,$unique,$image){
+
+        $data = array(
+            'vop_title' => $title,
+            'vop_uniqueid' => $unique,
+            'vop_desc' => $desc,
+            'vop_maxpuser' => $limit,
+            'vop_maxquota' => $quota,
+            'vop_image' => $image,
+            'vop_pointprice' => $price,
+            'date_created' => now(),
+            'date_start' => $start,
+            'date_end' => $end
+        );
+
+        $add = $this->db->insert('vp_voucher_program', $data);
+        return $add;
+    }
+
+    public function edit_voucher_program($title,$desc,$quota,$limit,$price,$start,$end,$unique,$image){
+
+        $data = array(
+            'vop_title' => $title,
+            'vop_desc' => $desc,
+            'vop_maxpuser' => $limit,
+            'vop_maxquota' => $quota,
+            'vop_image' => $image,
+            'vop_pointprice' => $price,
+            'date_created' => now(),
+            'date_start' => $start,
+            'date_end' => $end
+        );
+        $this->db->where('vop_uniqueid', $unique);
+        $this->db->update('vp_voucher_program', $data);
+        $edit = $this->db->affected_rows();
+        return $edit;
+    }
+
+    //Get Specific Voucher Program
+    public function specific_voucher_program($uniqueid){
+        $this->db->select('*');
+        $this->db->from('vp_voucher_program');
+        $this->db->where('vop_uniqueid', $uniqueid);
+        $specific_voucher_program = $this->db->get()->row_array();
+
+        return $specific_voucher_program;
+    }
+
+    //All Registered Members
+    public function all_voucher_program()
+    {
+        $this->db->select('*');
+        $this->db->from('vp_voucher_program');
+        $this->db->order_by('date_created', 'DESC');
+        $all_voucher_program = $this->db->get()->result_array();
+
+        return $all_voucher_program;
+    }
+
+    public function delete_voucher_program($uniqueid){
+        $this->db->delete('vp_voucher_program', array('vop_uniqueid' => $uniqueid));
+        
+        $delete = $this->db->affected_rows();
+        return $delete;
+    }
 }

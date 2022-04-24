@@ -84,7 +84,7 @@
     $('#btnscanqr').click(function() {
         html5QrCode.start({
             facingMode: {
-                exact: "user"
+                exact: "environment"
             }
         }, config, qrCodeSuccessCallback);
     });

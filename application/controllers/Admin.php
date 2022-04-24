@@ -252,19 +252,18 @@ class Admin extends CI_Controller
             $pass = $this->input->post('pass-input');
             $conpass = $this->input->post('conpass-input');
 
-            $pass_hash = password_hash($conpass,PASSWORD_DEFAULT);
+            $pass_hash = password_hash($conpass, PASSWORD_DEFAULT);
             $this->load->model('admin_model');
-            $change_password = $this->admin_model->change_password($this->session->userdata('ses_admin_email'),$pass_hash);
+            $change_password = $this->admin_model->change_password($this->session->userdata('ses_admin_email'), $pass_hash);
 
-            if($change_password){
+            if ($change_password) {
                 $this->session->set_flashdata('admin_change_password', "<p class='alert alert-success'>Password changed successfully.</p>");
                 redirect('admin/change_password?msg=change-password-success');
-            }else{
+            } else {
                 $this->session->set_flashdata('admin_change_password', "<p class='alert alert-danger'>Failed to change password!</p>");
                 redirect('admin/change_password?msg=change-password-failed');
             }
         }
-            
     }
     public function sign_out()
     {
@@ -323,8 +322,159 @@ class Admin extends CI_Controller
         $this->load->view('admin/export_cashier', $data);
     }
 
-    public function vod(){
-        echo '
-        ';
+    public function voucher_program()
+    {
+        $this->load->model('admin_model');
+        $data['voucher_program'] = $this->admin_model->all_voucher_program();
+        $this->load->view('admin/header');
+        $this->load->view('admin/page_voucher_program', $data);
+        $this->load->view('admin/footer');
+    }
+
+    public function delete_voucher_program($vop_uniqueid = '0'){
+        if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
+            $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
+            redirect('admin/auth');
+            die('Cannot Access Admin Page');
+        }
+
+        if($vop_uniqueid == '0'){
+            redirect('admin/voucher_program');
+        }else{
+            $this->load->model('admin_model');
+             $vop_data = $this->admin_model->specific_voucher_program($vop_uniqueid);
+             if($vop_data){
+                $data['vp_data'] = $vop_data;
+                //print_r($data['vp_data']);
+                $delete = $this->admin_model->delete_voucher_program($vop_uniqueid);
+                if ($delete) {
+                    redirect('admin/voucher_program?msg=delete-success');
+                } else {
+                    redirect('admin/voucher_program?msg=delete-failed');
+                }
+             }else{
+                redirect('admin/voucher_program');
+             }
+        }
+
+        $this->admin_model->delete_voucher_program($vop_uniqueid);
+    }
+
+    public function add_voucher_program()
+    {
+        if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
+            $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
+            redirect('admin/auth');
+            die('Cannot Access Admin Page');
+        }
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('vp-title', 'Program Title', 'required');
+        $this->form_validation->set_rules('vp-datestart', 'Date Start', 'required');
+        $this->form_validation->set_rules('vp-dateend', 'Date End', 'required');
+        $this->form_validation->set_rules('vp-timestart', 'Time Start', 'required');
+        $this->form_validation->set_rules('vp-timeend', 'Time End', 'required');
+        $this->form_validation->set_rules('vp-desc', 'Description', 'required');
+        $this->form_validation->set_rules('vp-quota', 'Total Quota', 'required');
+        $this->form_validation->set_rules('vp-limit', 'Limit', 'required');
+        $this->form_validation->set_rules('vp-price', 'Price', 'required');
+        $this->form_validation->set_rules('vp-image', 'Inmage', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('admin/header');
+            $this->load->view('admin/page_voucher_program_add');
+            $this->load->view('admin/footer');
+        } else {
+            $this->load->helper('date');
+
+            $title = $this->input->post('vp-title');
+            $datestart = $this->input->post('vp-datestart');
+            $dateend = $this->input->post('vp-dateend');
+            $timestart = $this->input->post('vp-timestart');
+            $timeend = $this->input->post('vp-timeend');
+            $desc = $this->input->post('vp-desc');
+            $quota = $this->input->post('vp-quota');
+            $limit = $this->input->post('vp-limit');
+            $price = $this->input->post('vp-price');
+
+            $start = strtotime($datestart . ' ' . $timestart);
+            $end = strtotime($dateend . ' ' . $timeend);
+
+            $unique = 'MLV' . now();
+            $image = $this->input->post('vp-image');
+
+            $this->load->model('admin_model');
+            $add = $this->admin_model->add_voucher_program($title, $desc, $quota, $limit, $price, $start, $end, $unique, $image);
+            if ($add) {
+                redirect('admin/voucher_program?msg=success');
+            } else {
+                redirect('admin/voucher_program?msg=failed');
+            }
+        }
+    }
+
+    public function edit_voucher_program($vop_uniqueid='0')
+    {
+        if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
+            $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
+            redirect('admin/auth');
+            die('Cannot Access Admin Page');
+        }
+
+        if($vop_uniqueid == '0'){
+            redirect('admin/voucher_program');
+        }else{
+            $this->load->model('admin_model');
+             $vop_data = $this->admin_model->specific_voucher_program($vop_uniqueid);
+             if($vop_data){
+                $data['vp_data'] = $vop_data;
+                //print_r($data['vp_data']);
+             }else{
+                redirect('admin/voucher_program');
+             }
+        }
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('vp-title', 'Program Title', 'required');
+        $this->form_validation->set_rules('vp-datestart', 'Date Start', 'required');
+        $this->form_validation->set_rules('vp-dateend', 'Date End', 'required');
+        $this->form_validation->set_rules('vp-timestart', 'Time Start', 'required');
+        $this->form_validation->set_rules('vp-timeend', 'Time End', 'required');
+        $this->form_validation->set_rules('vp-desc', 'Description', 'required');
+        $this->form_validation->set_rules('vp-quota', 'Total Quota', 'required');
+        $this->form_validation->set_rules('vp-limit', 'Limit', 'required');
+        $this->form_validation->set_rules('vp-price', 'Price', 'required');
+        $this->form_validation->set_rules('vp-image', 'Inmage', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('admin/header');
+            $this->load->view('admin/page_voucher_program_edit', $data);
+            $this->load->view('admin/footer');
+        } else {
+            $this->load->helper('date');
+
+            $title = $this->input->post('vp-title');
+            $datestart = $this->input->post('vp-datestart');
+            $dateend = $this->input->post('vp-dateend');
+            $timestart = $this->input->post('vp-timestart');
+            $timeend = $this->input->post('vp-timeend');
+            $desc = $this->input->post('vp-desc');
+            $quota = $this->input->post('vp-quota');
+            $limit = $this->input->post('vp-limit');
+            $price = $this->input->post('vp-price');
+
+            $start = strtotime($datestart . ' ' . $timestart);
+            $end = strtotime($dateend . ' ' . $timeend);
+
+            $image = $this->input->post('vp-image');
+
+            $this->load->model('admin_model');
+            $edit = $this->admin_model->edit_voucher_program($title, $desc, $quota, $limit, $price, $start, $end, $vop_uniqueid, $image);
+            if ($edit) {
+                redirect('admin/voucher_program?msg=edit-success');
+            } else {
+                redirect('admin/voucher_program?msg=edit-failed');
+            }
+        }
     }
 }

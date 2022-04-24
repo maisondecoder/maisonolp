@@ -76,6 +76,23 @@
             </li>
 
             <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsevop" aria-expanded="false" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-ticket-alt"></i>
+                    <span>Voucher Program</span>
+                </a>
+                <div id="collapsevop" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white collapse-inner rounded">
+                        <a class="collapse-item" href="<?= base_url('admin/voucher_program') ?>">List Voucher Program</a>
+                        <a class="collapse-item" href="<?= base_url('admin/add_voucher_program') ?>">Add Voucher Program</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Heading -->
