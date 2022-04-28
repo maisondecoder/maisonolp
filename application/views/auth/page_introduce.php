@@ -26,7 +26,7 @@
                 <form action="<?= base_url('auth/create_profile'); ?>" method="post">
                     <div class="mb-4">
                         <label for="first-input" class="form-label">First Name</label>
-                        <input type="text" class="form-control mb-2" name="first-input" id="first-input" minlength="3" maxlength="32"  placeholder="John" required>
+                        <input type="text" class="form-control mb-2" name="first-input" id="first-input" minlength="3" maxlength="32"  placeholder="First" required>
 
                         <label for="last-input" class="form-label">Last Name</label>
                         <input type="text" class="form-control mb-2" name="last-input" id="last-input" minlength="3" maxlength="32" placeholder="Doe" required>
@@ -37,13 +37,17 @@
                             <option value="2">Male</option>
                         </select>
 
-                        <label for="age-input" class="form-label">Age Group</label>
-                        <select class="form-select mb-2" name="age-input">
-                            <option value="1" selected>18-24</option>
-                            <option value="2">25-34</option>
-                            <option value="3">35-44</option>
-                            <option value="4">45-54</option>
-                            <option value="5">55+</option>
+                        <label for="birth-input" class="form-label">Date of Birth</label>
+                        <input type="date" class="form-control mb-2" name="birth-input" id="birth-input" required>
+
+                        <label for="celebrate-input" class="form-label">I Celebrate</label>
+                        <select class="form-select mb-2" name="celebrate-input">
+                            <option value="0" selected>Select an Option...</option>
+                            <option value="1">Chinese New Year</option>
+                            <option value="2">Christmas</option>
+                            <option value="3">Eid Al-Fitr / Ramadhan</option>
+                            <option value="4">Nyepi</option>
+                            <option value="5">Vesak</option>
                         </select>
                     </div>
                     <div class="d-grid gap-2">

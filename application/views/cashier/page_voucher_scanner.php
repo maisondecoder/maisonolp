@@ -36,7 +36,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <button id="btn-process" type="submit" class="btn btn-danger" disabled>Claim Voucher</button>
+                <button id="btn-process" type="submit" class="btn btn-danger" disabled>Redeem Voucher</button>
             </div>
         </div>
 

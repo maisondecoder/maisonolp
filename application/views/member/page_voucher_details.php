@@ -1,7 +1,7 @@
 <div class="container p-4">
     <h3 class="mt-2 mb-4 text-white"><a href="<?= base_url('voucher'); ?>" class="me-3 text-white"><i class="fas fa-arrow-left"></i></a> Voucher Program Details</h3>
 </div>
-<div class="bg-white p-4" style="margin-top:-15px; margin-bottom:95px; border-radius: 16px">
+<div class="bg-white p-4" style="margin-top:-15px; margin-bottom:100px !important; border-radius: 16px">
     <div>
         <h4 class="mt-2 mb-4"><?= $vp_details['vop_title'] ?></h4>
         <img src="<?= base_url('assets/voucher_program/') . $vp_details['vop_image'] ?>" class="img-fluid mb-4" width="100%" alt="">

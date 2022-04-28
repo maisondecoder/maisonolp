@@ -33,8 +33,8 @@ class User extends CI_Controller
 
     public function index()
     {
-        
-        if(!$this->session->has_userdata('ses_cusid')){
+
+        if (!$this->session->has_userdata('ses_cusid')) {
             redirect('auth');
         }
         $data['page'] = 'profile';
@@ -51,7 +51,7 @@ class User extends CI_Controller
 
         $level = $this->customer_model->get_level($data['total_spending']);
         $data['level'] = $level['ml_name'];
-        
+
 
         $data['total_trx'] = $this->customer_model->get_count_cus_trx($cusid);
         $data['total_pts'] = $this->customer_model->get_point_balance($cusid);
@@ -77,11 +77,11 @@ class User extends CI_Controller
         $data['total_spending'] = $this->customer_model->get_total_spending($cusid);
         $data['profile_data'] = $this->customer_model->get_cus_profile($cusid);
 
-        
+
         $level = $this->customer_model->get_level($data['total_spending']);
         $data['level'] = $level['ml_name'];
-        $data['next_spend'] = $level['ml_range_max']+1-$data['total_spending'];
-        $data['percentage'] = ($data['total_spending']-$level['ml_range_min'])/($level['ml_range_max']-$level['ml_range_min'])*100;
+        $data['next_spend'] = $level['ml_range_max'] + 1 - $data['total_spending'];
+        $data['percentage'] = ($data['total_spending'] - $level['ml_range_min']) / ($level['ml_range_max'] - $level['ml_range_min']) * 100;
 
         $data['total_trx'] = $this->customer_model->get_count_cus_trx($cusid);
         $data['total_pending'] = $this->customer_model->get_count_cus_trx_pending($cusid);
@@ -161,22 +161,58 @@ class User extends CI_Controller
         $data['page'] = 'profile';
 
         $this->load->library('form_validation');
-        
+
         $this->form_validation->set_rules('pass-input', 'Password', 'required');
-        $this->form_validation->set_rules('conpass-input', 'Confirmation Password', 'required|matches[pass-input]',array(
+        $this->form_validation->set_rules('conpass-input', 'Confirmation Password', 'required|matches[pass-input]', array(
             'matches'     => 'Confirmation Password is not matched.'
         ));
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('member/header');
-            $this->load->view('member/page_setting_change_pass',$data);
+            $this->load->view('member/page_setting_change_pass', $data);
             $this->load->view('member/footer');
-        }else{
+        } else {
             $cusid = $this->session->userdata('ses_cusid');
             $pass = $this->input->post('pass-input');
             $this->load->model('customer_model');
             $change_pass = $this->customer_model->change_password($pass, $cusid);
-            if($change_pass){
+            if ($change_pass) {
+                redirect('user?msg=change-password-success');
+            }
+        }
+    }
+
+    public function edit_profile()
+    {
+        $data['page'] = 'profile';
+        $cusid = $this->session->userdata('ses_cusid');
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('first-input', 'First Name', 'required');
+        $this->form_validation->set_rules('last-input', 'Last Name', 'required');
+        $this->form_validation->set_rules('gender-input', 'Gender', 'required');
+        $this->form_validation->set_rules('birth-input', 'Date of Birth', 'required');
+        $this->form_validation->set_rules('celebrate-input', 'Day Celebrate', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->model('customer_model');
+            $data['profile'] = $this->customer_model->get_cus_profile($cusid);
+
+            $this->load->view('member/header');
+            $this->load->view('member/page_setting_edit_profile', $data);
+            $this->load->view('member/footer');
+        } else {
+            $first = $this->input->post('first-input');
+            $last = $this->input->post('last-input');
+            $gender = $this->input->post('gender-input');
+            $dob = $this->input->post('birth-input');
+            $celebrate = $this->input->post('celebrate-input');
+
+            $this->load->model('customer_model');
+            $edit_profile = $this->customer_model->edit_profile($cusid, $first, $last, $gender, $dob, $celebrate);
+            if ($edit_profile) {
+                redirect('user?msg=edit-profile-success');
+            }else{
                 redirect('user');
             }
         }

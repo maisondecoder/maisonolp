@@ -15,22 +15,21 @@
         </div>
         <div class="col">
             <div class="bg-white" style="border-radius: 16px">
-                <div class="fs-6">Distributed</div>
+                <div class="fs-6">Success</div>
                 <div class="fw-bold"><?= number_format($total_trx, 0, ',', '.'); ?></div>
             </div>
         </div>
         <div class="col">
             <div class="bg-white" style="border-radius: 16px">
-                <div class="fs-6">Waiting</div>
+                <div class="fs-6">Pending</div>
                 <div class="fw-bold"><?= number_format($total_pending, 0, ',', '.'); ?></div>
             </div>
         </div>
     </div>
 </div>
-<div class="bg-white p-4" style="margin-bottom:95px; border-radius: 16px">
+<div class="bg-white p-4" style="margin-bottom:100px !important; border-radius: 16px">
     <div>
-        <h3 class="mt-3">Point History</h3>
-        <div class="mt-4 mb-3"><span class="badge bg-light text-dark"><i class="fas fa-hourglass-half fa-fw"></i> Waiting Approval</span> </div>
+        <h3 class="mt-3 mb-3">Point History</h3>
         <div class="list-group list-group-flush rounded-3">
             <?php if ($list_pts) {
                 $submitted_on_keys = array();
@@ -56,6 +55,8 @@
                                                                     echo '+';
                                                                 } ?><?= number_format($list_pts['pts_nominal'], 1, ',', '.'); ?><?php if (!$list_pts['pts_status']) {
                                                                                                                                     echo '<i class="fas fa-hourglass-half mx-1 text-secondary"></i>';
+                                                                                                                                } else {
+                                                                                                                                    echo '<i class="far fa-check-circle mx-1 text-secondary"></i>';
                                                                                                                                 } ?></div>
                         </div>
                     </div>

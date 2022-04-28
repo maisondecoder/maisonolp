@@ -29,7 +29,7 @@
         <div class="col position-relative">
             <div class="bg-white p-3" style="border-radius: 16px">
                 <div class="fs-6">Level <a href="<?= base_url('user/level'); ?>" class="stretched-link"><i class="fas fa-chevron-right cus-icon-color"></i></a></div>
-                <div class="fw-bold"><i class="fas fa-medal"></i> <?= $level; ?></div>
+                <div class="fw-bold badge bg-dark text-light"><i class="fas fa-medal"></i> <?= $level; ?></div>
             </div>
         </div>
         <div class="col position-relative">
@@ -82,6 +82,7 @@
 <div class="bg-white p-4 mt-1" style="border-radius: 0px">
     <h5>Settings</h5>
     <div class="list-group mt-3 list-group-flush rounded-3">
+    <a href="<?= base_url('user/edit_profile'); ?>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center text-dark">Edit Profile<span class=""><i class="fas fa-chevron-right cus-icon-color"></i></span></a>
         <a href="<?= base_url('user/change_password'); ?>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center text-dark">Change Password<span class=""><i class="fas fa-chevron-right cus-icon-color"></i></span></a>
     </div>
 </div>

@@ -135,10 +135,9 @@ class Customer_model extends CI_Model
     //memanggil profile customer
     public function get_cus_profile($cus_id)
     {
-        $this->db->select('a.profile_first_name, a.profile_last_name, b.gender_label, c.age_label');
+        $this->db->select('a.profile_first_name, a.profile_last_name, a.gender_id, a.celebrate_id, a.date_of_birth, b.gender_label');
         $this->db->from('cp_customer_profile a');
         $this->db->join('master_gender b', 'b.gender_id = a.gender_id');
-        $this->db->join('master_age_group c', 'c.age_id = a.age_id');
         $get_profile = $this->db->get_where('cp_customer_profile', array('a.cus_id' => $cus_id), 1, 0)->row_array();
 
         return $get_profile;
@@ -191,7 +190,7 @@ class Customer_model extends CI_Model
     }
 
 
-    //
+    //fungsi ganti password user
     public function change_password($pass_input, $cus_id_input){
         $pass_hash = password_hash($pass_input, PASSWORD_DEFAULT);
 
@@ -200,8 +199,27 @@ class Customer_model extends CI_Model
         );
 
         $this->db->where('cus_id', $cus_id_input);
-        $change_password = $this->db->update('cd_customer_data', $data);
+        $this->db->update('cd_customer_data', $data);
+        $change_password = $this->db->affected_rows();
 
         return $change_password;
+    }
+
+    //fungsi edit profile user
+    public function edit_profile($cus_id_input, $first, $last, $gender, $dob, $celebrate){
+
+        $data = array(
+            'profile_first_name' => $first,
+            'profile_last_name' => $last,
+            'gender_id' => $gender,
+            'date_of_birth' => $dob,
+            'celebrate_id' => $celebrate
+        );
+
+        $this->db->where('cus_id', $cus_id_input);
+        $this->db->update('cp_customer_profile', $data);
+        $edit_profile = $this->db->affected_rows();
+
+        return $edit_profile;
     }
 }

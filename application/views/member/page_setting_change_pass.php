@@ -1,7 +1,7 @@
 <div class="container p-4">
     <h3 class="mt-2 mb-2 text-white"><a href="<?= base_url('user'); ?>" class="me-3 text-white"><i class="fas fa-arrow-left"></i></a>Change Password</h3>
 </div>
-<div class="container bg-white p-4 mb-3" style="border-radius: 16px">
+<div class="container bg-white p-4 mb-3" style="margin-bottom:100px !important; border-radius: 16px">
     <span class="text-danger"><?php echo validation_errors(); ?></span>
     <form action="<?= base_url('user/change_password/'); ?>" method="post">
         <div class="mb-4">

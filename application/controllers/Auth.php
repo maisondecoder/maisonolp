@@ -311,7 +311,8 @@ class Auth extends CI_Controller
         $this->form_validation->set_rules('first-input', 'First Name', 'required');
         $this->form_validation->set_rules('last-input', 'Last Name', 'required');
         $this->form_validation->set_rules('gender-input', 'Gender', 'required');
-        $this->form_validation->set_rules('age-input', 'Age Group', 'required');
+        $this->form_validation->set_rules('birth-input', 'Date of Birth', 'required');
+        $this->form_validation->set_rules('celebrate-input', 'Day Celebrate', 'required');
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('auth/page_introduce');
@@ -320,10 +321,11 @@ class Auth extends CI_Controller
             $first_input = $this->input->post('first-input');
             $last_input = $this->input->post('last-input');
             $gender_input = $this->input->post('gender-input');
-            $age_input = $this->input->post('age-input');
+            $birth_input = $this->input->post('birth-input');
+            $celebrate_input = $this->input->post('celebrate-input');
             $this->load->model('auth_model');
             $this->load->model('cashier_model');
-            $this->auth_model->auth_create_profile($first_input, $last_input, $gender_input, $age_input, $cus_id);
+            $this->auth_model->auth_create_profile($first_input, $last_input, $gender_input, $birth_input, $celebrate_input, $cus_id);
             $this->session->set_userdata('ses_cusid', $cus_id);
             $this->cashier_model->create_pts(50, 0, 'Sign Up Bonus', $cus_id, 1, 'REG' . now());
             redirect('user');

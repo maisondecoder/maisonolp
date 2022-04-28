@@ -99,7 +99,7 @@ class Auth_model extends CI_Model
     }
 
     //fungsi menyimpan data member saat pertama kali login
-    public function auth_create_profile($first_input, $last_input, $gender_input, $age_input, $cus_id)
+    public function auth_create_profile($first_input, $last_input, $gender_input, $birth_input, $celebrate_input, $cus_id)
     {
         $this->load->helper('date');
 
@@ -108,7 +108,8 @@ class Auth_model extends CI_Model
             'profile_first_name' => $first_input,
             'profile_last_name' => $last_input,
             'gender_id' => $gender_input,
-            'age_id' => $age_input,
+            'date_of_birth' => $birth_input,
+            'celebrate_id' => $celebrate_input
         );
 
         $this->db->insert('cp_customer_profile', $data);

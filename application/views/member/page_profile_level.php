@@ -37,7 +37,7 @@
         </div>
     </div>
 </div>
-<div class="bg-white p-4" style="margin-bottom:95px; border-radius: 16px">
+<div class="bg-white p-4" style="margin-bottom:100px !important; border-radius: 16px">
     <h3>What's the Level Benefit?</h3>
     <ul class="list-group list-group-flush list-group-numbered">
         <li class="list-group-item">Free 50 Maison Points for Newcomers</li>
