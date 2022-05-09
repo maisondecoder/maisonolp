@@ -14,14 +14,14 @@
 
                             <?php foreach ($vp_details as $key => $vp_details) { ?>
                                 <li class="splide__slide">
-                                    <div class="col mt-3" style="margin-bottom:85px !important;">
-                                        <div class="mb-4 pb-2">
+                                    <div class="col mt-3" style="margin-bottom:95px !important;">
+                                        <div class="mb-4 pb-4">
                                             <a href="<?= base_url('voucher/details/') . $vp_details['vop_uniqueid']; ?>" class="stretched-link">
                                                 <div style="z-index:1;">
                                                     <img src="<?= base_url('assets/voucher_program/') . $vp_details['vop_image']; ?>" class="card-img-top" alt="..." loading="lazy">
                                                 </div>
                                                 <div class="py-3 px-2 border-top bg-white shadow-sm" style="position:absolute; margin-top:-10px; z-index:99; border-radius:12px; width:100%;">
-                                                    <div class="mb-2 text-dark"><?= $vp_details['vop_title']; ?></div>
+                                                    <div class="mb-2 text-dark" style="font-size:0.9rem; max-height:45px; overflow-y:hidden"><?= $vp_details['vop_title']; ?></div>
                                                     <div class="badge bg-success text-light"><?= number_format($vp_details['vop_pointprice'], 0, ',', '.'); ?> Points</div>
                                                 </div>
                                             </a>
@@ -46,14 +46,14 @@
                     <ul class="splide__list">
                         <?php foreach ($vp_details2 as $key => $vp_details2) { ?>
                             <li class="splide__slide">
-                                <div class="col mt-3" style="margin-bottom:85px !important;">
-                                    <div class="mb-4 pb-2">
+                                <div class="col mt-3" style="margin-bottom:95px !important;">
+                                    <div class="mb-4 pb-4">
                                         <a href="<?= base_url('voucher/details/') . $vp_details2['vop_uniqueid']; ?>" class="stretched-link">
                                             <div style="z-index:1;">
                                                 <img src="<?= base_url('assets/voucher_program/') . $vp_details2['vop_image']; ?>" class="card-img-top" alt="..." loading="lazy">
                                             </div>
                                             <div class="py-3 px-2 border-top bg-white shadow-sm" style="position:absolute; margin-top:-10px; z-index:99; border-radius:12px; width:100%;">
-                                                <div class="mb-2 text-dark"><?= $vp_details2['vop_title']; ?></div>
+                                                <div class="mb-2 text-dark" style="font-size:0.9rem; max-height:45px; overflow-y:hidden"><?= $vp_details2['vop_title']; ?></div>
                                                 <p class="card-text text-muted" style=""><span class="badge bg-danger text-light">In <span id="start<?= $key; ?>" data-start="<?= $vp_details2['date_start'] ?>000"></span><span id="ago<?= $key; ?>"></span></span></p>
                                             </div>
                                         </a>
@@ -77,14 +77,14 @@
                     <ul class="splide__list">
                         <?php foreach ($vp_details3 as $key => $vp_details3) { ?>
                             <li class="splide__slide">
-                                <div class="col mt-3" style="margin-bottom:85px !important;">
-                                    <div class="mb-4 pb-2">
+                                <div class="col mt-3" style="margin-bottom:95px !important;">
+                                    <div class="mb-4 pb-4">
                                         <a href="<?= base_url('voucher/details/') . $vp_details3['vop_uniqueid']; ?>" class="">
                                             <div style="z-index:1;">
                                                 <img src="<?= base_url('assets/voucher_program/') . $vp_details3['vop_image']; ?>" class="card-img-top" alt="..." loading="lazy">
                                             </div>
                                             <div class="py-3 px-2 border-top bg-white shadow-sm" style="position:absolute; margin-top:-10px; z-index:99; border-radius:12px; width:100%">
-                                                <div class="mb-2 text-dark"><?= $vp_details3['vop_title']; ?></div>
+                                                <div class="mb-2 text-dark" style="font-size:0.9rem; max-height:45px; overflow-y:hidden"><?= $vp_details3['vop_title']; ?></div>
                                                 <p class="card-text text-muted"><span class="badge bg-secondary text-light">End</span></p>
                                             </div>
                                         </a>
