@@ -93,33 +93,73 @@ class User extends CI_Controller
         $this->load->view('member/footer');
     }
 
-    public function point()
+    public function point($state = "total")
     {
         $data['page'] = 'profile';
         $cusid = $this->session->userdata('ses_cusid');
 
         $this->load->model('customer_model');
-        $data['list_pts'] = $this->customer_model->get_list_cus_pts($cusid);
+        //$data['list_pts'] = $this->customer_model->get_list_cus_pts($cusid);
 
         $data['total_trx'] = $this->customer_model->get_count_cus_pts_audited($cusid);
         $data['total_pending'] = $this->customer_model->get_count_cus_pts_pending($cusid);
         $data['total_pts'] = $this->customer_model->get_point_balance($cusid);
+        
+        $jenis = array("total", "success", "pending");
+
+        if (in_array($state, $jenis)) {
+            if ($state == "total") {
+                $data['list_pts'] = $this->customer_model->get_list_cus_pts($cusid);
+                $data['state'] = "total";
+                $data['text_no_data'] = "You don't have any point history.";
+            } elseif ($state == "success") {
+                $data['list_pts'] = $this->customer_model->get_list_cus_pts_by_status($cusid, 1);
+                $data['state'] = "success";
+                $data['text_no_data'] = "You don't have any succeed point history.";
+            } elseif ($state == "pending") {
+                $data['list_pts'] = $this->customer_model->get_list_cus_pts_by_status($cusid, 0);
+                $data['state'] = "pending";
+                $data['text_no_data'] = "You don't have any pending point history.";
+            }
+        } else {
+            redirect('user/point');
+        }
 
         $this->load->view('member/header');
         $this->load->view('member/page_profile_my_points', $data);
         $this->load->view('member/footer');
     }
 
-    public function transaction()
+    public function transaction($state = "total")
     {
         $data['page'] = 'profile';
         $cusid = $this->session->userdata('ses_cusid');
 
         $this->load->model('customer_model');
-        $data['list_trx'] = $this->customer_model->get_list_cus_trx($cusid);
+        //$data['list_trx'] = $this->customer_model->get_list_cus_trx($cusid);
         $data['total_spending'] = $this->customer_model->get_total_spending($cusid);
         $data['total_trx'] = $this->customer_model->get_count_cus_trx($cusid);
         $data['total_pending'] = $this->customer_model->get_count_cus_trx_pending($cusid);
+
+        $jenis = array("total", "success", "pending");
+
+        if (in_array($state, $jenis)) {
+            if ($state == "total") {
+                $data['list_trx'] = $this->customer_model->get_list_cus_trx($cusid);
+                $data['state'] = "total";
+                $data['text_no_data'] = "You don't have any transaction history.";
+            } elseif ($state == "success") {
+                $data['list_trx'] = $this->customer_model->get_list_cus_trx_by_status($cusid, 1);
+                $data['state'] = "success";
+                $data['text_no_data'] = "You don't have any succeed transaction history.";
+            } elseif ($state == "pending") {
+                $data['list_trx'] = $this->customer_model->get_list_cus_trx_by_status($cusid, 0);
+                $data['state'] = "pending";
+                $data['text_no_data'] = "You don't have any pending transaction history.";
+            }
+        } else {
+            redirect('user/transaction');
+        }
 
         $this->load->view('member/header');
         $this->load->view('member/page_profile_my_transactions', $data);
@@ -212,7 +252,7 @@ class User extends CI_Controller
             $edit_profile = $this->customer_model->edit_profile($cusid, $first, $last, $gender, $dob, $celebrate);
             if ($edit_profile) {
                 redirect('user?msg=edit-profile-success');
-            }else{
+            } else {
                 redirect('user');
             }
         }

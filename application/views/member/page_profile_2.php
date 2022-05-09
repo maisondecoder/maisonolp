@@ -8,7 +8,7 @@
                     </div>
                     <div id="member_since_text" class="col text-end text-light">
                         <p style="font-family:monospace">MEMBER SINCE<br><?= date('d/m/Y', $profile['date_created']); ?></p>
-                        <p style="font-family:monospace"><?= $profile_data['profile_first_name'] . ' ' . $profile_data['profile_last_name']; ?></p>
+                        <p style="font-family:monospace"><?= htmlspecialchars($profile_data['profile_first_name'] . ' ' . $profile_data['profile_last_name']); ?></p>
                     </div>
                 </div>
                 <div id="member_name_text" class="row">
@@ -62,19 +62,19 @@
         <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">
             <div class="row">
                 <div class="col">Full Name</div>
-                <div class="col text-end"><?= $profile_data['profile_first_name'] . ' ' . $profile_data['profile_last_name']; ?></div>
+                <div class="col text-end"><?= htmlspecialchars($profile_data['profile_first_name'] . ' ' . $profile_data['profile_last_name']); ?></div>
             </div>
         </a>
         <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">
             <div class="row">
                 <div class="col">Email</div>
-                <div class="col text-end"><?= $profile['cus_email']; ?></div>
+                <div class="col text-end"><?= htmlspecialchars($profile['cus_email']); ?></div>
             </div>
         </a>
         <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">
             <div class="row">
                 <div class="col">Phone</div>
-                <div class="col text-end">+<?= $profile['cus_phone']; ?></div>
+                <div class="col text-end">+<?= htmlspecialchars($profile['cus_phone']); ?></div>
             </div>
         </a>
     </div>

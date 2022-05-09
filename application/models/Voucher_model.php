@@ -95,7 +95,7 @@ class Voucher_model extends CI_Model
     {
         $this->load->helper('date');
         $this->db->select('vou_id');
-        $count_all_voucher_owned_by_user = $this->db->get_where('vou_voucher_user', array('cus_id' => $cus_id_input, 'date_expired >=' => now()), 0, 0)->result_array();
+        $count_all_voucher_owned_by_user = $this->db->get_where('vou_voucher_user', array('cus_id' => $cus_id_input,'date_used' => 0, 'date_expired >=' => now()), 0, 0)->result_array();
 
         return count($count_all_voucher_owned_by_user);
     }

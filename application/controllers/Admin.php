@@ -60,7 +60,7 @@ class Admin extends CI_Controller
         $this->load->view('admin/footer');
     }
 
-    public function transactions($state = 'pending')
+    public function transactions($branch = 'bsd', $state = 'pending')
     {
         if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
             $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
@@ -71,16 +71,26 @@ class Admin extends CI_Controller
         $this->load->model('websetting_model');
         $data['point_setting'] = $this->websetting_model->get_point_setting();
 
-        $this->load->model('admin_model');
-        if ($state == 'pending') {
-            $data['pending_trx'] = $this->admin_model->get_all_pending_transactions();
-            //print_r($data['pending_trx']);
-            $data['state_trx'] = 'pending';
-        } elseif ($state == 'approved') {
-            $data['pending_trx'] = $this->admin_model->get_all_approved_transactions();
-            $data['state_trx'] = 'approved';
-        } else {
-            redirect('admin/transactions/pending');
+        $jenis = array("pending", "approved");
+        $cabang = array("bsd", "kemang");
+
+        if (in_array($state, $jenis) && in_array($branch, $cabang)) {
+            $this->load->model('admin_model');
+            if ($branch == 'bsd') {
+                $data['branch_trx'] = 'bsd';
+            }elseif($branch == 'kemang'){
+                $data['branch_trx'] = 'kemang';
+            }
+            if ($state == 'pending') {
+                $data['pending_trx'] = $this->admin_model->get_all_pending_transactions();
+                //print_r($data['pending_trx']);
+                $data['state_trx'] = 'pending';
+            } elseif ($state == 'approved') {
+                $data['pending_trx'] = $this->admin_model->get_all_approved_transactions();
+                $data['state_trx'] = 'approved';
+            }
+        }else {
+            redirect('admin/transactions/bsd/pending');
         }
 
         $this->load->view('admin/header');
@@ -97,8 +107,8 @@ class Admin extends CI_Controller
         }
 
         $this->load->model('admin_model');
+        $this->load->model('customer_model');
         if ($status == 'active') {
-
             $data['member_list'] = $this->admin_model->get_all_members(1);
             $data['state_tab'] = 'active';
         } elseif ($status == 'inactive') {
@@ -331,19 +341,20 @@ class Admin extends CI_Controller
         $this->load->view('admin/footer');
     }
 
-    public function delete_voucher_program($vop_uniqueid = '0'){
+    public function delete_voucher_program($vop_uniqueid = '0')
+    {
         if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
             $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
             redirect('admin/auth');
             die('Cannot Access Admin Page');
         }
 
-        if($vop_uniqueid == '0'){
+        if ($vop_uniqueid == '0') {
             redirect('admin/voucher_program');
-        }else{
+        } else {
             $this->load->model('admin_model');
-             $vop_data = $this->admin_model->specific_voucher_program($vop_uniqueid);
-             if($vop_data){
+            $vop_data = $this->admin_model->specific_voucher_program($vop_uniqueid);
+            if ($vop_data) {
                 $data['vp_data'] = $vop_data;
                 //print_r($data['vp_data']);
                 $delete = $this->admin_model->delete_voucher_program($vop_uniqueid);
@@ -352,9 +363,9 @@ class Admin extends CI_Controller
                 } else {
                     redirect('admin/voucher_program?msg=delete-failed');
                 }
-             }else{
+            } else {
                 redirect('admin/voucher_program');
-             }
+            }
         }
 
         $this->admin_model->delete_voucher_program($vop_uniqueid);
@@ -413,7 +424,7 @@ class Admin extends CI_Controller
         }
     }
 
-    public function edit_voucher_program($vop_uniqueid='0')
+    public function edit_voucher_program($vop_uniqueid = '0')
     {
         if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
             $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
@@ -421,17 +432,17 @@ class Admin extends CI_Controller
             die('Cannot Access Admin Page');
         }
 
-        if($vop_uniqueid == '0'){
+        if ($vop_uniqueid == '0') {
             redirect('admin/voucher_program');
-        }else{
+        } else {
             $this->load->model('admin_model');
-             $vop_data = $this->admin_model->specific_voucher_program($vop_uniqueid);
-             if($vop_data){
+            $vop_data = $this->admin_model->specific_voucher_program($vop_uniqueid);
+            if ($vop_data) {
                 $data['vp_data'] = $vop_data;
                 //print_r($data['vp_data']);
-             }else{
+            } else {
                 redirect('admin/voucher_program');
-             }
+            }
         }
         $this->load->library('form_validation');
 

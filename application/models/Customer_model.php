@@ -84,6 +84,7 @@ class Customer_model extends CI_Model
     }
 
     //memanggil semua list transaksi customer
+    //total
     public function get_list_cus_trx($cus_id_input)
     {
         $this->load->helper('date');
@@ -93,13 +94,39 @@ class Customer_model extends CI_Model
 
         return $get_list_cus_trx;
     }
+    //memanggil semua list transaksi customer
+    //by status 1=success 0=pending
+    public function get_list_cus_trx_by_status($cus_id_input, $status)
+    {
+        $this->load->helper('date');
+        $this->db->select('*');
+        $this->db->order_by('date_created', 'DESC');
+        $this->db->where('trx_status', $status);
+        $get_list_cus_trx = $this->db->get_where('trx_transaction', array('cus_id' => $cus_id_input, 'date_expired >=' => now()), 0, 0)->result_array();
+
+        return $get_list_cus_trx;
+    }
 
     //memanggil semua list point customer
+    //total
     public function get_list_cus_pts($cus_id_input)
     {
         $this->load->helper('date');
         $this->db->select('*');
         $this->db->order_by('date_created', 'DESC');
+        $get_list_cus_pts = $this->db->get_where('pts_point', array('cus_id' => $cus_id_input, 'date_expired >=' => now()), 0, 0)->result_array();
+
+        return $get_list_cus_pts;
+    }
+
+    //memanggil semua list point customer
+    //by status 1=success 0=pending
+    public function get_list_cus_pts_by_status($cus_id_input, $status)
+    {
+        $this->load->helper('date');
+        $this->db->select('*');
+        $this->db->order_by('date_created', 'DESC');
+        $this->db->where('pts_status', $status);
         $get_list_cus_pts = $this->db->get_where('pts_point', array('cus_id' => $cus_id_input, 'date_expired >=' => now()), 0, 0)->result_array();
 
         return $get_list_cus_pts;

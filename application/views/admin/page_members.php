@@ -25,18 +25,26 @@
                         <tr>
                             <th>#</th>
                             <th>Name</th>
+                            <th>Level</th>
                             <th>Email</th>
                             <th>Phone</th>
+                            <th>Celebrate</th>
                             <th>Date Created</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($member_list as $key => $member) { ?>
+                        <?php 
+                            foreach ($member_list as $key => $member) { 
+                                $spending = $this->customer_model->get_total_spending($member['cus_id']);
+                                $level = $this->customer_model->get_level($spending);
+                        ?>
                             <tr id="<?= $member['cus_id']; ?>">
                                 <td><?= $key+1 ?></td>
                                 <td><?= $member['profile_first_name'].' '.$member['profile_last_name']; ?></td>
+                                <td><?= $level['ml_name']; ?></td>
                                 <td><?= $member['cus_email']; ?></td>
                                 <td><?= $member['cus_phone']; ?></td>
+                                <td><?= $member['celebrate_label']; ?></td>
                                 <td><?= date('d-m-Y H:i:s', $member['date_created']); ?></td>
                             </tr>
                         <?php } ?>

@@ -9,14 +9,26 @@
     <div class="card shadow mb-4">
         <ul class="nav nav-tabs mt-3">
             <li class="nav-item">
+                <a class="nav-link <?php if ($branch_trx == 'bsd') {
+                                        echo 'active';
+                                    } ?>" aria-current="page" href="<?= base_url('admin/transactions/bsd/'.$state_trx) ?>">BSD</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?php if ($branch_trx == 'kemang') {
+                                        echo 'active';
+                                    } ?>" href="<?= base_url('admin/transactions/kemang/'.$state_trx) ?>">Kemang</a>
+            </li>
+        </ul>
+        <ul class="nav nav-tabs mt-3">
+            <li class="nav-item">
                 <a class="nav-link <?php if ($state_trx == 'pending') {
                                         echo 'active';
-                                    } ?>" aria-current="page" href="<?= base_url('admin/transactions/pending') ?>">Pending</a>
+                                    } ?>" aria-current="page" href="<?= base_url('admin/transactions/'.$branch_trx.'/pending') ?>">Pending</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link <?php if ($state_trx == 'approved') {
                                         echo 'active';
-                                    } ?>" href="<?= base_url('admin/transactions/approved') ?>">Approved</a>
+                                    } ?>" href="<?= base_url('admin/transactions/'.$branch_trx.'/approved') ?>">Approved</a>
             </li>
         </ul>
         <div class="card-body">
@@ -56,7 +68,7 @@
                                 <td><?= $pending['store_branch']; ?></td>
                                 <td><?= $pending['jurnal_id']; ?></td>
 
-                                <td><?= $pending['profile_first_name'].' '.$pending['profile_last_name']; ?></td>
+                                <td><?= $pending['profile_first_name'] . ' ' . $pending['profile_last_name']; ?></td>
                                 <td><?= $pending['cas_fullname']; ?></td>
                                 <td><span id="trx-idr-<?= $pending['trx_reff']; ?>"><?= number_format($pending['trx_nominal'], 0, ',', '.'); ?></span></td>
                                 <td><span id="trx-pts-<?= $pending['trx_reff']; ?>"><?= number_format($pending['pts_nominal'], 1, ',', '.'); ?></span> <span class="badge bg-dark text-light rounded-pill"><?= $pending['pts_multiplier']; ?>x</span></td>

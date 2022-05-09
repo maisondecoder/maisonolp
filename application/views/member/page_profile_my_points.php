@@ -7,21 +7,21 @@
 </div>
 <div class="container bg-white p-4 mb-3 text-center" style="border-radius: 16px">
     <div class="row">
-        <div class="col">
+        <div class="col position-relative">
             <div class="bg-white" style="border-radius: 16px">
-                <div class="fs-6">Total</div>
+                <div class="fs-6 <?php if ($state == 'total') { echo 'text-cus-brown'; } ?>">Total <a href="<?= base_url('user/point'); ?>" class="stretched-link"><i class="fas fa-chevron-right cus-icon-color"></i></a></div>
                 <div class="fw-bold"><?= number_format(($total_trx + $total_pending), 0, ',', '.'); ?></div>
             </div>
         </div>
-        <div class="col">
+        <div class="col position-relative">
             <div class="bg-white" style="border-radius: 16px">
-                <div class="fs-6">Success</div>
+                <div class="fs-6 <?php if ($state == 'success') { echo 'text-cus-brown'; } ?>">Success <a href="<?= base_url('user/point/success'); ?>" class="stretched-link"><i class="fas fa-chevron-right cus-icon-color"></i></a></div>
                 <div class="fw-bold"><?= number_format($total_trx, 0, ',', '.'); ?></div>
             </div>
         </div>
-        <div class="col">
+        <div class="col position-relative">
             <div class="bg-white" style="border-radius: 16px">
-                <div class="fs-6">Pending</div>
+                <div class="fs-6 <?php if ($state == 'pending') { echo 'text-cus-brown'; } ?>">Pending <a href="<?= base_url('user/point/pending'); ?>" class="stretched-link"><i class="fas fa-chevron-right cus-icon-color"></i></a></div>
                 <div class="fw-bold"><?= number_format($total_pending, 0, ',', '.'); ?></div>
             </div>
         </div>
@@ -63,7 +63,7 @@
                 <?php }
             } else { ?>
                 <i class="fas fa-ghost text-center text-muted mb-3" style="font-size:36pt;"></i>
-                <span class="text-center text-muted">You don't have any point yet.</span>
+                <span class="text-center text-muted"><?= $text_no_data; ?></span>
             <?php } ?>
         </div>
     </div>

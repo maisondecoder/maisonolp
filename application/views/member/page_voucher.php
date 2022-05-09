@@ -79,7 +79,7 @@
                             <li class="splide__slide">
                                 <div class="col mt-3" style="margin-bottom:85px !important;">
                                     <div class="mb-4 pb-2">
-                                        <a href="<?= base_url('voucher/details/') . $vp_details3['vop_uniqueid']; ?>" class="stretched-link">
+                                        <a href="<?= base_url('voucher/details/') . $vp_details3['vop_uniqueid']; ?>" class="">
                                             <div style="z-index:1;">
                                                 <img src="<?= base_url('assets/voucher_program/') . $vp_details3['vop_image']; ?>" class="card-img-top" alt="..." loading="lazy">
                                             </div>
