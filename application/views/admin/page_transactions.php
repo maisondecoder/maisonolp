@@ -8,27 +8,24 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <ul class="nav nav-tabs mt-3">
+            <?php foreach($cabang_id as $key => $branch){ ?>
             <li class="nav-item">
-                <a class="nav-link <?php if ($branch_trx == 'bsd') {
+                <a class="nav-link <?php if ($branch_id == $cabang_id[$key]) {
                                         echo 'active';
-                                    } ?>" aria-current="page" href="<?= base_url('admin/transactions/bsd/'.$state_trx) ?>">BSD</a>
+                                    } ?>" aria-current="page" href="<?= base_url('admin/transactions/'.$cabang_id[$key].'/'.$state_trx) ?>"><?= $cabang_label[$key]; ?></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link <?php if ($branch_trx == 'kemang') {
-                                        echo 'active';
-                                    } ?>" href="<?= base_url('admin/transactions/kemang/'.$state_trx) ?>">Kemang</a>
-            </li>
+            <?php } ?>
         </ul>
         <ul class="nav nav-tabs mt-3">
             <li class="nav-item">
                 <a class="nav-link <?php if ($state_trx == 'pending') {
                                         echo 'active';
-                                    } ?>" aria-current="page" href="<?= base_url('admin/transactions/'.$branch_trx.'/pending') ?>">Pending</a>
+                                    } ?>" aria-current="page" href="<?= base_url('admin/transactions/'.$branch_id.'/pending') ?>">Pending</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link <?php if ($state_trx == 'approved') {
                                         echo 'active';
-                                    } ?>" href="<?= base_url('admin/transactions/'.$branch_trx.'/approved') ?>">Approved</a>
+                                    } ?>" href="<?= base_url('admin/transactions/'.$branch_id.'/approved') ?>">Approved</a>
             </li>
         </ul>
         <div class="card-body">

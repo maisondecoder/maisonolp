@@ -60,7 +60,7 @@ class Admin extends CI_Controller
         $this->load->view('admin/footer');
     }
 
-    public function transactions($branch = 'bsd', $state = 'pending')
+    public function transactions($branch_id = 1, $state = 'pending')
     {
         if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
             $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
@@ -69,30 +69,36 @@ class Admin extends CI_Controller
         }
 
         $this->load->model('websetting_model');
+        $this->load->model('admin_model');
         $data['point_setting'] = $this->websetting_model->get_point_setting();
 
+        $stores = $this->admin_model->get_stores();
+        //print_r($stores);
+        $cabang_id = array();
+        $cabang_label = array();
         $jenis = array("pending", "approved");
-        $cabang = array("bsd", "kemang");
+        foreach($stores as $key=>$store){
+            array_push($cabang_id,$store['store_id']);
+            array_push($cabang_label,$store['store_branch']);
+        }
+        
+        $data['cabang_id'] = $cabang_id;
+        $data['cabang_label'] = $cabang_label;
+        if (in_array($state, $jenis) && in_array($branch_id, $cabang_id)) {
+            
+                $data['branch_id'] = $branch_id;
 
-        if (in_array($state, $jenis) && in_array($branch, $cabang)) {
-            $this->load->model('admin_model');
-            if ($branch == 'bsd') {
-                $data['branch_trx'] = 'bsd';
-            }elseif($branch == 'kemang'){
-                $data['branch_trx'] = 'kemang';
-            }
             if ($state == 'pending') {
-                $data['pending_trx'] = $this->admin_model->get_all_pending_transactions();
-                //print_r($data['pending_trx']);
+                $data['pending_trx'] = $this->admin_model->get_all_pending_transactions($branch_id);
                 $data['state_trx'] = 'pending';
             } elseif ($state == 'approved') {
-                $data['pending_trx'] = $this->admin_model->get_all_approved_transactions();
+                $data['pending_trx'] = $this->admin_model->get_all_approved_transactions($branch_id);
                 $data['state_trx'] = 'approved';
             }
         }else {
-            redirect('admin/transactions/bsd/pending');
+            redirect('admin/transactions/');
         }
-
+        
         $this->load->view('admin/header');
         $this->load->view('admin/page_transactions', $data);
         $this->load->view('admin/footer');

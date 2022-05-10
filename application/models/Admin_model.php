@@ -75,7 +75,7 @@ class Admin_model extends CI_Model
     }
 
     //Pending Review Transaksi
-    public function get_all_pending_transactions()
+    public function get_all_pending_transactions($branch = 0)
     {
         $this->db->select('*');
         $this->db->from('trx_transaction');
@@ -86,13 +86,16 @@ class Admin_model extends CI_Model
         $this->db->join('pts_point', 'pts_point.trx_reff = trx_transaction.trx_reff');
         $this->db->order_by('trx_transaction.date_created', 'ASC');
         $this->db->where('trx_status', 0);
+        if($branch > 0){
+            $this->db->where('trx_transaction.store_id', $branch);
+        }
         $trx_list = $this->db->get()->result_array();
 
         return $trx_list;
     }
 
     //Approved Review Transaksi
-    public function get_all_approved_transactions()
+    public function get_all_approved_transactions($branch = 0)
     {
         $this->db->select('*');
         $this->db->from('trx_transaction');
@@ -104,9 +107,20 @@ class Admin_model extends CI_Model
         $this->db->join('pts_point', 'pts_point.trx_reff = trx_transaction.trx_reff');
         $this->db->order_by('trx_transaction.date_approved', 'DESC');
         $this->db->where('trx_status', 1);
+        if($branch > 0){
+            $this->db->where('trx_transaction.store_id', $branch);
+        }
         $trx_list = $this->db->get()->result_array();
 
         return $trx_list;
+    }
+
+    public function get_stores(){
+        $this->db->select('*');
+        $this->db->from('sd_store_data');
+        $stores = $this->db->get()->result_array();
+
+        return $stores;
     }
 
     public function check_pending_trx($trx_id)
