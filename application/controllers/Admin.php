@@ -314,8 +314,8 @@ class Admin extends CI_Controller
             die('Cannot Access Admin Page');
         }
 
-        //header("Content-type: application/vnd-ms-excel");
-        //header("Content-Disposition: attachment; filename=list_member_data.xls");
+        header("Content-type: application/vnd-ms-excel");
+        header("Content-Disposition: attachment; filename=list_member_data.xls");
         $this->load->model('admin_model');
         $this->load->model('customer_model');
         $data['member_list'] = $this->admin_model->get_all_members(1);

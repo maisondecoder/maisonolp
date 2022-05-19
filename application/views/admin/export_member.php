@@ -22,8 +22,8 @@
                 <th>Day Celebrate</th>
                 <th>Date of Birth</th>
                 <th>Date Created</th>
-                <th>Last Login (Date)</th>
-                <th>Last Login (Days Ago)</th>
+                <th>Last Login</th>
+                <th>Days Ago</th>
             </tr>
         </thead>
         <tbody>
@@ -43,7 +43,7 @@
                     <td><?= $member['date_of_birth']; ?></td>
                     <td><?= date('Y-m-d', $member['date_created']); ?></td>
                     <td><?= date('Y-m-d', $member['date_last_login']); ?></td>
-                    <td><?= floor(abs($member['date_last_login'] - now())/86400); ?></td>
+                    <td><?= round(abs($member['date_last_login'] - now())/86400); ?></td>
                     <td></td>
                 </tr>
             <?php } ?>
