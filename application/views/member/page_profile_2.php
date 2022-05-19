@@ -29,7 +29,7 @@
         <div class="col position-relative">
             <div class="bg-white p-3" style="border-radius: 16px">
                 <div class="fs-6">Level <a href="<?= base_url('user/level'); ?>" class="stretched-link"><i class="fas fa-chevron-right cus-icon-color"></i></a></div>
-                <div class="fw-bold badge bg-dark text-light"><i class="fas fa-medal"></i> <?= $level; ?></div>
+                <div class="fw-bold badge"  style="background-color:<?= $level_bg; ?> !important; color:<?= $level_text; ?> !important"><i class="fas fa-medal"></i> <?= $level; ?></div>
             </div>
         </div>
         <div class="col position-relative">

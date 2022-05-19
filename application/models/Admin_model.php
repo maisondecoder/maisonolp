@@ -173,6 +173,20 @@ class Admin_model extends CI_Model
     }
 
     //All Registered Members
+    public function get_filtered_members($status_input)
+    {
+        $this->db->select('*');
+        $this->db->from('cd_customer_data');
+        $this->db->join('cp_customer_profile', 'cp_customer_profile.cus_id = cd_customer_data.cus_id');
+        $this->db->join('master_celebrate', 'master_celebrate.celebrate_id = cp_customer_profile.celebrate_id');
+        $this->db->order_by('date_created', 'DESC');
+        $this->db->where('cus_status', $status_input);
+        $member_list = $this->db->get()->result_array();
+
+        return $member_list;
+    }
+
+    //All Registered Members
     public function get_all_cashiers($status_input)
     {
         $this->db->select('*');

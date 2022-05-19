@@ -188,7 +188,7 @@ class Customer_model extends CI_Model
     public function get_level($total_spending)
     {
 
-        $this->db->select('ml_name, ml_range_min, ml_range_max');
+        $this->db->select('ml_name, ml_range_min, ml_range_max, ml_color, ml_text');
         $level = $this->db->get_where('ml_member_level', array('ml_range_min <=' => $total_spending, 'ml_range_max >=' => $total_spending), 0, 0)->row_array();
 
         return $level;

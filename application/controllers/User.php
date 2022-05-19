@@ -52,6 +52,9 @@ class User extends CI_Controller
         $level = $this->customer_model->get_level($data['total_spending']);
         $data['level'] = $level['ml_name'];
 
+        $data['level_bg'] = $level['ml_color'];
+        $data['level_text'] = $level['ml_text'];
+
 
         $data['total_trx'] = $this->customer_model->get_count_cus_trx($cusid);
         $data['total_pts'] = $this->customer_model->get_point_balance($cusid);
