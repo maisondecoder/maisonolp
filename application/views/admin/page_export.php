@@ -6,11 +6,11 @@
 
     <div class="card shadow mb-2 p-4 col-sm-12 col-md-12 col-lg-5">
         <h4 class="h4 mb-4 text-gray-800">Member</h4>
-        <form action="">
+        <form action="<?= base_url('admin/export_member/') ?>" method="post">
             <div class="row">
                 <div class="col mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Day Celebrate</label>
-                    <select type="text" class="form-control" name="celebrate">
+                    <select type="text" class="form-control" name="memceleb">
                         <option value="all">All</option>
                         <option value="1">Chinese New Year</option>
                         <option value="2">Christmas</option>
@@ -20,20 +20,20 @@
                     </select>
                 </div>
                 <div class="col mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Level</label>
-                    <select type="text" class="form-control" name="celebrate">
-                        <option value="all">All</option>
-                        <option value="1">Classic</option>
-                        <option value="2">Silver</option>
-                        <option value="3">Gold</option>
-                        <option value="4">Platinum</option>
-                        <option value="5">Diamond</option>
+                    <label for="exampleFormControlInput1" class="form-label">Level Start From</label>
+                    <select type="text" class="form-control" name="spendstart">
+                        <option value="0">All</option>
+                        <option value="0">Classic</option>
+                        <option value="10000000">Silver</option>
+                        <option value="100000000">Gold</option>
+                        <option value="300000000">Platinum</option>
+                        <option value="750000000">Diamond</option>
                     </select>
 
                 </div>
 
             </div>
-            <a class="btn btn-primary mb-2" href="<?= base_url('admin/export_member'); ?>">Export Member Data</a>
+            <button id="export-member" class="btn btn-primary mb-2">Export Member Data</button>
         </form>
     </div>
 

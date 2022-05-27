@@ -115,10 +115,10 @@ class Admin extends CI_Controller
         $this->load->model('admin_model');
         $this->load->model('customer_model');
         if ($status == 'active') {
-            $data['member_list'] = $this->admin_model->get_all_members(1);
+            $data['member_list'] = $this->admin_model->get_all_members(1,'all');
             $data['state_tab'] = 'active';
         } elseif ($status == 'inactive') {
-            $data['member_list'] = $this->admin_model->get_all_members(0);
+            $data['member_list'] = $this->admin_model->get_all_members(0,'all');
             $data['state_tab'] = 'inactive';
         } else {
             redirect('admin/members/active');
@@ -314,11 +314,13 @@ class Admin extends CI_Controller
             die('Cannot Access Admin Page');
         }
 
-        header("Content-type: application/vnd-ms-excel");
-        header("Content-Disposition: attachment; filename=list_member_data.xls");
+        $celebrate = $this->input->post('memceleb');
+        $data['spendstart'] = $this->input->post('spendstart');
+        //header("Content-type: application/vnd-ms-excel");
+        //header("Content-Disposition: attachment; filename=list_member_data.xls");
         $this->load->model('admin_model');
         $this->load->model('customer_model');
-        $data['member_list'] = $this->admin_model->get_all_members(1);
+        $data['member_list'] = $this->admin_model->get_all_members(1,$celebrate);
         $data['state_trx'] = 'pending';
         $this->load->view('admin/export_member', $data);
     }

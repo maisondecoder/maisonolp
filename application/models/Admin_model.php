@@ -159,14 +159,17 @@ class Admin_model extends CI_Model
     }
 
     //All Registered Members
-    public function get_all_members($status_input)
+    public function get_all_members($status,$celebrate)
     {
         $this->db->select('*');
         $this->db->from('cd_customer_data');
         $this->db->join('cp_customer_profile', 'cp_customer_profile.cus_id = cd_customer_data.cus_id');
         $this->db->join('master_celebrate', 'master_celebrate.celebrate_id = cp_customer_profile.celebrate_id');
-        $this->db->order_by('date_created', 'DESC');
-        $this->db->where('cus_status', $status_input);
+        $this->db->order_by('cd_customer_data.date_created', 'DESC');
+        $this->db->where('cus_status', $status);
+        if($celebrate != 'all'){
+            $this->db->where('cp_customer_profile.celebrate_id', $celebrate);
+        }
         $member_list = $this->db->get()->result_array();
 
         return $member_list;

@@ -28,8 +28,10 @@
         </thead>
         <tbody>
             <?php foreach ($member_list as $key => $member) { 
+               
                 $spending = $this->customer_model->get_total_spending($member['cus_id']);
-                $level = $this->customer_model->get_level($spending);    
+                $level = $this->customer_model->get_level($spending);   
+                if($spending >= $spendstart){ 
             ?>
                 <tr id="<?= $member['cus_id']; ?>">
                     <td><?= $key + 1 ?></td>
@@ -46,7 +48,7 @@
                     <td><?= round(abs($member['date_last_login'] - now())/86400); ?></td>
                     <td></td>
                 </tr>
-            <?php } ?>
+            <?php }} ?>
         </tbody>
     </table>
 </body>
