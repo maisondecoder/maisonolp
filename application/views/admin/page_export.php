@@ -12,11 +12,12 @@
                     <label for="exampleFormControlInput1" class="form-label">Day Celebrate</label>
                     <select type="text" class="form-control" name="memceleb">
                         <option value="all">All</option>
-                        <option value="1">Chinese New Year</option>
-                        <option value="2">Christmas</option>
-                        <option value="3">Eid Al-Fitr / Ramadhan</option>
-                        <option value="4">Nyepi</option>
-                        <option value="5">Vesak</option>
+                        <option value="1">Not Celebrate</option>
+                        <option value="2">Chinese New Year</option>
+                        <option value="3">Christmas</option>
+                        <option value="4">Eid Al-Fitr / Ramadhan</option>
+                        <option value="5">Nyepi</option>
+                        <option value="6">Vesak</option>
                     </select>
                 </div>
                 <div class="col mb-3">
