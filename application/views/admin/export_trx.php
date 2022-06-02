@@ -33,7 +33,7 @@
                     <td><?= $pending['admin_name']; ?></td>
                     <td><?= $pending['store_branch']; ?></td>
                     <td><?= $pending['jurnal_id']; ?></td>
-                    <td><?= $pending['cus_fullname']; ?></td>
+                    <td><?= $pending['profile_first_name'].' '.$member['profile_last_name']; ?></td>
                     <td><?= $pending['cas_fullname']; ?></td>
                     <td><?= $pending['trx_nominal']; ?></td>
                     <td><?= $pending['pts_nominal']; ?></td>
