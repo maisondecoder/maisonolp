@@ -298,10 +298,13 @@ class Admin extends CI_Controller
             die('Cannot Access Admin Page');
         }
 
-        header("Content-type: application/vnd-ms-excel");
-        header("Content-Disposition: attachment; filename=list_transaction_data.xls");
+        $min = strtotime($this->input->post('trxmin'));
+        $max = strtotime($this->input->post('trxmax'));
+        echo $min.'-'.$max;
+        //header("Content-type: application/vnd-ms-excel");
+        //header("Content-Disposition: attachment; filename=list_transaction_data.xls");
         $this->load->model('admin_model');
-        $data['pending_trx'] = $this->admin_model->get_all_transactions();
+        $data['pending_trx'] = $this->admin_model->get_all_transactions_filter($min, $max);
         $data['state_trx'] = 'pending';
         $this->load->view('admin/export_trx', $data);
     }

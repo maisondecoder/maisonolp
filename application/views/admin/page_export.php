@@ -40,7 +40,20 @@
 
     <div class="card shadow mb-2 p-4 col-sm-12 col-md-12 col-lg-5">
         <h4 class="h4 mb-4 text-gray-800">Transaction</h4>
-        <a class="btn btn-primary mb-2" href="<?= base_url('admin/export_trx'); ?>">Export Transaction Data</a>
+        <form action="<?= base_url('admin/export_trx/') ?>" method="post">
+            <div class="row">
+                <div class="col mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Min Date</label>
+                    <input type="date" class="form-control" name="trxmin" value="<?= date('Y-m-d', now() - 2592000); ?>">
+                </div>
+                <div class="col mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Max Date</label>
+                    <input type="date" class="form-control" name="trxmax" max="<?= date('Y-m-d', now()); ?>" value="<?= date('Y-m-d', now()); ?>">
+                </div>
+            </div>
+
+            <button id="export-trx" class="btn btn-primary mb-2">Export Transaction Data</button>
+        </form>
     </div>
 
     <div class="card shadow mb-2 p-4 col-sm-12 col-md-12 col-lg-5">

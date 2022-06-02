@@ -74,6 +74,23 @@ class Admin_model extends CI_Model
         return $trx_list;
     }
 
+    public function get_all_transactions_filter($mindate, $maxdate)
+    {
+        $this->db->select('*');
+        $this->db->from('trx_transaction');
+        $this->db->join('sd_store_data', 'sd_store_data.store_id = trx_transaction.store_id');
+        $this->db->join('cd_cashier_data', 'cd_cashier_data.cas_id = trx_transaction.cas_id');
+        $this->db->join('cd_customer_data', 'cd_customer_data.cus_id = trx_transaction.cus_id');
+        $this->db->join('cp_customer_profile', 'cp_customer_profile.cus_id = trx_transaction.cus_id');
+        $this->db->join('ad_admin_data', 'ad_admin_data.admin_id = trx_transaction.admin_id');
+        $this->db->join('pts_point', 'pts_point.trx_reff = trx_transaction.trx_reff');
+        $this->db->order_by('trx_transaction.date_created', 'ASC');
+        $this->db->where("trx_transaction.date_created BETWEEN '$mindate' AND '$maxdate' ");
+        $trx_list = $this->db->get()->result_array();
+
+        return $trx_list;
+    }
+
     //Pending Review Transaksi
     public function get_all_pending_transactions($branch = 0)
     {
