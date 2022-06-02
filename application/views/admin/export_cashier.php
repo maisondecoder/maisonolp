@@ -16,6 +16,8 @@
                 <th>Cashier Name</th>
                 <th>Email</th>
                 <th>Date Created</th>
+                <th>Date Last Login</th>
+                <th>Days Ago</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +27,8 @@
                     <td><?= $cashier['cas_fullname']; ?></td>
                     <td><?= $cashier['cas_email']; ?></td>
                     <td><?= date('d-m-Y H:i:s', $cashier['date_created']); ?></td>
+                    <td><?= date('d-m-Y H:i:s', $cashier['date_last_login']); ?></td>
+                    <td><?= round(abs($cashier['date_last_login'] - now())/86400); ?></td>
                 </tr>
             <?php } ?>
         </tbody>
