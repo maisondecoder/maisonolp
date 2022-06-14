@@ -27,7 +27,7 @@
                                 <td><?php if($vop['date_start'] > now()){ echo '<span class="badge bg-danger text-white">Upcoming</span>'; }else{if($vop['date_end'] > now()){ echo '<span class="badge bg-success text-white">Running</span>';}else{echo '<span class="badge bg-secondary text-white">End</span>';}} ?></td>
                                 <td><?= date('d-m-Y H:i:s', $vop['date_start']); ?></td>
                                 <td><?= date('d-m-Y H:i:s', $vop['date_end']); ?></td>
-                                <td><a class="btn btn-info" href="<?= base_url('admin/edit_voucher_program/').$vop['vop_uniqueid'];; ?>">Edit</a></td>
+                                <td><a class="btn btn-info" href="<?= base_url('admin/edit_voucher_program/').$vop['vop_uniqueid'];; ?>"><i class="fas fa-edit"></i></a></td>
                             </tr>
                         <?php } ?>
                     </tbody>

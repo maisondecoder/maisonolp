@@ -104,7 +104,7 @@ class Admin extends CI_Controller
         $this->load->view('admin/footer');
     }
 
-    public function members($status = 'active')
+    public function members($status = 'all')
     {
         if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
             $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
@@ -114,14 +114,20 @@ class Admin extends CI_Controller
 
         $this->load->model('admin_model');
         $this->load->model('customer_model');
-        if ($status == 'active') {
+        if ($status == 'all') {
+            $data['member_list'] = $this->admin_model->get_all_members('all','all');
+            $data['state_tab'] = 'all';
+        }elseif ($status == 'active') {
             $data['member_list'] = $this->admin_model->get_all_members(1,'all');
             $data['state_tab'] = 'active';
-        } elseif ($status == 'inactive') {
+        }elseif ($status == 'inactive') {
             $data['member_list'] = $this->admin_model->get_all_members(0,'all');
             $data['state_tab'] = 'inactive';
-        } else {
-            redirect('admin/members/active');
+        }elseif ($status == 'suspend') {
+            $data['member_list'] = $this->admin_model->get_all_members(2,'all');
+            $data['state_tab'] = 'suspend';
+        }else {
+            redirect('admin/members/all');
         }
 
         $this->load->view('admin/header');
@@ -198,6 +204,26 @@ class Admin extends CI_Controller
                 $this->session->set_flashdata('settings_point_change', "<p class='alert alert-danger'>Point Setting Changes Failed.</p>");
                 redirect('admin/settings_point?msg=point-settings-failed');
             }
+        }
+    }
+
+    public function frag_edit_member($cusid = -1, $custat = -1, $reason='')
+    {
+        if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
+            $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
+            redirect('admin/auth');
+            die('Cannot Access Admin Page');
+        }
+        $this->load->model('customer_model');
+        $this->load->model('admin_model');
+        $check = $this->customer_model->get_cus_profile($cusid);
+
+        if ($check) {
+            $edit_stat = $this->admin_model->edit_stat_member($cusid, $custat, $reason);
+            print_r($edit_stat);
+        } else {
+            echo 'Data Invalid';
+            return false;
         }
     }
 

@@ -175,15 +175,37 @@ class Admin_model extends CI_Model
         }
     }
 
+    //Edit status member
+    public function edit_stat_member($cus_id = '-1', $cus_stat = '-1', $reason = '')
+    {
+        if ($cus_id == '-1' || $cus_stat == '-1') {
+            return 'parameter invalid';
+            die();
+        }
+        $this->load->helper('date');
+        $this->db->set('cus_status', $cus_stat);
+        $this->db->set('suspend_reason', $reason);
+        $this->db->where('cus_id', $cus_id);
+        $this->db->update('cd_customer_data');
+        $edit_stat_member = $this->db->affected_rows();
+        if ($edit_stat_member) {
+            return $edit_stat_member;
+        } else {
+            return false;
+        }
+    }
+
     //All Registered Members
-    public function get_all_members($status,$celebrate)
+    public function get_all_members($status = 'all',$celebrate ='all') 
     {
         $this->db->select('*');
         $this->db->from('cd_customer_data');
         $this->db->join('cp_customer_profile', 'cp_customer_profile.cus_id = cd_customer_data.cus_id');
         $this->db->join('master_celebrate', 'master_celebrate.celebrate_id = cp_customer_profile.celebrate_id');
         $this->db->order_by('cd_customer_data.date_created', 'DESC');
-        $this->db->where('cus_status', $status);
+        if($status != 'all'){
+            $this->db->where('cd_customer_data.cus_status', $status);
+        }
         if($celebrate != 'all'){
             $this->db->where('cp_customer_profile.celebrate_id', $celebrate);
         }

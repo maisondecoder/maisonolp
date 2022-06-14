@@ -214,7 +214,7 @@ class Auth extends CI_Controller
                 
                 $token = $this->auth_model->auth_create_token_reset($check_data);
 
-                $sender = "auto-service";
+                $sender = "auto-services";
                 $symbol_send = "@";
                 $domain_send = "maisonliving.id";
                 $sendergroup = $sender . $symbol_send . $domain_send;
@@ -223,7 +223,7 @@ class Auth extends CI_Controller
                 $config = [
                     'protocol' => 'smtp',
                     'priority' => 2,
-                    'smtp_host' => 'ssl://srv115.niagahoster.com',
+                    'smtp_host' => 'ssl://smtp.gmail.com',
                     'smtp_user' => $sendergroup,
                     'smtp_pass' => $secret,
                     'smtp_port' => 465,

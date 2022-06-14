@@ -8,24 +8,24 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <ul class="nav nav-tabs mt-3">
-            <?php foreach($cabang_id as $key => $branch){ ?>
-            <li class="nav-item">
-                <a class="nav-link <?php if ($branch_id == $cabang_id[$key]) {
-                                        echo 'active';
-                                    } ?>" aria-current="page" href="<?= base_url('admin/transactions/'.$cabang_id[$key].'/'.$state_trx) ?>"><?= $cabang_label[$key]; ?></a>
-            </li>
+            <?php foreach ($cabang_id as $key => $branch) { ?>
+                <li class="nav-item">
+                    <a class="nav-link <?php if ($branch_id == $cabang_id[$key]) {
+                                            echo 'active';
+                                        } ?>" aria-current="page" href="<?= base_url('admin/transactions/' . $cabang_id[$key] . '/' . $state_trx) ?>"><?= $cabang_label[$key]; ?></a>
+                </li>
             <?php } ?>
         </ul>
         <ul class="nav nav-tabs mt-3">
             <li class="nav-item">
                 <a class="nav-link <?php if ($state_trx == 'pending') {
                                         echo 'active';
-                                    } ?>" aria-current="page" href="<?= base_url('admin/transactions/'.$branch_id.'/pending') ?>">Pending</a>
+                                    } ?>" aria-current="page" href="<?= base_url('admin/transactions/' . $branch_id . '/pending') ?>">Pending</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link <?php if ($state_trx == 'approved') {
                                         echo 'active';
-                                    } ?>" href="<?= base_url('admin/transactions/'.$branch_id.'/approved') ?>">Approved</a>
+                                    } ?>" href="<?= base_url('admin/transactions/' . $branch_id . '/approved') ?>">Approved</a>
             </li>
         </ul>
         <div class="card-body">
@@ -152,7 +152,7 @@
                     $('#trx-pts-' + $('#save-trx').data('trx-reff')).text($.number(pts_recalc, 1, ',', '.'));
                     $('#edit-trx-' + $('#save-trx').data('trx-reff')).data('trx-idr', $("#edit-idr-input").val());
                     $('#edit-trx-' + $('#save-trx').data('trx-reff')).data('trx-pts', pts_recalc);
-                    $('#editModal').modal('hide')
+                    $('#editModal').modal('hide');
                 })
                 .fail(function() {
                     alert("Error While Saving");

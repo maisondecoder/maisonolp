@@ -274,7 +274,7 @@ class Cashier extends CI_Controller
 
                 $token = $this->cashier_model->cashier_create_token_reset($check_cashier['cas_id']);
 
-                $sender = "auto-service";
+                $sender = "auto-services";
                 $symbol_send = "@";
                 $domain_send = "maisonliving.id";
                 $sendergroup = $sender . $symbol_send . $domain_send;
@@ -283,7 +283,7 @@ class Cashier extends CI_Controller
                 $config = [
                     'protocol' => 'smtp',
                     'priority' => 2,
-                    'smtp_host' => 'ssl://srv115.niagahoster.com',
+                    'smtp_host' => 'ssl://smtp.gmail.com',
                     'smtp_user' => $sendergroup,
                     'smtp_pass' => $secret,
                     'smtp_port' => 465,
@@ -295,7 +295,7 @@ class Cashier extends CI_Controller
                 $this->load->library('email', $config);
                 $this->email->initialize($config);
 
-                $this->email->from($sendergroup, 'Auto-Services Maison Living');
+                $this->email->from($sendergroup, 'Maison Living | Auto-Services');
                 $this->email->to($email);
                 $this->email->subject('Password Reset Request [' . $token . ']');
                 $this->email->message('You have submitted a password reset request, click the following link to create a new password: <a href="' . base_url() . 'cashier/reset_password/' . $token . '" target="_blank">Create a New Password.</a>');
