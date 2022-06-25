@@ -118,13 +118,13 @@ class Admin extends CI_Controller
             $data['member_list'] = $this->admin_model->get_all_members('all', 'all');
             $data['state_tab'] = 'all';
         } elseif ($status == 'active') {
-            $data['member_list'] = $this->admin_model->get_all_members(1, 'all');
+            $data['member_list'] = $this->admin_model->get_all_members('1', 'all');
             $data['state_tab'] = 'active';
         } elseif ($status == 'inactive') {
-            $data['member_list'] = $this->admin_model->get_all_members(0, 'all');
+            $data['member_list'] = $this->admin_model->get_all_members('0', 'all');
             $data['state_tab'] = 'inactive';
         } elseif ($status == 'suspend') {
-            $data['member_list'] = $this->admin_model->get_all_members(2, 'all');
+            $data['member_list'] = $this->admin_model->get_all_members('2', 'all');
             $data['state_tab'] = 'suspend';
         } else {
             redirect('admin/members/all');
