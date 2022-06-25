@@ -212,7 +212,7 @@ class Admin extends CI_Controller
         $this->load->model('admin_model');
         $data['stores'] = $this->admin_model->get_stores();
         $data['cashier'] = $this->admin_model->get_cashier_by_id($id);
-        print_r($data['cashier']);
+        //print_r($data['cashier']);
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules('cas-fullname', 'Full Name', 'required');

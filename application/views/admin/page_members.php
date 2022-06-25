@@ -135,7 +135,7 @@
             var selected_reason = $('#suspend-reason').val();
             var selected_cusid = $(this).data('cusid');
 
-            alert(selected_cusid + ' - ' + selected_status + ' - ' + selected_reason);
+            //alert(selected_cusid + ' - ' + selected_status + ' - ' + selected_reason);
             $.post("<?= base_url('admin/frag_edit_member/'); ?>" + selected_cusid + "/" + selected_status + "/" + selected_reason, function() {
 
                 })
