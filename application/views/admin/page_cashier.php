@@ -29,6 +29,7 @@
                             <th>Assigned Store</th>
                             <th>Date Created</th>
                             <th>Last Login</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,6 +41,7 @@
                                 <td><?= $member['store_branch']; ?></td>
                                 <td><?= date('d-m-Y H:i:s', $member['date_created']); ?></td>
                                 <td><?= date('d-m-Y H:i:s', $member['date_last_login']); ?></td>
+                                <td><a class="btn btn-info" href="<?= base_url('admin/edit_cashier/').$member['cas_id'];; ?>"><i class="fas fa-edit"></i></a></td>
                             </tr>
                         <?php } ?>
                     </tbody>

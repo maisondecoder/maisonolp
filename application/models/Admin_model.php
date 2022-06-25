@@ -228,7 +228,48 @@ class Admin_model extends CI_Model
         return $member_list;
     }
 
-    //All Registered Members
+    //Find Chasier by ID
+    public function get_cashier_by_id($id)
+    {
+        $this->db->select('*');
+        $this->db->from('cd_cashier_data');
+        $this->db->join('sd_store_data', 'sd_store_data.store_id = cd_cashier_data.store_id');
+        $this->db->order_by('cd_cashier_data.date_created', 'DESC');
+        $this->db->where('cas_id', $id);
+        $cashier_list = $this->db->get()->row_array();
+
+        return $cashier_list;
+    }
+
+    //Add New Cashier
+    public function add_new_cashier($fullname, $email, $store_id, $date_created){
+        $data = array(
+            'cas_fullname' => $fullname,
+            'cas_email' => $email,
+            'cas_password' => password_hash('Maisonliving123', PASSWORD_DEFAULT),
+            'store_id' => $store_id,
+            'date_created' => $date_created,
+            'date_last_login' => $date_created,
+            'cas_status' => 1
+        );
+
+        $add = $this->db->insert('cd_cashier_data', $data);
+        return $add;
+    }
+
+    public function edit_cashier($id, $fullname, $store_id, $status){
+        $data = array(
+            'cas_fullname' => $fullname,
+            'store_id' => $store_id,
+            'cas_status' => $status
+        );
+        $this->db->where('cas_id', $id);
+        $this->db->update('cd_cashier_data', $data);
+        $edit = $this->db->affected_rows();
+        return $edit;
+    }
+
+    //All Registered Chasiers
     public function get_all_cashiers($status_input)
     {
         $this->db->select('*');

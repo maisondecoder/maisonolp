@@ -72,9 +72,15 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('admin/cashiers') ?>">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsecas" aria-expanded="false" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Cashier</span></a>
+                    <div id="collapsecas" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white collapse-inner rounded">
+                        <a class="collapse-item" href="<?= base_url('admin/cashiers') ?>">List Cashier</a>
+                        <a class="collapse-item" href="<?= base_url('admin/add_cashier') ?>">Add Cashier</a>
+                    </div>
+                </div>
             </li>
 
             <!-- Divider -->

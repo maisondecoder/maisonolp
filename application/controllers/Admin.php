@@ -77,16 +77,16 @@ class Admin extends CI_Controller
         $cabang_id = array();
         $cabang_label = array();
         $jenis = array("pending", "approved");
-        foreach($stores as $key=>$store){
-            array_push($cabang_id,$store['store_id']);
-            array_push($cabang_label,$store['store_branch']);
+        foreach ($stores as $key => $store) {
+            array_push($cabang_id, $store['store_id']);
+            array_push($cabang_label, $store['store_branch']);
         }
-        
+
         $data['cabang_id'] = $cabang_id;
         $data['cabang_label'] = $cabang_label;
         if (in_array($state, $jenis) && in_array($branch_id, $cabang_id)) {
-            
-                $data['branch_id'] = $branch_id;
+
+            $data['branch_id'] = $branch_id;
 
             if ($state == 'pending') {
                 $data['pending_trx'] = $this->admin_model->get_all_pending_transactions($branch_id);
@@ -95,10 +95,10 @@ class Admin extends CI_Controller
                 $data['pending_trx'] = $this->admin_model->get_all_approved_transactions($branch_id);
                 $data['state_trx'] = 'approved';
             }
-        }else {
+        } else {
             redirect('admin/transactions/');
         }
-        
+
         $this->load->view('admin/header');
         $this->load->view('admin/page_transactions', $data);
         $this->load->view('admin/footer');
@@ -115,18 +115,18 @@ class Admin extends CI_Controller
         $this->load->model('admin_model');
         $this->load->model('customer_model');
         if ($status == 'all') {
-            $data['member_list'] = $this->admin_model->get_all_members('all','all');
+            $data['member_list'] = $this->admin_model->get_all_members('all', 'all');
             $data['state_tab'] = 'all';
-        }elseif ($status == 'active') {
-            $data['member_list'] = $this->admin_model->get_all_members(1,'all');
+        } elseif ($status == 'active') {
+            $data['member_list'] = $this->admin_model->get_all_members(1, 'all');
             $data['state_tab'] = 'active';
-        }elseif ($status == 'inactive') {
-            $data['member_list'] = $this->admin_model->get_all_members(0,'all');
+        } elseif ($status == 'inactive') {
+            $data['member_list'] = $this->admin_model->get_all_members(0, 'all');
             $data['state_tab'] = 'inactive';
-        }elseif ($status == 'suspend') {
-            $data['member_list'] = $this->admin_model->get_all_members(2,'all');
+        } elseif ($status == 'suspend') {
+            $data['member_list'] = $this->admin_model->get_all_members(2, 'all');
             $data['state_tab'] = 'suspend';
-        }else {
+        } else {
             redirect('admin/members/all');
         }
 
@@ -135,6 +135,7 @@ class Admin extends CI_Controller
         $this->load->view('admin/footer');
     }
 
+    //====== CASHIER =======//
     public function cashiers($status = 'active')
     {
         if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
@@ -160,20 +161,7 @@ class Admin extends CI_Controller
         $this->load->view('admin/footer');
     }
 
-    public function export()
-    {
-        if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
-            $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
-            redirect('admin/auth');
-            die('Cannot Access Admin Page');
-        }
-
-        $this->load->view('admin/header');
-        $this->load->view('admin/page_export');
-        $this->load->view('admin/footer');
-    }
-
-    public function settings_point()
+    public function add_cashier()
     {
         if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
             $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
@@ -182,32 +170,74 @@ class Admin extends CI_Controller
         }
 
         $this->load->model('admin_model');
+        $data['stores'] = $this->admin_model->get_stores();
 
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('point-pair', 'Point Value', 'required');
-        $this->form_validation->set_rules('point-multi', 'Point Multiplier', 'required');
+
+        $this->form_validation->set_rules('cas-fullname', 'Full Name', 'required');
+        $this->form_validation->set_rules(
+            'cas-email',
+            'Email Address',
+            'required|is_unique[cd_cashier_data.cas_email]',
+            array(
+                'is_unique'     => '%s already used.'
+            )
+        );
 
         if ($this->form_validation->run() == FALSE) {
-            $data['point'] = $this->admin_model->get_point_settings();
-
             $this->load->view('admin/header');
-            $this->load->view('admin/page_settings_point', $data);
+            $this->load->view('admin/page_cashier_add', $data);
             $this->load->view('admin/footer');
         } else {
-            $value = $this->input->post('point-pair');
-            $multi = $this->input->post('point-multi');
-
-            if ($this->admin_model->set_point_settings($value, $multi)) {
-                $this->session->set_flashdata('settings_point_change', "<p class='alert alert-success'>Point Setting Changes Saved.</p>");
-                redirect('admin/settings_point?msg=point-settings-changed-successfully');
+            $fullname = $this->input->post('cas-fullname');
+            $email = $this->input->post('cas-email');
+            $store = $this->input->post('cas-store');
+            $add_new_cashier = $this->admin_model->add_new_cashier($fullname, $email, $store, now(), 1);
+            if ($add_new_cashier) {
+                redirect('admin/cashiers?msg=add-cashier-success');
             } else {
-                $this->session->set_flashdata('settings_point_change', "<p class='alert alert-danger'>Point Setting Changes Failed.</p>");
-                redirect('admin/settings_point?msg=point-settings-failed');
+                redirect('admin/add_cashier?msg=add-cashier-failed');
             }
         }
     }
 
-    public function frag_edit_member($cusid = -1, $custat = -1, $reason='')
+    public function edit_cashier($id=0)
+    {
+        if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
+            $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
+            redirect('admin/auth');
+            die('Cannot Access Admin Page');
+        }
+
+        $this->load->model('admin_model');
+        $data['stores'] = $this->admin_model->get_stores();
+        $data['cashier'] = $this->admin_model->get_cashier_by_id($id);
+        print_r($data['cashier']);
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('cas-fullname', 'Full Name', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('admin/header');
+            $this->load->view('admin/page_cashier_edit', $data);
+            $this->load->view('admin/footer');
+        } else {
+            $fullname = $this->input->post('cas-fullname');
+            $store = $this->input->post('cas-store');
+            $status = $this->input->post('cas-status');
+
+            $edit_cashier = $this->admin_model->edit_cashier($id, $fullname, $store, $status);
+            if ($edit_cashier) {
+                redirect('admin/cashiers?msg=edit-cashier-success');
+            } else {
+                redirect('admin/edit_cashier/'.$id.'?msg=edit-cashier-failed');
+            }
+        }
+    }
+    //====== CASHIER =======//
+
+    //====== FRAGMENT =======//
+    public function frag_edit_member($cusid = -1, $custat = -1, $reason = '')
     {
         if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
             $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
@@ -273,6 +303,43 @@ class Admin extends CI_Controller
             return false;
         }
     }
+    //====== FRAGMENT =======//
+
+    //====== OTHER =======//
+    public function settings_point()
+    {
+        if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
+            $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
+            redirect('admin/auth');
+            die('Cannot Access Admin Page');
+        }
+
+        $this->load->model('admin_model');
+
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('point-pair', 'Point Value', 'required');
+        $this->form_validation->set_rules('point-multi', 'Point Multiplier', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $data['point'] = $this->admin_model->get_point_settings();
+
+            $this->load->view('admin/header');
+            $this->load->view('admin/page_settings_point', $data);
+            $this->load->view('admin/footer');
+        } else {
+            $value = $this->input->post('point-pair');
+            $multi = $this->input->post('point-multi');
+
+            if ($this->admin_model->set_point_settings($value, $multi)) {
+                $this->session->set_flashdata('settings_point_change', "<p class='alert alert-success'>Point Setting Changes Saved.</p>");
+                redirect('admin/settings_point?msg=point-settings-changed-successfully');
+            } else {
+                $this->session->set_flashdata('settings_point_change', "<p class='alert alert-danger'>Point Setting Changes Failed.</p>");
+                redirect('admin/settings_point?msg=point-settings-failed');
+            }
+        }
+    }
+
     public function change_password()
     {
         if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
@@ -315,6 +382,21 @@ class Admin extends CI_Controller
         unset($_SESSION['ses_admin_token']);
         redirect('admin/auth');
     }
+    //====== OTHER =======//
+
+    //====== EXPORT DATA =======//
+    public function export()
+    {
+        if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
+            $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
+            redirect('admin/auth');
+            die('Cannot Access Admin Page');
+        }
+
+        $this->load->view('admin/header');
+        $this->load->view('admin/page_export');
+        $this->load->view('admin/footer');
+    }
 
     public function export_trx()
     {
@@ -326,7 +408,7 @@ class Admin extends CI_Controller
 
         $min = strtotime($this->input->post('trxmin'));
         $max = strtotime($this->input->post('trxmax'));
-        
+
         //header("Content-type: application/vnd-ms-excel");
         //header("Content-Disposition: attachment; filename=list_transaction_data.xls");
         $this->load->model('admin_model');
@@ -349,7 +431,7 @@ class Admin extends CI_Controller
         //header("Content-Disposition: attachment; filename=list_member_data.xls");
         $this->load->model('admin_model');
         $this->load->model('customer_model');
-        $data['member_list'] = $this->admin_model->get_all_members(1,$celebrate);
+        $data['member_list'] = $this->admin_model->get_all_members(1, $celebrate);
         $data['state_trx'] = 'pending';
         $this->load->view('admin/export_member', $data);
     }
@@ -369,7 +451,9 @@ class Admin extends CI_Controller
         $data['state_trx'] = 'pending';
         $this->load->view('admin/export_cashier', $data);
     }
+    //====== EXPORT DATA =======//
 
+    //====== VOUCHER PROGRAM =======//
     public function voucher_program()
     {
         $this->load->model('admin_model');
@@ -526,4 +610,5 @@ class Admin extends CI_Controller
             }
         }
     }
+    //====== VOUCHER PROGRAM =======//
 }

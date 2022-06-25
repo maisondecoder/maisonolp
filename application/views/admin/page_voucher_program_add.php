@@ -9,28 +9,28 @@
         <form action="<?= base_url('admin/add_voucher_program') ?>" method="post">
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Program Title</label>
-                <input name="vp-title" type="text" class="form-control" id="vp-title" min="1000000" placeholder="ex: 1 Unit Luxurious Sofa" value="" required>
+                <input name="vp-title" type="text" class="form-control" id="vp-title" placeholder="ex: 1 Unit Luxurious Sofa" value="" required>
             </div>
             <div class="row">
                 <div class="col mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Date Start</label>
-                    <input name="vp-datestart" type="date" class="form-control" id="vp-datestart" min="1000000" placeholder="ex: 1000" value="" required>
+                    <input name="vp-datestart" type="date" class="form-control" id="vp-datestart" value="" required>
                 </div>
 
                 <div class="col mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Date End</label>
-                    <input name="vp-dateend" type="date" class="form-control" id="vp-dateend" min="1000000" placeholder="ex: 1000" value="" required>
+                    <input name="vp-dateend" type="date" class="form-control" id="vp-dateend" value="" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Time Start</label>
-                    <input name="vp-timestart" type="time" class="form-control" id="vp-timestart" min="1000000" placeholder="ex: 1000" value="" required>
+                    <input name="vp-timestart" type="time" class="form-control" id="vp-timestart" value="" required>
                 </div>
 
                 <div class="col mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Time End</label>
-                    <input name="vp-timeend" type="time" class="form-control" id="vp-timeend" min="1000000" placeholder="ex: 1000" value="" required>
+                    <input name="vp-timeend" type="time" class="form-control" id="vp-timeend"  value="" required>
                 </div>
             </div>
 
