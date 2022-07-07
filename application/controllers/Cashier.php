@@ -80,7 +80,7 @@ class Cashier extends CI_Controller
 
             $cus_data = $this->customer_model->find_cus_by_hash($qrid);
             if ($cus_data) {
-                $generated_trx_reff = 'ML' . now() . '1';
+                $generated_trx_reff = 'ML' . now() . rand(0,99);
                 $this->cashier_model->create_trx($generated_trx_reff, $nominal, "Transaksi Store", 0, $this->session->userdata('ses_store_id'), $cus_data['cus_id'], $jurnal, $this->session->userdata('ses_cas_id'), $point_setting['ps_point_multiplier']);
 
                 $bonus_point = $nominal / $point_setting['ps_point_per'] * $point_setting['ps_point_multiplier'];

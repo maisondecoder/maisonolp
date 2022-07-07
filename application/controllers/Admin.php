@@ -408,7 +408,7 @@ class Admin extends CI_Controller
 
         $min = strtotime($this->input->post('trxmin').' 00:00:01');
         $max = strtotime($this->input->post('trxmax').' 23:59:00');
-
+        
         //header("Content-type: application/vnd-ms-excel");
         //header("Content-Disposition: attachment; filename=list_transaction_data.xls");
         $this->load->model('admin_model');
