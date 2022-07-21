@@ -278,7 +278,7 @@ class Cashier extends CI_Controller
                 $symbol_send = "@";
                 $domain_send = "maisonliving.id";
                 $sendergroup = $sender . $symbol_send . $domain_send;
-                $secret = '~~Maisonliving123~~';
+                $secret = 'icylplvrqnpvnhwa';
 
                 $config = [
                     'protocol' => 'smtp',

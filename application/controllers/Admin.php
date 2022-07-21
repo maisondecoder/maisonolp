@@ -201,7 +201,7 @@ class Admin extends CI_Controller
         }
     }
 
-    public function edit_cashier($id=0)
+    public function edit_cashier($id = 0)
     {
         if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
             $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
@@ -230,7 +230,7 @@ class Admin extends CI_Controller
             if ($edit_cashier) {
                 redirect('admin/cashiers?msg=edit-cashier-success');
             } else {
-                redirect('admin/edit_cashier/'.$id.'?msg=edit-cashier-failed');
+                redirect('admin/edit_cashier/' . $id . '?msg=edit-cashier-failed');
             }
         }
     }
@@ -406,9 +406,9 @@ class Admin extends CI_Controller
             die('Cannot Access Admin Page');
         }
 
-        $min = strtotime($this->input->post('trxmin').' 00:00:01');
-        $max = strtotime($this->input->post('trxmax').' 23:59:00');
-        
+        $min = strtotime($this->input->post('trxmin') . ' 00:00:01');
+        $max = strtotime($this->input->post('trxmax') . ' 23:59:00');
+
         //header("Content-type: application/vnd-ms-excel");
         //header("Content-Disposition: attachment; filename=list_transaction_data.xls");
         $this->load->model('admin_model');
@@ -611,4 +611,127 @@ class Admin extends CI_Controller
         }
     }
     //====== VOUCHER PROGRAM =======//
+
+    //====== POST ARTICLE =======//
+    public function post($status = 'all')
+    {
+        if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
+            $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
+            redirect('admin/auth');
+            die('Cannot Access Admin Page');
+        }
+
+        $this->load->model('post_model');
+        if ($status == 'all') {
+            $data['list'] = $this->post_model->get_all_post(0);
+            $data['state_tab'] = 'all';
+        } elseif ($status == 'junk') {
+            $data['list'] = $this->post_model->get_all_post(1);
+            $data['state_tab'] = 'junk';
+        } else {
+            redirect('admin/post/all');
+        }
+
+        $this->load->view('admin/header');
+        $this->load->view('admin/page_post_list', $data);
+        $this->load->view('admin/footer');
+    }
+
+    public function add_post()
+    {
+        if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
+            $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
+            redirect('admin/auth');
+            die('Cannot Access Admin Page');
+        }
+
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('title', 'Post Title', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('admin/header');
+            $this->load->view('admin/page_post_add');
+            $this->load->view('admin/footer');
+        } else {
+            $author = 'Maison Living';
+
+            $pa_title = $this->input->post('title');
+            $pa_slug = str_replace(' ', '-', strtolower($pa_title));
+            $pa_category = $this->input->post('category');
+            $pa_tag = $this->input->post('tag');
+            $pa_cover = $this->input->post('cover');
+            $pa_body = $this->input->post('body');
+            $pa_author = $author;
+            $pa_status = $this->input->post('status');
+            $is_deleted = 0;
+            $date_created = now();
+            $date_publish = $this->input->post('date');
+            $time_publish = $this->input->post('time');
+            $publish = strtotime($date_publish . ' ' . $time_publish);
+
+            $this->load->model('post_model');
+            $add = $this->post_model->add_post($pa_title, $pa_slug, $pa_category, $pa_tag, $pa_cover, $pa_body, $pa_author, $pa_status, $is_deleted, $date_created, $publish);
+            if ($add) {
+                //Jika sukses
+                echo 'sukses';
+                redirect('admin/post?msg=add-post-success');
+            } else {
+                //Jika gagal
+                echo 'gagal';
+                redirect('admin/post?msg=add-post-failed');
+            }
+        }
+    }
+
+    public function edit_post($pa_id)
+    {
+        if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
+            $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
+            redirect('admin/auth');
+            die('Cannot Access Admin Page');
+        }
+    }
+
+    public function delete_post($pa_id)
+    {
+        if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
+            $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
+            redirect('admin/auth');
+            die('Cannot Access Admin Page');
+        }
+
+        $this->load->model('post_model');
+        $delete = $this->post_model->delete_post($pa_id);
+        if ($delete) {
+            //Jika sukses
+            echo 'sukses';
+            redirect('admin/post?msg=delete-post-success');
+        } else {
+            //Jika gagal
+            echo 'gagal';
+            redirect('admin/post?msg=delete-post-failed');
+        }
+    }
+
+    public function restore_post($pa_id){
+        if (!$this->session->has_userdata('ses_admin_id') && !$this->session->has_userdata('ses_admin_email') && !$this->session->has_userdata('ses_admin_token')) {
+            $this->session->set_flashdata('admin_login', "<p class='alert alert-danger'>Invalid Access!</p>");
+            redirect('admin/auth');
+            die('Cannot Access Admin Page');
+        }
+        
+        $this->load->model('post_model');
+        $restore = $this->post_model->restore_post($pa_id);
+        if ($restore) {
+            //Jika sukses
+            echo 'sukses';
+            redirect('admin/post?msg=restore-post-success');
+        } else {
+            //Jika gagal
+            echo 'gagal';
+            redirect('admin/post?msg=restore-post-failed');
+        }
+    }
+
+    //====== POST ARTICLE =======//
 }

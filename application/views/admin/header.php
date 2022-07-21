@@ -12,7 +12,7 @@
     <title>Admin | Maison Living</title>
 
     <!-- Custom fonts for this template-->
-    
+
     <link href="<?= base_url('assets/sbadmin/'); ?>vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <script src="<?= base_url('assets/sbadmin/'); ?>vendor/jquery/jquery.min.js"></script>
@@ -75,7 +75,7 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsecas" aria-expanded="false" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Cashier</span></a>
-                    <div id="collapsecas" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapsecas" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white collapse-inner rounded">
                         <a class="collapse-item" href="<?= base_url('admin/cashiers') ?>">List Cashier</a>
                         <a class="collapse-item" href="<?= base_url('admin/add_cashier') ?>">Add Cashier</a>
@@ -83,6 +83,21 @@
                 </div>
             </li>
 
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsepost" aria-expanded="false" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-pen"></i>
+                    <span>Post</span></a>
+                <div id="collapsepost" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white collapse-inner rounded">
+                        <a class="collapse-item" href="<?= base_url('admin/post') ?>">List Post</a>
+                        <a class="collapse-item" href="<?= base_url('admin/add_post') ?>">Add New Post</a>
+                    </div>
+                </div>
+            </li>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 

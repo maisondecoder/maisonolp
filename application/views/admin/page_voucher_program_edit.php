@@ -5,7 +5,7 @@
     <h1 class="h3 mb-4 text-gray-800">Edit Voucher Program</h1>
 
     <div class="card shadow mb-4 p-4 col-sm-12 col-md-12 col-lg-8">
-        <?= $this->session->flashdata('settings_point_change'); ?>
+        <?= $this->session->flashdata('edit_voucher_program'); ?>
         <form action="<?= base_url('admin/edit_voucher_program').'/'.$vp_data['vop_uniqueid'] ?>" method="post">
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Program Title</label>

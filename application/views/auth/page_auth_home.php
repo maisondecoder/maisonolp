@@ -14,6 +14,19 @@
     <link rel="apple-touch-icon" href="https://maisonliving.id/wp-content/uploads/2021/11/cropped-logo-tab1-180x180.jpg" />
     <meta name="msapplication-TileImage" content="https://maisonliving.id/wp-content/uploads/2021/11/cropped-logo-tab1-270x270.jpg" />
     <title>Online Loyalty Program | Maison Living</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N7BCSL5D7P"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-N7BCSL5D7P');
+    </script>
 </head>
 
 <body class="cus-dark-bg mx-auto vh-100" style="max-width:500px; background-image:url('<?= base_url('assets/papadatos-sofa.jpg'); ?>');background-size:cover; background-repeat:no-repeat; background-position: left center">
