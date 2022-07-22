@@ -31,8 +31,15 @@ class Front extends CI_Controller
 		} else {
 			if ($read) {
 				if ($read['date_publish'] > now() || $read['pa_status'] == '0' || $read['is_deleted'] == '1') {
-					echo 'artikel tidak ditemukan';
-					exit;
+					//Article Not Found
+					$read['pa_title'] = 'Article Not Found';
+					$data['read'] = $read;
+					$latest = $this->post_model->get_latest_post(10, 0);
+					$data['latest'] = $latest;
+
+					$this->load->view('public/header', $data);
+					$this->load->view('public/read-not-found', $data);
+					$this->load->view('public/footer');
 				} else {
 					$latest = $this->post_model->get_latest_post(3, $read['pa_id']);
 					$data['read'] = $read;
@@ -42,8 +49,15 @@ class Front extends CI_Controller
 					$this->load->view('public/footer');
 				}
 			} else {
-				echo 'artikel tidak ditemukan';
-				exit;
+				//Article Not Found
+				$read['pa_title'] = 'Article Not Found';
+				$data['read'] = $read;
+				$latest = $this->post_model->get_latest_post(10, 0);
+				$data['latest'] = $latest;
+
+				$this->load->view('public/header', $data);
+				$this->load->view('public/read-not-found', $data);
+				$this->load->view('public/footer');
 			}
 		}
 	}

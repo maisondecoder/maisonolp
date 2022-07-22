@@ -3,12 +3,10 @@
 </div>
 <div class="bg-white p-4" style="margin-top:-15px; border-radius: 16px;">
     <div style="margin-bottom:140px">
-        <h3 class="mt-2"><?= $read['pa_title']; ?></h3>
-        <p class="fs-6 mb-3"><?= ucfirst($read['pa_category']); ?> - <?= date('d M Y, h:i', $read['date_publish']); ?> </p>
-        <img class="rounded shadow-sm mb-3 img-fluid" src="<?= base_url('assets/post/images/').$read['pa_cover']; ?>" alt="Photo of <?= $read['pa_title']; ?>">
-        <div id="post_body" class=""><?= $read['pa_body']; ?></div>
-        <hr>
-        <h4 class="mt-2 mb-4">Latest Post</h4>
+        <h3 class="mt-2">Oops, Article Not Found!</h3>
+        <p>Sorry, the article you were looking for could not be found.</p>
+        <hr class="mt-4">
+        <h4 class="mt-2 mb-4">Articles You Might Like</h4>
         <div>
             <?php foreach ($latest as $key => $latest) { ?>
                 <div class="row mb-3 d-flex position-relative">
